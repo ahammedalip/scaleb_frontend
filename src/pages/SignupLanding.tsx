@@ -1,10 +1,10 @@
-import React from 'react'
-import Header from '../components/header/header'
+
+import Signuplanding from '../components/Signup.Landing/Signup.landing'
 
 function SignupLanding() {
   return (
     <div>
-        
+        <Signuplanding/>
     </div>
   )
 }
