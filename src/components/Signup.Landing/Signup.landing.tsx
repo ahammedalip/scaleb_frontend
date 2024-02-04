@@ -1,5 +1,6 @@
 import React from 'react'
 import './Signup.landing.css'
+import { Link } from 'react-router-dom'
 import bg from '../../../public/images/5588665.jpg'
 
 function Signuplanding() {
@@ -15,7 +16,9 @@ function Signuplanding() {
               <h1 className='text-5xl font-bold pt-11 text-slate-500'>Retail Business</h1>
               <p className='pt-8'>Ready to revolutionize your retail business? Join us today and take the first step towards
                 streamlined management and increased success.</p>
-              <h4 className='text-blue-500 font-medium pt-5'>Signup here</h4>
+              <Link to="/retail/signup">
+                <h4 className='text-blue-500 font-medium pt-5'>Signup here</h4>
+              </Link>
             </div>
           </div>
         </div>

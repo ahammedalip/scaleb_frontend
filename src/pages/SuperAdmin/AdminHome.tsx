@@ -1,9 +1,11 @@
 import React from 'react'
+import Admnhome from '../../components/SuperAdmin/AdminHome/Admn.home'
 
 function AdminHome() {
   return (
     <div>
-        <h2>welcome to home</h2>
+        <Admnhome/>
+        
     </div>
   )
 }

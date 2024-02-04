@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../header/header'
 import './landing.first.css'
+import { Link } from 'react-router-dom';
 
 function LandingFirst() {
   return (
@@ -32,9 +33,12 @@ function LandingFirst() {
           <p className=' ml-16 mr-16 font-medium'>Transform your wholesale and retail business with our advanced management app. Streamline operations,
             optimize inventory, and boost sales effortlessly. Join us for a future of efficiency and success!</p>
           <h1 className='font-bold text-8xl pt-4  text-blue-500'>Join Us</h1>
-          <a href="/action">
-            <h2 className='text-blue-400'>Click here</h2>
-          </a>
+         
+         <Link to='/action'>
+         <h2 className='text-blue-400'>Click here</h2>
+          </Link>
+            
+          
 
         </div>
 
