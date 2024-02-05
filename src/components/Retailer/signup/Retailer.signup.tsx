@@ -16,6 +16,7 @@ interface FormData {
 function Retailersignup() {
   const [formData, setFormData] = useState<FormData>({})
   const [otp, setOTP] = useState<string>('')
+  const [error, setError] = useState<string>('')
 
   const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value })
@@ -26,10 +27,18 @@ function Retailersignup() {
     e.preventDefault();
     console.log(formData);
     try {
-
+      const response = await api.post('/retailer/signup/verify_cred', formData,{
+        headers:{
+          "Content-Type": "application/json"
+        }
+      })
+      const data = response.data;
+    console.log('coming from retailer signup',data)
+      
     }
-    catch (err) {
-      console.log(err);
+    catch (err:any) {
+      console.log(err?.response.data);
+      setError(err?.response.data.message || "An error occured");
     }
 
   }
@@ -54,6 +63,11 @@ const handleSubmitOTP = async (e:FormEvent<HTMLFormElement>)=>{
             <div className=' bg-white bg-opacity-100 p-8 shadow-md rounded-tl-md rounded-bl-md w-96'>
               <form className=' grad' onSubmit={handleSubmitCred}>
                 <h2 className='text-2xl font-bold mb-4 text-center'> Retailer SignUp</h2>
+                <div className='mb-4'>
+                  {error && (
+                  <div className="mb-4 text-red-500 text-center">{error}</div>
+                )}
+                </div>
                 <div className='mb-4'>
 
 

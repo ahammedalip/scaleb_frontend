@@ -26,12 +26,15 @@ function Adminlogin() {
           'Content-Type': 'application/json',
         },
       });
-
+      
       const data = response.data;
       console.log(data);
-      localStorage.setItem('access_token', data?.token)
+      if(data.success==='true'){
+        localStorage.setItem('access_token', data?.token)
 
-      navigate('/admin/home');
+        navigate('/admin/home');
+      }
+      
 
     } catch (error: any) {
       console.error(error?.response.data);
