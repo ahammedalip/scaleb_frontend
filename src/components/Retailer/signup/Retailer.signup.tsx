@@ -92,15 +92,20 @@ function Retailersignup() {
   }
   const handleSubmitOTP = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    const signupData ={
+      formData, otp
+    }
     try {
-      const response =await api.post('/retailer/signup/verify_otp', otp, {
+      const response =await api.post('/retailer/signup/verify_otp',signupData, {
         headers:{
           "Content-Type": 'application/json'
         }
       })
       const data = response.data;
+      console.log(data);
     } catch (error) {
-      
+      console.log(error?.response.data);
+      setError(error?.response.data.message || "An error occured");
     }
     console.log(otp)
   }
