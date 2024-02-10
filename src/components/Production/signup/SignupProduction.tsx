@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,Link } from 'react-router-dom'
 import './SignupProduction.css'
 import api from '../../../axios/api'
 
@@ -26,7 +26,14 @@ function SignupProduction() {
         console.log(data);
 
         try {
-            const response = await api('')
+            const response = await api.post('/production/auth/verify_cred', data, {
+                headers:{
+                    "Content-Type":"application/json"
+                }
+            })
+
+            const result = response.data
+
         } catch (error) {
             
         }
@@ -54,7 +61,7 @@ function SignupProduction() {
                 </div>
 
                 <div className='mb-4'>
-                    <label htmlFor="productionName" className='block text-gray-700 text-sm font-bold mb-2'>
+                    <label htmlFor="productionName" className='block text-gray-700 text-sm font-semibold mb-2'>
                         Production Name
                     </label>
                     <input
@@ -70,7 +77,7 @@ function SignupProduction() {
                 </div>
 
                 <div className='mb-4'>
-                    <label htmlFor="email" className=' block text-gray-700 text-sm font-bold mb-2'> Email</label>
+                    <label htmlFor="email" className=' block text-gray-700 font-semibold text-sm mb-2'> Email</label>
                     <input id='email' className='border shadow rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                         {...registerSignup('email', { required: 'Email is mandatory' }
                         )} />
@@ -79,7 +86,7 @@ function SignupProduction() {
                 </div>
 
                 <div className='mb-4'>
-                    <label htmlFor="password" className='block text-gray-700 text-sm font-bold mb-2'>Password</label>
+                    <label htmlFor="password" className='block text-gray-700 font-semibold text-sm mb-2'>Password</label>
                     <input type="password"
                         id='password'
                         className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outlin'
@@ -93,9 +100,12 @@ function SignupProduction() {
                     {errorsSignup.password && <p className='text-red-500 text-xs italic'> {errorsSignup.password.message} </p>}
                 </div>
                 <div className='flex items-center justify-center'>
-                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' type='submit'>
-                        Verify
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline' type='submit'>
+                        Request OTP
                     </button>
+                </div>
+                <div className='text-center pt-3'>
+                        <h2>Already a user? <Link to='/production/login' className= "text-blue-500"> Click here</Link></h2>
                 </div>
             </form>
                 ) :(
@@ -129,6 +139,7 @@ function SignupProduction() {
                         verify & Sign Up
                     </button>
                 </div>
+                
             </form>
                         ) }
 

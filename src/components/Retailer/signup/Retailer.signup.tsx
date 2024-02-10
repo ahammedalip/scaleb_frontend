@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
-import {  useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import api from '../../../axios/api.ts'
+import './sample.css'
 
 interface FormData {
   retailerName?: string;
@@ -9,7 +10,7 @@ interface FormData {
 }
 
 function Retailersignup() {
-  const navigate=  useNavigate();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({})
   const [otp, setOTP] = useState<string>('')
   const [error, setError] = useState<string>('')
@@ -89,10 +90,10 @@ function Retailersignup() {
       })
       const data = response.data;
       console.log(data);
-      if(data.success=== true){
+      if (data.success === true) {
         navigate('/retail/login')
       }
-    } catch (error:any) {
+    } catch (error: any) {
       console.log(error?.response.data);
       setError(error?.response.data.message || "An error occured");
     }
@@ -101,66 +102,78 @@ function Retailersignup() {
 
   return (
 
-    <div className='bg-gradient-to-r from-slate-300 to-slate-400 min-h-screen'>
-      {/* <div className='container'>    */}
-      <div className='pt-11 flex'>
-        <div className=' pt-20 '>
-          <div className=' flex items-center justify-center h-full '>
-            <div className=' ml-48 bg-white  p-8 shadow-left-bottom rounded-tl-md rounded-bl-md w-96'>
-              {!isOtpSent ? (
-                <form className=' grad' onSubmit={handleSubmitCred}>
-                  <h2 className='text-2xl font-bold mb-4 text-center'> Retailer SignUp</h2>
-                  <div className='mb-4 pt-4'>
-                    {error && (
-                      <div className="mb-4 text-red-500 text-center">{error}</div>
-                    )}
-                  </div>
-                  <div className='mb-4'>
-                    <h1 className='ml-3'>Name<span className='text-red-500'>*</span>:</h1>
-                    <input type="text" id='retailerName' className='w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500' placeholder='Enter your retailer name' onChange={handleChange} />
-                  </div>
-                  <div className='mb-4'>
-                    <h1 className='ml-3'>email<span className='text-red-500'>*</span>:</h1>
-                    <input type="text" id='email' className='w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500' placeholder='Enter your email' onChange={handleChange} />
-                  </div>
-                  <div className='mb-4'>
-                    <h1 className='ml-3'>Password<span className='text-red-500'>*</span>:</h1>
-                    <input type="password" id='password' className='w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500' placeholder='Enter your password' onChange={handleChange} />
-                    {passwordError && <div className="text-red-500 text-xs mt-1">{passwordError}</div>}
-                  </div>
-                  <div className='mb-4 text-center'>
-                    <button
-                      type="submit"
-                      className="w-auto px-3 text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300 disabled:bg-disabled disabled:text-disabled"
-                      disabled={!!passwordError}
-                    >
-                      Send OTP
-                    </button>
-                  </div>
-                </form >
-              ) : (
-                <div>
-                  <h2 className='text-2xl font-bold mb-4 text-center'>Submit OTP</h2>
-                  <form onSubmit={handleSubmitOTP}>
-                    <div className='mb-4 flex '>
-                      <div className='flex-auto'>
-                        <input type="text" id='otp' className='w-32 px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500' placeholder='OTP' onChange={handleOTPChange} />
-                      </div>
-                      <div className='flex-auto'>
-                        <button
-                          type="submit"
-                          className="w-auto px-3 bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition duration-300"
-                        >
-                          Verify and Submit
-                        </button>
-                      </div>
+    <div className='bg-gradient-to-r from-slate-400 to-slate-300 min-h-screen container-fluid'>
+
+      <div className="background3e">
+        <div className="cube"></div>
+        <div className="cube"></div>
+        <div className="cube"></div>
+        <div className="cube"></div>
+        <div className="cube"></div>
+
+
+        <div className='pt-11 flex'>
+          <div className=' pt-20 '>
+            <div className=' flex items-center justify-center h-full '>
+              <div className=' ml-48 bg-white bg-opacity-20 backdrop-filter backdrop-blur-md  p-8 shadow-left-bottom  rounded-lg w-96'>
+                {!isOtpSent ? (
+                  <form className=' grad' onSubmit={handleSubmitCred}>
+                    <h2 className='text-2xl font-bold mb-4 text-center'> Retailer SignUp</h2>
+                    <div className='mb-4 pt-4'>
+                      {error && (
+                        <div className="mb-4 text-red-500 text-center">{error}</div>
+                      )}
                     </div>
-                  </form>
-                </div>
-              )}
-            </div>
-            <div className='shadow-bo rounded-tr-md rounded-br-md'>
+                    <div className='mb-4'>
+                      <h1 className='ml-3'>Name<span className='text-red-500'>*</span>:</h1>
+                      <input type="text" id='retailerName' className='w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500' placeholder='Enter your retailer name' onChange={handleChange} />
+                    </div>
+                    <div className='mb-4'>
+                      <h1 className='ml-3'>email<span className='text-red-500'>*</span>:</h1>
+                      <input type="text" id='email' className='w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500' placeholder='Enter your email' onChange={handleChange} />
+                    </div>
+                    <div className='mb-4'>
+                      <h1 className='ml-3'>Password<span className='text-red-500'>*</span>:</h1>
+                      <input type="password" id='password' className='w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500' placeholder='Enter your password' onChange={handleChange} />
+                      {passwordError && <div className="text-red-500 text-xs mt-1">{passwordError}</div>}
+                    </div>
+                    <div className='mb-4 text-center'>
+                      <button
+                        type="submit"
+                        className="w-auto px-3 text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300 disabled:bg-disabled disabled:text-disabled"
+                        disabled={!!passwordError}
+                      >
+                        Send OTP
+                      </button>
+                    </div>
+                    <div className='text-center pt-3'>
+                      <h2>Already a user? <Link to='/retail/login' className='text-blue-500'>Click here</Link> </h2>
+                    </div>
+                  </form >
+                ) : (
+                  <div>
+                    <h2 className='text-2xl font-bold mb-4 text-center'>Submit OTP</h2>
+                    <form onSubmit={handleSubmitOTP}>
+                      <div className='mb-4 flex '>
+                        <div className='flex-auto'>
+                          <input type="text" id='otp' className='w-32 px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500' placeholder='OTP' onChange={handleOTPChange} />
+                        </div>
+                        <div className='flex-auto'>
+                          <button
+                            type="submit"
+                            className="w-auto px-3 bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition duration-300"
+                          >
+                            Verify and Submit
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                )}
+              </div>
+              {/* <div className='shadow-bo rounded-tr-md rounded-br-md'>
               <img src="../../../../public/images/signupSide.jpg" alt="" className=' max-w-[444px] shadow-bottom-right rounded-tr-md rounded-br-md' />
+            </div> */}
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import api from '../../../axios/api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 
 interface IFormInput {
     retailerName: string,
@@ -36,9 +36,9 @@ function Retailerlogin() {
 
     return (
         <div className='flex justify-center items-center h-screen bg-gray-200'>
-            <form onSubmit={handleSubmit(onSubmit)} className='bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-full max-w-md'>
+            <form onSubmit={handleSubmit(onSubmit)} className='bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-full max-w-sm'>
                 <div className='mb-4 text-center'>
-                    <h2 className='text-2xl font- '>LOGIN</h2>
+                    <h2 className='text-2xl font-bold '>Retailers Login</h2>
                 </div>
                 <div className='mb-4'>
                     {authError && (
@@ -46,7 +46,7 @@ function Retailerlogin() {
                     )}
                 </div>
                 <div className='mb-4'>
-                    <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='retailerName'>
+                    <label className='block text-gray-700 text-sm font-semibold mb-2' htmlFor='retailerName'>
                         Retailer Name
                     </label>
                     <input
@@ -57,7 +57,7 @@ function Retailerlogin() {
                     {errors.retailerName && <p className='text-red-500 text-xs italic'>{errors.retailerName.message}</p>}
                 </div>
                 <div className='mb-6'>
-                    <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='password'>
+                    <label className='block text-gray-700 text-sm font-semibold mb-2' htmlFor='password'>
                         Password
                     </label>
                     <input
@@ -75,10 +75,13 @@ function Retailerlogin() {
                     {errors.password && <p className='text-red-500 text-xs italic'>{errors.password.message}</p>}
                 </div>
                 <div className='flex items-center justify-center'>
-                    <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' type='submit'>
+                    <button className='bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline' type='submit'>
                         Sign In
                     </button>
                 </div>
+                <div className='text-center pt-3'>
+                    <h2>New user? <Link to='/retail/signup' className='text-blue-500'>Click here</Link> </h2>
+                  </div>
 
                 
             </form>
