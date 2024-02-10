@@ -5,13 +5,13 @@ import { Link, useNavigate } from 'react-router-dom'
 
 interface LoginForm {
   productionName: string,
-  password: string
+  password: number
 }
 
 function LoginProduction() {
   const [authError, setAuthError] = useState<string>('')
   const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>()
-
+const navigate = useNavigate()
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
     try {
       const response = await api.post('/production/auth/login',data,{
@@ -22,7 +22,8 @@ function LoginProduction() {
       const result = response.data
       console.log(result);
       if(result.success== true){
-
+        localStorage.setItem('access_token2', result.token)
+        navigate('/production/home')
       }
     } catch (error:any) {
       console.log(error?.response.data);
