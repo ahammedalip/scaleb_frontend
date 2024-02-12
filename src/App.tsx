@@ -9,6 +9,7 @@ import RetailerLogin from './pages/Retailer/RetailerLogin'
 import RetailerHome from './pages/Retailer/home/RetailerHome'
 import ProductionSignup from './pages/Production/Signup/ProductionSignup'
 import ProductionLogin from './pages/Production/Login/ProductionLogin'
+import SalesExec from './pages/Retailer/salesExec/SalesExec'
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
       <Route path='/retail/home' element={<RetailerHome/>}/>
       <Route path='/production/signup' element={<ProductionSignup/>}/>
       <Route path='/production/login' element = {<ProductionLogin/>}/>
+      <Route path='/retail/sales_exec' element={<SalesExec/>}/>
     </Routes>
     
    

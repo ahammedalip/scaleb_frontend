@@ -27,7 +27,7 @@ function Retailerlogin() {
                 navigate('/retail/home')
             }
 
-        } catch (error:any) {
+        } catch (error:any) { 
             console.log(error?.response.data)
             setAuthError(error?.response.data.message ||'An error occured')
         }
