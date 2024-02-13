@@ -5,7 +5,7 @@ import { jwtDecode } from 'jwt-decode'
 
 function SalesList() {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [adminId, setAdminId] = useState<Number>()
+  const [adminId, setAdminId] = useState<number>()
   const [salesExecList, setSalesExecList] = useState([])
 
   useEffect(() => {
@@ -19,21 +19,21 @@ function SalesList() {
         console.log(userDetails.salesExeclist);
         setSalesExecList(userDetails.salesExeclist);
       } catch (error) {
-        console.log('error at fetch list',error);
+        console.log('error at fetch list', error);
 
       }
     };
 
     fetchSalesList();
-  },[adminId]);
+  }, [adminId]);
 
   const getToken = async () => {
     const token = localStorage.getItem('access_token1');
     const decodedToken = token ? jwtDecode(token) : null
     const validUser = decodedToken?.validUser
-    
+
     const id = validUser._id;
-   
+
     setAdminId(id)
   }
 
@@ -41,7 +41,7 @@ function SalesList() {
     setShowModal(true);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModal = ():void => {
     setShowModal(false);
   };
 
@@ -60,37 +60,44 @@ function SalesList() {
       <UserModal isOpen={showModal} onClose={handleCloseModal} />
 
       <div className="overflow-auto">
-  <table className="min-w-full divide-y divide-gray-200">
-    <thead className="bg-gray-50">
-      <tr>
-        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          Username
-        </th>
-        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          Email
-        </th>
-        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-          Is Blocked
-        </th>
-      </tr>
-    </thead>
-    <tbody className="bg-white divide-y divide-gray-200">
-      {salesExecList.map((exec, index) => (
-        <tr key={index} className={index %  2 ===  0 ? 'bg-gray-50' : ''}>
-          <td className="px-6 py-4 whitespace-nowrap">
-            {exec.username}
-          </td>
-          <td className="px-6 py-4 whitespace-nowrap">
-            {exec.email}
-          </td>
-          <td className="px-6 py-4 whitespace-nowrap">
-            {exec.isBlocked ? 'Yes' : 'No'}
-          </td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Username
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Email
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Is Blocked
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {salesExecList.map((exec:
+            {
+              username:string,
+              email: string,
+              isBlocked: boolean
+            },
+             index:number
+             ) => (
+              <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : ''}>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {exec?.username ?? ""}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {exec.email}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {exec.isBlocked ? 'Yes' : 'No'}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
 
 

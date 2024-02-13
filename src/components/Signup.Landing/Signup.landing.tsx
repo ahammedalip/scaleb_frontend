@@ -31,7 +31,9 @@ function Signuplanding() {
         <div className='flex-1 ml-16 text-center pt-10'>
           <h1 className='text-5xl font-bold pt-11 text-slate-500'>Production Units</h1>
           <p className='pt-12'>Ready to revolutionize your retail business? Join us today and take the first step towards streamlined management and increased success.</p>
+          <Link to='/production/signup'>
           <h4 className='text-blue-500 font-medium pt-5'>Signup here</h4>
+          </Link>
         </div>
         <div className='flex-1 pt-8 ml-12'>
           <img className='h-80 sideImage22' src="../../../public/images/fact.jpg" alt="" />
