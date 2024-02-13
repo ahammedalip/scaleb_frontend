@@ -29,14 +29,14 @@ function Adminlogin() {
       
       const data = response.data;
       console.log(data);
-      if(data.success==='true'){
+      if(data.success=== true){
         localStorage.setItem('access_token', data?.token)
 
         navigate('/admin/home');
       }
       
 
-    } catch (error: any) {
+    } catch (error) {
       console.error(error?.response.data);
       // setError(error? error.response.data: "An error occured")
       setError(error?.response.data.message || 'An error occurred');
