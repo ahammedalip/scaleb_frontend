@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Landing from './pages/landing'
 import SignupLanding from './pages/SignupLanding'
+
 import Header from './components/header/Header'
 import AdminLogin from './pages/SuperAdmin/AdminLogin'
 import AdminHome from './pages/SuperAdmin/AdminHome'
@@ -15,8 +16,7 @@ import SalesExec from './pages/Retailer/salesExec/SalesExec'
 function App() {
   return (
     <BrowserRouter>
-    <Header/>
-    
+    {/* <Header/> */}
     <Routes>
       <Route path='/' element={<Landing/>}/>
       <Route path='/action' element={<SignupLanding/>} />
