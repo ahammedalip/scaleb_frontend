@@ -1,35 +1,46 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import api from '../../../axios/api';
-import { useNavigate,Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { signInSuccess, signInStart } from '../../../redux/Retailer/slice';
 
 interface IFormInput {
     retailerName: string,
-    password: string
+    password: string,
+    role : string
 }
 
 function Retailerlogin() {
     const [authError, setAuthError] = useState<string>('')
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
 
-    const navigate= useNavigate();
-    const onSubmit: SubmitHandler<IFormInput> = async(data) => {
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch()
+    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
-            const response = await api.post('/retailer/auth/login', data,{
-                headers:{
-                    "Content-Type":"application/json"
+            const response = await api.post('/retailer/auth/login', data, {
+                headers: {
+                    "Content-Type": "application/json"
                 }
             })
             const result = response.data;
             console.log(result);
-            if(result.success== true){
+            if (result.success == true && result.user.role == 'retailer') {
+                // console.log('hai from here',result.user);
+                dispatch(signInSuccess({ user: result.user }))
                 localStorage.setItem('access_token1', result?.token)
                 navigate('/retail/home')
+            }else if(result.success == true ){
+                dispatch(signInSuccess({user: result.user}))
+                localStorage.setItem('access_token11', result?.token)
+                navigate('/retail/sales/home')
             }
 
-        } catch (error:any) { 
+        } catch (error: any) {
             console.log(error?.response.data)
-            setAuthError(error?.response.data.message ||'An error occured')
+            setAuthError(error?.response.data.message || 'An error occured')
         }
         // console.log(data);
     };
@@ -47,7 +58,7 @@ function Retailerlogin() {
                 </div>
                 <div className='mb-4'>
                     <label className='block text-gray-700 text-sm font-semibold mb-2' htmlFor='retailerName'>
-                        Retailer Name
+                        Name
                     </label>
                     <input
                         id='retailerName'
@@ -79,11 +90,42 @@ function Retailerlogin() {
                         Sign In
                     </button>
                 </div>
+                <div className='mb-4'>
+                    <label className='block text-gray-700 text-sm font-semibold mb-2'>
+                        Role
+                    </label>
+                    <div className='flex items-center space-x-4'>
+                    <div className='flex items-center'>
+                        <input
+                            id='retailAdmin'
+                            name='role'
+                            type='radio'
+                            value='retailAdmin'
+                            className='mr-2'
+                            {...register('role', { required: 'Role is required' })}
+                        />
+                        <label htmlFor='retailAdmin' className='text-gray-700'>Retail Admin</label>
+                    </div>
+                    <div className='flex items-center'>
+                        <input
+                            id='salesExecutive'
+                            name='role'
+                            type='radio'
+                            value='salesExecutive'
+                            className='mr-2'
+                            {...register('role', { required: 'Role is required' })}
+                        />
+                        <label htmlFor='salesExecutive' className='text-gray-700'>Sales Executive</label>
+                    </div>
+                    </div>
+                    
+                    {errors.role && <p className='text-red-500 text-xs italic'>{errors.role.message}</p>}
+                </div>
                 <div className='text-center pt-3'>
                     <h2>New user? <Link to='/retail/signup' className='text-blue-500'>Click here</Link> </h2>
-                  </div>
+                </div>
 
-                
+
             </form>
         </div>
     );

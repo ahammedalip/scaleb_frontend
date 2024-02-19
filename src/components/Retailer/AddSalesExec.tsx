@@ -28,10 +28,9 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
     const getToken = async()=>{
         const token= localStorage.getItem('access_token1');
         const decodedToken =  token?jwtDecode(token) : null
-    
-        const validUser = decodedToken?.validUser
-        setId(validUser._id)
-        setRetailerUsername(validUser.retailerName)
+        console.log('here decoded token is ',decodedToken);
+        setId(decodedToken.id)
+        setRetailerUsername(decodedToken.validUser)
     
     }
 

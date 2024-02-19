@@ -30,9 +30,11 @@ function SalesList() {
   const getToken = async () => {
     const token = localStorage.getItem('access_token1');
     const decodedToken = token ? jwtDecode(token) : null
-    const validUser = decodedToken?.validUser
+    console.log('here',decodedToken);
+    // const validUser = decodedToken?.validUser
 
-    const id = validUser._id;
+    const id = decodedToken.id;
+    console.log('id is ', id);
 
     setAdminId(id)
   }

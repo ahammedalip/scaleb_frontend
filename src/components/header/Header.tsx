@@ -33,7 +33,8 @@ function Header() {
       <div className="fixed p-4 w-[98%] border-box shadow-xl flex justify-between items-center rounded-full bg-white">
         <h2 className="headerLogo pl-5 text-xl">SCALE.B</h2>
         {isloggedin ? (
-          <div className='flex items-center space-x-4 mr-4 pr-8'>
+          <div className='flex items-center space-x-10 mr-4'>
+            
             <Link to='/profile'>
             <img src="../../../public/images/profileC.png" alt=""  className='w-8 h-8 '/>
             </Link>

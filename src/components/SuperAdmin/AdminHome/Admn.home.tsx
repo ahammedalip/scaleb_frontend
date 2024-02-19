@@ -1,9 +1,11 @@
 import React from 'react'
+import Menu from '../menu/Menu'
 
 function Admnhome() {
   return (
     <div className='pt-20'>
-        <h1>welcome home super admin</h1>
+      <Menu/>
+      
     </div>
   )
 }
