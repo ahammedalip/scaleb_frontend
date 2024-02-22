@@ -11,6 +11,8 @@ import RetailerHome from './pages/Retailer/home/RetailerHome'
 import ProductionSignup from './pages/Production/Signup/ProductionSignup'
 import ProductionLogin from './pages/Production/Login/ProductionLogin'
 import SalesExec from './pages/Retailer/salesExec/SalesExec'
+import RetailerList from './pages/SuperAdmin/RetailerList'
+import ProductionList from './pages/SuperAdmin/ProductionList'
 
 
 function App() {
@@ -28,6 +30,8 @@ function App() {
       <Route path='/production/signup' element={<ProductionSignup/>}/>
       <Route path='/production/login' element = {<ProductionLogin/>}/>
       <Route path='/retail/sales_exec' element={<SalesExec/>}/>
+      <Route path='/admin/retail' element ={<RetailerList/>} />
+      <Route path='/admin/prod' element = {<ProductionList/>}/>
     </Routes>
     
    

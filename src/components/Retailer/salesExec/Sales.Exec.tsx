@@ -11,21 +11,21 @@ function SalesList() {
   useEffect(() => {
 
     getToken();
-
-    const fetchSalesList = async () => {
-      try {
-        const response = await api.get(`/retailer/sales_list?id=${adminId}`)
-        const userDetails = response.data
-        console.log(userDetails.salesExeclist);
-        setSalesExecList(userDetails.salesExeclist);
-      } catch (error) {
-        console.log('error at fetch list', error);
-
-      }
-    };
-
     fetchSalesList();
+    
   }, [adminId]);
+
+  const fetchSalesList = async () => {
+    try {
+      const response = await api.get(`/retailer/sales_list?id=${adminId}`)
+      const userDetails = response.data
+      console.log(userDetails.salesExeclist);
+      setSalesExecList(userDetails.salesExeclist);
+    } catch (error) {
+      console.log('error at fetch list', error);
+
+    }
+  };
 
   const getToken = async () => {
     const token = localStorage.getItem('access_token1');

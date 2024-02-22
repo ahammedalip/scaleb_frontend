@@ -3,8 +3,9 @@ import Menu from '../menu/Menu'
 
 function Admnhome() {
   return (
-    <div className='pt-20'>
+    <div className='pt-20 bg-red-50/40'>
       <Menu/>
+      
       
     </div>
   )
