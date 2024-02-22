@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 function Menu() {
   return (
     <div>
- <div className=' pl-6 '>
-            <div className='bg-white pt-5 rounded-lg shadow-lg min-h-96'>
+ <div className=' pl-6  '>
+            <div className='bg-white pt-5 rounded-lg shadow-lg min-h-[560px]'>
                 <ul className='list-none'>
                     <div className='group py-3 hover:bg-pink-700/85 transition duration-1000 ease-in-out'>
                         <li className=''>
