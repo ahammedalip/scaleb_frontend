@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../axios/api.ts'
 
@@ -12,6 +12,14 @@ function Adminlogin() {
   const [formData, setFormData] = useState<FormData>({});
   const [error, setError] = useState<string | null>(null)
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    const token= localStorage.getItem('superAdmin_token')
+    if(token){
+      navigate('/admin/home')
+    }
+    
+})
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -30,7 +38,7 @@ function Adminlogin() {
       const data = response.data;
       console.log(data);
       if(data.success=== true){
-        localStorage.setItem('access_token', data?.token)
+        localStorage.setItem('superAdmin_token', data?.token)
 
         navigate('/admin/home');
       }

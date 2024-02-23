@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import api from '../../../axios/api'
 import { Link, useNavigate } from 'react-router-dom'
@@ -11,7 +11,16 @@ interface LoginForm {
 function LoginProduction() {
   const [authError, setAuthError] = useState<string>('')
   const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>()
-const navigate = useNavigate()
+  const navigate = useNavigate()
+
+useEffect(()=>{
+  const token= localStorage.getItem('production_token')
+  if(token){
+    navigate('/production/home')
+  }
+})
+
+
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
     try {
       const response = await api.post('/production/auth/login',data,{
@@ -22,7 +31,7 @@ const navigate = useNavigate()
       const result = response.data
       console.log(result);
       if(result.success== true){
-        localStorage.setItem('access_token2', result.token)
+        localStorage.setItem('production_token', result.token)
         navigate('/production/home')
       }
     } catch (error:any) {

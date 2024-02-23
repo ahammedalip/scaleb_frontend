@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import api from '../../../axios/api';
 import { useNavigate, Link } from 'react-router-dom';
@@ -14,10 +14,19 @@ interface IFormInput {
 function Retailerlogin() {
     const [authError, setAuthError] = useState<string>('')
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
-
     const navigate = useNavigate();
-
     const dispatch = useDispatch()
+
+    useEffect(()=>{
+        const token1= localStorage.getItem('retailer_token')
+        const token2 = localStorage.getItem('retailSales_token')
+        if(token1){
+            navigate('/retail/home')
+        }
+        if(token2){
+            navigate('/sales/home')
+        }
+    })
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
             const response = await api.post('/retailer/auth/login', data, {
@@ -30,12 +39,12 @@ function Retailerlogin() {
             if (result.success == true && result.user.role == 'retailer') {
                 // console.log('hai from here',result.user);
                 dispatch(signInSuccess({ user: result.user }))
-                localStorage.setItem('access_token1', result?.token)
+                localStorage.setItem('retailer_token', result?.token)
                 navigate('/retail/home')
-            }else if(result.success == true ){
+            }else if(result.success == true && result.user.role == 'retailer_sales' ){
                 dispatch(signInSuccess({user: result.user}))
-                localStorage.setItem('access_token11', result?.token)
-                navigate('/retail/sales/home')
+                localStorage.setItem('retailerSales_token', result?.token)
+                navigate('/sales/home')
             }
 
         } catch (error: any) {
