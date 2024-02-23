@@ -16,7 +16,7 @@ function Retailerlist() {
   },[adminId])
 
   const getToken = async()=>{
-    const token = localStorage.getItem('access_token');
+    const token = localStorage.getItem('superAdmin_token');
     const decodedToken = token? jwtDecode(token): null
     console.log('here decoded token', decodedToken);
 

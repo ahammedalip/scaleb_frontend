@@ -28,7 +28,7 @@ function SalesList() {
   };
 
   const getToken = async () => {
-    const token = localStorage.getItem('access_token1');
+    const token = localStorage.getItem('retailer_token');
     const decodedToken = token ? jwtDecode(token) : null
     console.log('here',decodedToken);
     // const validUser = decodedToken?.validUser

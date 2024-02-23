@@ -26,7 +26,7 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
     },[])
 
     const getToken = async()=>{
-        const token= localStorage.getItem('access_token1');
+        const token= localStorage.getItem('retailer_token');
         const decodedToken =  token?jwtDecode(token) : null
         console.log('here decoded token is ',decodedToken);
         setId(decodedToken.id)
@@ -42,7 +42,7 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
             }
         })
         const result = response.data
-        console.log(result);
+        console.log('result from here adding sales exec',result);
         if(result.success=== true){
             onClose()
         }

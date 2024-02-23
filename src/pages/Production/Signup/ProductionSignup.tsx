@@ -1,5 +1,5 @@
 import React from 'react'
-import SignupProduction from '../../../components/Production/signup/SignupProduction'
+import SignupProduction from '../../../components/Production/Signup/SignupProduction'
 import Header from '../../../components/header/Header'
 
 function ProductionSignup() {
