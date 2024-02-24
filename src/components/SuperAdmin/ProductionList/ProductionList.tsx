@@ -2,21 +2,28 @@ import React, { useEffect, useState } from 'react'
 import api from '../../../axios/api'
 import { jwtDecode } from 'jwt-decode'
 
+interface ProductionItem {
+  _id: string;
+  productionName: string;
+  email: string;
+  isBlocked: boolean;
+  // Include other properties as needed
+}
 
 function Productionlist() {
 
   const [adminId, setAdminId] = useState<number>()
-  const [productionList, setProductionList] = useState([]);
+  const [productionList, setProductionList] = useState<ProductionItem[]>([]);
+  // const [isChecked, setIsChecked] = useState([]);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     getToken()
     getProductionList()
-  },[adminId])
+  }, [adminId])
 
-  const getToken = async()=>{
-    const token = localStorage.getItem('access_token');
-    const decodedToken = token? jwtDecode(token): null
+  const getToken = async () => {
+    const token = localStorage.getItem('superAdmin_token');
+    const decodedToken = token ? jwtDecode(token) : null
     console.log('here decoded token', decodedToken);
 
     setAdminId(decodedToken.id)
@@ -24,28 +31,66 @@ function Productionlist() {
 
     console.log(adminId);
   }
-
-  const getProductionList = async()=>{
+  // const role = 'production'
+  const getProductionList = async () => {
 
     try {
-      const response = await api.get(`/admin/production_list?id=${adminId}` )
+      const response = await api.get(`/admin/production_list?id=${adminId}`)
       const productionList = response.data
 
-      console.log('production list',productionList.userlist);
+      console.log('production list', productionList.userlist);
       setProductionList(productionList.userlist)
     } catch (error) {
-      console.log('error at production list fetch',error);
+      console.log('error at production list fetch', error);
     }
-    
+
   }
 
+  // const toggleBlockStatus = async (productionId) => {
+  //   try {
+  //     const response = await api.put(`/admin/toggle_block_status?id=${productionId}`);
+  //     if (response.status === 200) {
+  //       // Assuming the API returns the updated production list
+  //       const updatedProductionList = response.data.userlist;
+  //       setProductionList(updatedProductionList);
+  //     } else {
+  //       console.error('Failed to toggle block status');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error toggling block status:', error);
+  //   }
+  // };
+
+
+  const handleToggle = async (productionId:string, currentIsBlocked:boolean) => {
+    console.log('production',productionId);
+    setProductionList(productionList.map(item => {
+      if (item._id === productionId) {
+        return { ...item, isBlocked: !currentIsBlocked };
+      }
+      return item;
+    }));
+    try {
+      const response = await api.put(`/admin/toggle_block_update?id=${productionId}&role=production`)
+      if (response.status === 200) {
+        // Assuming the API returns the updated production list
+        const updatedProductionList = response.data.userlist;
+        setProductionList(updatedProductionList);
+      } else {
+        console.error('Failed to toggle block status');
+      }
+    } catch (error) {
+      console.error('Error toggling block status:', error);
+    }
+  }; 
+
   return (
-   
-<div className='bg-white ml-10 shadow-lg rounded-lg p-4'> {/* Add padding here */}
-<div className="overflow-auto">
-  <table className="min-w-full divide-y divide-gray-200">
-    {/* ... rest of your table code ... */}
-    <thead className="bg-gray-50">
+
+    <div className='bg-white ml-10 shadow-lg rounded-lg p-4'> {/* Add padding here */}
+      <div className="overflow-auto">
+        <table className="min-w-full divide-y divide-gray-200">
+          {/* ... rest of your table code ... */}
+          <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Username
@@ -60,13 +105,14 @@ function Productionlist() {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {productionList.map((retail:
-            { id: string,
-              productionName:string,
-              email: string,
-              isBlocked: boolean
-            },
-             index:number
-             ) => (
+              {
+                _id: string,
+                productionName: string,
+                email: string,
+                isBlocked: boolean
+              },
+              index: number
+            ) => (
               <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : ''}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {retail?.productionName ?? ""}
@@ -77,12 +123,31 @@ function Productionlist() {
                 <td className="px-6 py-4 whitespace-nowrap">
                   {retail.isBlocked ? 'Yes' : 'No'}
                 </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {/* <button
+                    onClick={() => toggleBlockStatus(retail._id)}
+                    className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+                  >
+                    {retail.isBlocked ? 'Unblock' : 'Block'}
+                  </button> */}
+                
+                <label className="inline-flex items-center cursor-pointer">
+                <input
+                      type="checkbox"
+                      className="sr-only peer"
+                      checked={retail.isBlocked}
+                      onChange={() => handleToggle(retail._id, retail.isBlocked)}
+                    />
+                  <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
+                  {/* <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Red</span> */}
+                </label>
+                </td>
               </tr>
             ))}
           </tbody>
-  </table>
-</div>
-</div>
+        </table>
+      </div>
+    </div>
   )
 }
 
