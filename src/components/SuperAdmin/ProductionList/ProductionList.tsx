@@ -7,14 +7,14 @@ interface ProductionItem {
   productionName: string;
   email: string;
   isBlocked: boolean;
-  // Include other properties as needed
+
 }
 
 function Productionlist() {
 
   const [adminId, setAdminId] = useState<number>()
   const [productionList, setProductionList] = useState<ProductionItem[]>([]);
-  // const [isChecked, setIsChecked] = useState([]);
+
 
   useEffect(() => {
     getToken()
@@ -27,11 +27,9 @@ function Productionlist() {
     console.log('here decoded token', decodedToken);
 
     setAdminId(decodedToken.id)
-
-
     console.log(adminId);
   }
-  // const role = 'production'
+
   const getProductionList = async () => {
 
     try {
@@ -46,24 +44,8 @@ function Productionlist() {
 
   }
 
-  // const toggleBlockStatus = async (productionId) => {
-  //   try {
-  //     const response = await api.put(`/admin/toggle_block_status?id=${productionId}`);
-  //     if (response.status === 200) {
-  //       // Assuming the API returns the updated production list
-  //       const updatedProductionList = response.data.userlist;
-  //       setProductionList(updatedProductionList);
-  //     } else {
-  //       console.error('Failed to toggle block status');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error toggling block status:', error);
-  //   }
-  // };
-
-
-  const handleToggle = async (productionId:string, currentIsBlocked:boolean) => {
-    console.log('production',productionId);
+  const handleToggle = async (productionId: string, currentIsBlocked: boolean) => {
+    console.log('production', productionId);
     setProductionList(productionList.map(item => {
       if (item._id === productionId) {
         return { ...item, isBlocked: !currentIsBlocked };
@@ -82,7 +64,7 @@ function Productionlist() {
     } catch (error) {
       console.error('Error toggling block status:', error);
     }
-  }; 
+  };
 
   return (
 
@@ -124,23 +106,16 @@ function Productionlist() {
                   {retail.isBlocked ? 'Yes' : 'No'}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {/* <button
-                    onClick={() => toggleBlockStatus(retail._id)}
-                    className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
-                  >
-                    {retail.isBlocked ? 'Unblock' : 'Block'}
-                  </button> */}
-                
-                <label className="inline-flex items-center cursor-pointer">
-                <input
+                  <label className="inline-flex items-center cursor-pointer">
+                    <input
                       type="checkbox"
                       className="sr-only peer"
                       checked={retail.isBlocked}
                       onChange={() => handleToggle(retail._id, retail.isBlocked)}
                     />
-                  <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
-                  {/* <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Red</span> */}
-                </label>
+                    <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
+                    {/* <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Red</span> */}
+                  </label>
                 </td>
               </tr>
             ))}

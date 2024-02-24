@@ -5,6 +5,7 @@ import RetailerSignUp from '../pages/Retailer/signup.tsx/RetailerSignUp'
 import RetailerPrivateRoute from '../components/Retailer/RetailerPrivateRoutes/RetailerPrivateRoute'
 import RetailerHome from '../pages/Retailer/home/RetailerHome'
 import SalesExec from '../pages/Retailer/salesExec/SalesExec'
+import ProductionList from '../pages/Retailer/ProductionList/ProductionList'
 
 function RetailRoutes() {
   return (
@@ -15,6 +16,7 @@ function RetailRoutes() {
         <Route element={<RetailerPrivateRoute/>}>
             <Route path='/home' element={<RetailerHome/>}/>
             <Route path='/sales_exec' element={<SalesExec/>}/>
+            <Route path='/prod_unit' element={<ProductionList/>}/>
 
         </Route>
     </Routes>
