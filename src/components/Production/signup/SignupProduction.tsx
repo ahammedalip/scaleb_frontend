@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { useNavigate, Link } from 'react-router-dom'
 import './SignupProduction.css'
 import api from '../../../axios/api'
+import toast from 'react-hot-toast'
 
 interface SignupForm {
     productionName: string,
@@ -57,6 +58,7 @@ function SignupProduction() {
             const result = response.data;
             console.log(result);
             if (result.success == true) {
+                toast.success('Signup Success! Please Login')
                 navigate('/production/login')
             }
 

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form'
 import api from '../../axios/api';
 import {jwtDecode} from 'jwt-decode'
+import toast from 'react-hot-toast';
 
 interface UserModalProps {
     isOpen: boolean;
@@ -44,6 +45,7 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
         const result = response.data
         console.log('result from here adding sales exec',result);
         if(result.success=== true){
+            toast.success('Sales executive added successfully!')
             onClose()
         }
         

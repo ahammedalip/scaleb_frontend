@@ -4,6 +4,7 @@ import api from '../../../axios/api';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signInSuccess, signInStart } from '../../../redux/Retailer/slice';
+import toast from 'react-hot-toast';
 
 interface IFormInput {
     retailerName: string,
@@ -40,10 +41,12 @@ function Retailerlogin() {
                 // console.log('hai from here',result.user);
                 dispatch(signInSuccess({ user: result.user }))
                 localStorage.setItem('retailer_token', result?.token)
+                toast.success('Login Success!')
                 navigate('/retail/home')
             }else if(result.success == true && result.user.role == 'retailer_sales' ){
                 dispatch(signInSuccess({user: result.user}))
                 localStorage.setItem('retailerSales_token', result?.token)
+                toast.success('Login Success!')
                 navigate('/sales/home')
             }
 

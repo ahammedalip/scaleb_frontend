@@ -2,6 +2,7 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../../../axios/api.ts'
 import './sample.css'
+import toast from 'react-hot-toast';
 
 interface FormData {
   retailerName?: string;
@@ -91,6 +92,7 @@ function Retailersignup() {
       const data = response.data;
       console.log(data);
       if (data.success === true) {
+        toast.success('Signup Success! Please Login')
         navigate('/retail/login')
       }
     } catch (error: any) {

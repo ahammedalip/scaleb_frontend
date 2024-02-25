@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import api from '../../../axios/api'
 import { Link, useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 interface LoginForm {
   productionName: string,
@@ -32,6 +33,7 @@ useEffect(()=>{
       console.log(result);
       if(result.success== true){
         localStorage.setItem('production_token', result.token)
+        toast.success('Login succesfull!')
         navigate('/production/home')
       }
     } catch (error:any) {
