@@ -9,11 +9,11 @@ function AdditionalMenu() {
     const handleLogout = () => {
 
         try {
-            localStorage.removeItem('production_token')
-            if (localStorage.getItem('production_token') === null) {
+            localStorage.removeItem('retailer_token')
+            if (localStorage.getItem('retailer_token') === null) {
                 console.log('token is deleted and logged out');
                 toast.success('Logged out successfully!')
-                navigate('/production/login')
+                navigate('/retail/login')
                 return
             }
             toast.error('Something went wrong!')
@@ -31,7 +31,7 @@ function AdditionalMenu() {
                 <ul className='list-none'>
                     <div className='group py-3 hover:bg-pink-700/85 transition duration-1000 ease-in-out'>
                         <li className='Subscriptions'>
-                            <Link to='/production/subscription' className='flex items-center'>
+                            <Link to='/retailer/subscription' className='flex items-center'>
                                 <span className='inline-flex items-center pl-5'>
                                         <TbUserDollar size={24} className='text-pink-700/85 group-hover:text-white font-light'/>
                                     <h3 className='ml-2 group-hover:text-white'>Subscriptions</h3>
