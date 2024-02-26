@@ -4,6 +4,7 @@ import ProductionSignup from '../pages/Production/Signup/ProductionSignup'
 import ProductionLogin from '../pages/Production/Login/ProductionLogin'
 import ProductionPrivateRoutes from '../components/Production/ProductionPrivateRoutes/ProductionPrivateRoutes'
 import ProductionHome from '../pages/Production/home/ProductionHome'
+import ProfilePage from '../pages/Production/Profile/ProfilePage'
 
 function ProductionRoutes() {
   return (
@@ -14,6 +15,7 @@ function ProductionRoutes() {
         <Route path= '/login' element = {<ProductionLogin/>}/>
         <Route element = {<ProductionPrivateRoutes/>}>
             <Route path='/home' element = {<ProductionHome/>}/>
+            <Route path='/profile' element= {<ProfilePage/>}/>
             
         </Route>
     </Routes>
