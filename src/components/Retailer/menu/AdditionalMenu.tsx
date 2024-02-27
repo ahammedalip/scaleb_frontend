@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { TbUserDollar } from "react-icons/tb";
+import { FaHandshake } from "react-icons/fa";
 
 function AdditionalMenu() {
     const navigate = useNavigate()
@@ -35,6 +36,16 @@ function AdditionalMenu() {
                                 <span className='inline-flex items-center pl-5'>
                                         <TbUserDollar size={24} className='text-pink-700/85 group-hover:text-white font-light'/>
                                     <h3 className='ml-2 group-hover:text-white'>Subscriptions</h3>
+                                </span>
+                            </Link>
+                        </li>
+                    </div>
+                    <div className='group py-3 hover:bg-pink-700/85 transition duration-1000 ease-in-out'>
+                        <li className='Subscriptions'>
+                            <Link to='/retailer/requests' className='flex items-center'>
+                                <span className='inline-flex items-center pl-5'>
+                                        <FaHandshake size={24} className='text-pink-700/85 group-hover:text-white font-light'/>
+                                    <h3 className='ml-2 group-hover:text-white'>New requests</h3>
                                 </span>
                             </Link>
                         </li>
