@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './AvailableProduction.css';
 import api from '../../../axios/api';
 import { useNavigate } from 'react-router-dom';
 

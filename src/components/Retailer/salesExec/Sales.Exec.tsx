@@ -79,6 +79,7 @@ function SalesList() {
 
   const handleOpenModal = () => {
     setShowModal(true);
+    
   };
 
   const handleCloseModal = (): void => {
@@ -90,8 +91,8 @@ function SalesList() {
       <div className='flex justify-end items-center pt-5'>
         <p className='pr-6'>Add a new sales executive</p>
         <button
-          className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded 
-          shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+          className="border-2 border-pink-500  active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded 
+          shadow hover:bg-pink-500 hover:text-white hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
           type="button"
           onClick={handleOpenModal}
         >

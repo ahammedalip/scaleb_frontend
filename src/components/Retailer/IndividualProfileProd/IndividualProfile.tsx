@@ -13,6 +13,7 @@ const IndProfileProd: React.FC = () => {
   const [description, setDescription] = useState('')
   const [items, setItems] = useState([])
   const [id, setId] = useState<number>()
+  const [connected, setConnected] = useState<boolean>(false)
 
   const location = useLocation();
 
@@ -26,7 +27,12 @@ const IndProfileProd: React.FC = () => {
   const fetchUserData = async () => {
     const params = new URLSearchParams(location.search)
     const id = params.get('id')
-    console.log(id);
+    const view = params.get('view')
+    // console.log(id, view);
+    if (view) {
+      console.log('show only if view appears');
+      setConnected(true)
+    }
     try {
       const response = await api.get(`/retailer/prod/profile?id=${id}`)
 
@@ -44,14 +50,14 @@ const IndProfileProd: React.FC = () => {
   }
 
   const handleRequest = async (prodId: number) => {
-    console.log('from here',prodId);
+    // console.log('from here', prodId);
     try {
-      const response = await api.post('/retailer/conn-req', {prodId})
+      const response = await api.post('/retailer/conn-req', { prodId })
       console.log(response.data)
       if (response.data.success == true) {
-        if(response.data.message=='already requested'){
+        if (response.data.message == 'already requested') {
           toast.success('Already requested')
-        }else{
+        } else {
           toast.success('Requested successfully')
         }
       }
@@ -69,9 +75,12 @@ const IndProfileProd: React.FC = () => {
         <img src="../../../../public/images/Product_pro.png" alt="" className='w-36 rounded-xl shadow-slate-800 shadow-md' />
       </div>
       <h1 className='text-center font-bold  p-5 productionName' style={{ fontSize: '32px' }}>{profileName} </h1>
-      <div>
-        <button className='bg-blue-500 p-2 rounded-md shadow-md text-white hover:bg-blue-800' onClick={() =>handleRequest(id)}>Send connection request</button>
-      </div>
+      {!connected ? (
+        <div>
+          <button className='bg-blue-500 p-2 rounded-md shadow-md text-white hover:bg-blue-800' onClick={() => handleRequest(id)}>Send connection request</button>
+        </div>
+      ) : null}
+
       <div className='p-8'>
         <div className='border-2 rounded-lg bg-red-50/40 border-pink-700/10 p-5 box-border text-center description min-w-80'>
           <div>
