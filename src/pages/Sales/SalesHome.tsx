@@ -8,12 +8,12 @@ function SalesHome() {
     <div className=''>
       <Header />
       <div className='bg-red-50/40 min-h-screen pt-20 flex space-x-4'>
-        <div>
-
+        <div className='w-1/5'>
           <SalesMenu />
         </div>
-
-        <Saleshome />
+        <div className='w-9/12'>
+          <Saleshome />
+        </div>
       </div>
 
     </div>
