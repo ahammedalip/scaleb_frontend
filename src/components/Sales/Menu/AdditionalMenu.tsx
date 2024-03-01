@@ -10,29 +10,29 @@ function AdditionalMenu() {
     const handleLogout = () => {
 
         try {
-            localStorage.removeItem('production_token')
-            if (localStorage.getItem('production_token') === null) {
+            localStorage.removeItem('retailerSales_token')
+            if (localStorage.getItem('retailerSales_token') === null) {
                 console.log('token is deleted and logged out');
                 toast.success('Logged out successfully!')
-                navigate('/production/login')
+                navigate('/retail/login')
                 return
             }
             toast.error('Something went wrong!')
 
 
         } catch (error) {
-
+            console.log('error while removing token/logout');
         }
 
     }
 
     return (
         <div className='  pl-4'>
-            <div className='bg-white py-4 rounded-lg shadow-lg '>
+            <div className='bg-white py-5 rounded-lg shadow-lg '>
                 <ul className='list-none'>
                     <div className='group  hover:bg-pink-700/85 transition duration-1000 ease-in-out'>
                         <li className='Subscriptions'>
-                            <Link to='/production/subscription' className='flex items-center py-2'>
+                            <Link to='/retailer/subscription' className='flex items-center py-2'>
                                 <span className='inline-flex items-center pl-5'>
                                         <TbUserDollar size={24} className='text-pink-700/85 group-hover:text-white font-light'/>
                                     <h3 className='ml-2 group-hover:text-white'>Subscriptions</h3>
@@ -40,19 +40,18 @@ function AdditionalMenu() {
                             </Link>
                         </li>
                     </div>
-
                     <div className='group  hover:bg-pink-700/85 transition duration-1000 ease-in-out'>
                         <li className='Subscriptions'>
-                            <Link to='/production/requests' className='flex items-center py-2'>
+                            <Link to='/retailer/requests' className='flex items-center py-2'>
                                 <span className='inline-flex items-center pl-5'>
                                         <FaHandshake size={24} className='text-pink-700/85 group-hover:text-white font-light'/>
-                                    <h3 className='ml-2 group-hover:text-white'>New Requests</h3>
+                                    <h3 className='ml-2 group-hover:text-white'>New requests</h3>
                                 </span>
                             </Link>
                         </li>
                     </div>
 
-                    <div className=' hover:bg-pink-700/85 transition duration-1000 ease-in-out group' onClick={handleLogout}>
+                    <div className='  hover:bg-pink-700/85 transition duration-1000 ease-in-out group' onClick={handleLogout}>
                         <li className='logout'>
                             <span className="inline-flex items-center pl-5 py-2">
 

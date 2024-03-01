@@ -7,11 +7,11 @@ type Item = {
   name: string;
 };
 
-const  ProfileRet: React.FC= ()=> {
+const ProfileRet: React.FC = () => {
 
   const [profileName, setProfileName] = useState('')
   const [description, setDescription] = useState('')
-  
+
 
   useEffect(() => {
 
@@ -33,7 +33,7 @@ const  ProfileRet: React.FC= ()=> {
     }
   }
 
-  
+
 
   return (
     <div className='bg-slate-100 rounded-lg shadow-lg flex flex-col items-center justify-center mainClass overflow-y-auto pb-3'>
@@ -51,7 +51,7 @@ const  ProfileRet: React.FC= ()=> {
           </h2>
         </div>
       </div>
-      
+
     </div>
   )
 }
