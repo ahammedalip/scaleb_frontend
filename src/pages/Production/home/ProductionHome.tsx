@@ -8,9 +8,9 @@ function ProductionHome() {
     <div className=''>
       <Header />
       <div className='flex bg-red-50/40 min-h-screen pt-20 space-x-5'>
-        <div className='w-1/4'>
+        <div className='w-1/5'>
 
-        <ProductionMenu />
+          <ProductionMenu />
         </div>
         <Productionhome />
       </div>
