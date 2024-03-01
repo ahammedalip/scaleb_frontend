@@ -5,7 +5,7 @@ import Header from '../../components/header/Header'
 
 function SalesHome() {
   return (
-    <div className='bg-red-50/40'>
+    <div className=''>
       <Header />
       <div className='bg-red-50/40 min-h-screen pt-20 flex space-x-4'>
         <div>

@@ -1,6 +1,6 @@
 import React from 'react'
-import Retailerlogin from '../../components/Retailer/login/retailer.login'
 import Header from '../../components/header/Header'
+import Retailerlogin from '../../components/Retailer/login/Retailer.login'
 
 function RetailerLogin() {
   return (
