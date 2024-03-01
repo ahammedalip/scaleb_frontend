@@ -20,7 +20,7 @@ function Retailerlogin() {
 
     useEffect(()=>{
         const token1= localStorage.getItem('retailer_token')
-        const token2 = localStorage.getItem('retailSales_token')
+        const token2 = localStorage.getItem('retailerSales_token')
         if(token1){
             navigate('/retail/home')
         }
