@@ -30,26 +30,8 @@ function AdditionalMenu() {
         <div className='  pl-4'>
             <div className='bg-white py-5 rounded-lg shadow-lg '>
                 <ul className='list-none'>
-                    <div className='group  hover:bg-pink-700/85 transition duration-1000 ease-in-out'>
-                        <li className='Subscriptions'>
-                            <Link to='/retailer/subscription' className='flex items-center py-2'>
-                                <span className='inline-flex items-center pl-5'>
-                                        <TbUserDollar size={24} className='text-pink-700/85 group-hover:text-white font-light'/>
-                                    <h3 className='ml-2 group-hover:text-white'>Subscriptions</h3>
-                                </span>
-                            </Link>
-                        </li>
-                    </div>
-                    <div className='group  hover:bg-pink-700/85 transition duration-1000 ease-in-out'>
-                        <li className='Subscriptions'>
-                            <Link to='/retailer/requests' className='flex items-center py-2'>
-                                <span className='inline-flex items-center pl-5'>
-                                        <FaHandshake size={24} className='text-pink-700/85 group-hover:text-white font-light'/>
-                                    <h3 className='ml-2 group-hover:text-white'>New requests</h3>
-                                </span>
-                            </Link>
-                        </li>
-                    </div>
+                   
+                    
 
                     <div className='  hover:bg-pink-700/85 transition duration-1000 ease-in-out group' onClick={handleLogout}>
                         <li className='logout'>
