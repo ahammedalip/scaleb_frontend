@@ -4,6 +4,8 @@ import SalesPrivateRoute from '../components/Sales/SalesPrivateRoutes/SalesPriva
 import SalesHome from '../pages/Sales/SalesHome'
 import SalesProd from '../pages/Sales/SalesProd'
 import IndividualProdProfile from '../pages/Sales/IndividualProdProfile'
+import Profile from '../pages/Sales/Profile'
+import Orders from '../pages/Sales/Orders'
 
 function SalesRoutes() {
     return (
@@ -13,6 +15,8 @@ function SalesRoutes() {
                     <Route path= '/home' element= {<SalesHome/>}/>
                     <Route path='/prod_unit' element = {<SalesProd/>}/>
                     <Route path='/prod/ind-profile' element = {<IndividualProdProfile/>}/>
+                    <Route path='/profile' element = {<Profile/>}/>
+                    <Route path='/orders' element = {<Orders/>}/>
                 </Route>
             </Routes>
 
