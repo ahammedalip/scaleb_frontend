@@ -3,8 +3,8 @@ import './AvailableProduction.css';
 import api from '../../../axios/api';
 import { useNavigate } from 'react-router-dom';
 
-function ProductionAvailable() {
-  const [availableProduction, setAvailableProduction] = useState([]);
+function ProductionConnected() {
+  const [ProductionList, setProductionList] = useState([]);
   
   const navigate = useNavigate()
 
@@ -14,27 +14,27 @@ function ProductionAvailable() {
 
   const fetchAvailableUsers = async () => {
     try {
-      const response = await api.get('/retailer/available');
+      const response = await api.get('/retailer/connected');
       const result = response.data;
       console.log('result her', result.availableProduction);
-      setAvailableProduction(result.availableProduction)
+      setProductionList(result.availableProduction)
       // You might want to set the result to your state here
     } catch (error) {
       console.log('error fetching available productions', error)
     }
   }
   const handleViewClick =(id:number)=>{
-    navigate(`/retail/prod/ind-profile?id=${id}`)
+    navigate(`/retail/prod/ind-profile?id=${id}&view=conn`)
   }
 
   return (
     <div className='bg-white rounded-lg shadow-md p-5'>
       <div className='text-center'>
-      <h1 className='heading1 font-bold ' style={{fontSize:'20px',textShadow:'1px 3px 4px grey', color:'black'}}>Production Companies Available for Connection</h1>
+        <h1 className='heading1 font-bold ' style={{fontSize:'20px',textShadow:'1px 3px 4px grey'}}>Connected Production Units</h1>
       </div>
 
       <div className='profile text-center p-5 flex'>
-        {availableProduction.map((unit:{
+        {ProductionList.map((unit:{
           _id:number,
           name: string,
           productionName:string
@@ -54,7 +54,7 @@ function ProductionAvailable() {
   );
 }
 
-export default ProductionAvailable;
+export default ProductionConnected;
 
 
 
