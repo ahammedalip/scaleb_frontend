@@ -36,6 +36,7 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
     }
 
     const onSubmit = async(data: any) => {
+        try{
         console.log(data);
         const response = await api.post('/retailer/add_sales', {data,id},{
             headers:{
@@ -48,6 +49,9 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
             toast.success('Sales executive added successfully!')
             onClose()
         }
+    }catch(error){
+        console.log('error at post', error);
+    }
         
     };
 

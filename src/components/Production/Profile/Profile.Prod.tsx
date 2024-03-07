@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import api from '../../../axios/api'
+import toast from 'react-hot-toast';
 // import './ProfileProd.css'
 
 type Item = {
@@ -59,6 +60,7 @@ const  ProfileProd: React.FC= ()=> {
       fetchUserData()
       setShowInput(false); 
       setNewItemName(''); 
+      toast.success('Item Saved')
     } catch (error) {
       console.error('Error saving item:', error);
     }
