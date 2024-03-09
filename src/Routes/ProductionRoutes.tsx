@@ -6,6 +6,7 @@ import ProductionPrivateRoutes from '../components/Production/ProductionPrivateR
 import ProductionHome from '../pages/Production/home/ProductionHome'
 import ProfilePage from '../pages/Production/Profile/ProfilePage'
 import ShowReq from '../pages/Production/ViewRequest/Requests'
+import Orders from '../pages/Production/Orders/Orders'
 
 function ProductionRoutes() {
   return (
@@ -18,6 +19,7 @@ function ProductionRoutes() {
             <Route path='/home' element = {<ProductionHome/>}/>
             <Route path='/profile' element= {<ProfilePage/>}/>
             <Route path='/requests' element={<ShowReq/>}/>
+            <Route path= '/order' element = {<Orders/>}/>
             
             
         </Route>
