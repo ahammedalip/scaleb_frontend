@@ -14,7 +14,7 @@ function Orders() {
                 </div>
                     
                 <div className='space-y-4 w-9/12'>
-                    <CreateOrder/>
+                
                     <ExistingOrders/>
                 </div>
 
