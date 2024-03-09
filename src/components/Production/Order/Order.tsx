@@ -60,6 +60,7 @@ function Order() {
     }
 
     const handleReject = async(orderId:string) =>{
+        
         console.log(orderId)
         const orderDetails = {
             orderId
@@ -68,13 +69,13 @@ function Order() {
             const request = await api.patch('/production/order-rej', orderDetails)
             const response = request.data
             if (response.success) {
-                toast.success('Congratulations! Order Accepted')
+                toast.success('Congratulations! Order rejected')
                 fetchOrder()
             } else {
                 toast.error('Something went wrong, Please try again')
             }
         } catch (error) {
-            console.log('error at accepting order', error);
+            console.log('error at rejecting order', error);
             toast.error('Something went wrong!')
         }
     }
