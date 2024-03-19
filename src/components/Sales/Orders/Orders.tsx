@@ -42,7 +42,7 @@ interface Order {
   quantity: number;
   status: string;
   blocked: boolean;
-  accepted: boolean;
+  accepted: string;
   description: string;
   item: string;
   updateRequest: string;
@@ -66,7 +66,8 @@ function ExistingOrders() {
   const [description, setDescription] = useState<string>('')
   const [images, setImages] = useState<File[]>([]);
   const [orderId, setOrderId] = useState<string>('')
- 
+  const [deletemodal, setDeleteModal] = React.useState(false)
+
 
 
   const [errorMessages, setErrorMessages] = useState({
@@ -87,11 +88,19 @@ function ExistingOrders() {
     console.log(orderId)
   }
 
+
   const handleClose = () => {
     fetchOrders()
     setOpen(false);
   }
 
+  const handleDeleteModalOpen = () => {
+    setDeleteModal(true)
+  }
+
+  const handleDeleteModalClose = () => {
+    setDeleteModal(false)
+  }
 
   useEffect(() => {
     fetchOrders();
@@ -147,6 +156,8 @@ function ExistingOrders() {
     }
   }
 
+ 
+
   const fetchOrders = async () => {
     const response = await api.get('/sales/orders');
     const result = response.data;
@@ -155,12 +166,40 @@ function ExistingOrders() {
     }
   };
 
+  const handleDelete = async (orderId: string) => {
+    const deleteOrder = {
+      orderId
+    };
+    const request = await api.delete('/sales/deleteOrder', { data: deleteOrder });
+    const response = request.data;
+    if(response.success){
+      toast.success('Order successfully deleted!')
+      handleDeleteModalClose()
+      fetchOrders()
+    }
+  }
+
+  const handleEditRequest = async(orderId:string)=>{
+    const id = {
+      orderId
+    }
+    try {
+      const request =await api.patch('/sales/edit-req',id)
+    const response = request.data;
+    if(response.success){
+      toast.success("Requested for editing")
+    }
+    } catch (error) {
+      console.log('error at sending edit request',error)
+      toast.error('Something went wrong, please try again')
+    }
+  }
 
 
   return (
     <div className='bg-white rounded-md shadow-md'>
       <div className='text-center'>
-      <CreateOrder onOrderCreated={fetchOrders} />
+        <CreateOrder onOrderCreated={fetchOrders} />
       </div>
 
       {orders.length > 0 ? (
@@ -180,7 +219,31 @@ function ExistingOrders() {
                 </div>
 
                 <div>
-                  <Button onClick={() => handleOpen(order)}>Edit Order</Button>
+                  {order.accepted == 'Rejected' ? (
+                    <div>
+                      {/* <Button onClick={handleDeleteModalOpen}>Delete Order</Button> */}
+                      <button onClick={handleDeleteModalOpen} className='border-2 hover:bg-red-600 hover:text-white rounded-md shadow-md p-2 bg-white border-red-700 transition duration-300 ease-in-out'>Delete Order</button>
+                      <Modal
+                        open={deletemodal}
+                        onClose={handleDeleteModalClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                      >
+                        <Box sx={modalStyle}>
+
+                          <Typography id="modal-modal-description" className='text-center space-y-3' sx={{ mt: 2 }}>
+                            <h1 className='text-red-700 text-xl'>Are you sure you want to delete this order?</h1>
+                            <button onClick={() => handleDelete(order._id)} className='p-2 bg-red-600 text-white hover:bg-red-700 rounded-md shadow-md '>Delete Order</button>
+
+                          </Typography>
+                        </Box>
+                      </Modal>
+                    </div>
+                  ) : order.status === 'Pending' && order.accepted === 'Yes' && order.updateRequest !== 'Requested' ? (
+                    <button className='border-2  bg-white hover:bg-pink-700/95 hover:text-white border-pink-700 p-2 rounded-md ease-linear transition-all duration-150' onClick={()=>handleEditRequest(order._id)}>Request for Editing</button>
+                   ) : order.updateRequest === 'Accepted' ? (
+                    <button className='border-2  bg-white hover:bg-pink-700/95 hover:text-white border-pink-700 p-2 rounded-md ease-linear transition-all duration-150' onClick={() => handleOpen(order)}>Edit Order</button>
+                   ):null }
                   <Modal
                     open={open}
                     onClose={handleClose}
@@ -273,7 +336,7 @@ function ExistingOrders() {
                 </div>
               </div>
               <div>
-                {order.updateRequest ? (
+                {order.updateRequest === 'Requested' ? (
                   <div className='p-2'>
                     <h2 className='text-pink-600'>Requested for updating order</h2>
                   </div>
