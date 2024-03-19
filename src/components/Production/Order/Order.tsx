@@ -25,10 +25,11 @@ interface Order {
 function Order() {
     const [availableOrders, setAvailableOrders] = useState([])
     const [filter, setFilter] = useState('All');
-    
+
     useEffect(() => {
         fetchOrder()
     }, [])
+    
     const fetchOrder = async () => {
         const request = await api.get('/production/orders')
         const response = request.data
@@ -59,8 +60,8 @@ function Order() {
         }
     }
 
-    const handleReject = async(orderId:string) =>{
-        
+    const handleReject = async (orderId: string) => {
+
         console.log(orderId)
         const orderDetails = {
             orderId
@@ -80,6 +81,19 @@ function Order() {
         }
     }
 
+    const handlePermitEdit = async(orderId:string, role:string) =>{
+        const  id ={
+            orderId,
+            role
+        }
+        const request = await api.patch('/production/edit-acc',id)
+        const response = request.data
+
+        if(response.success){
+            toast.success('')
+        }
+    }
+
 
     return (
 
@@ -93,8 +107,10 @@ function Order() {
                 <div className='pl-3 space-x-2 p-2' >
                     <button onClick={() => setFilter('Pending')} className='bg-pink-400 p-2 rounded-sm hover:bg-pink-600 text-white'>Pending</button>
                     <button onClick={() => setFilter('Completed')} className='bg-pink-500 p-2 rounded-sm hover:bg-pink-700 text-white'>Completed</button>
-                    <button onClick={() => setFilter('Requests')} className='bg-pink-600 p-2 rounded-sm hover:bg-pink-800 text-white'>Requests</button>
-                    <button onClick={() => setFilter('All')} className='bg-pink-700 p-2 rounded-sm hover:bg-pink-900 text-white'>All</button>
+                    <button onClick={() => setFilter('New_Requests')} className='bg-pink-600 p-2 rounded-sm hover:bg-pink-800 text-white'>New Requests</button>
+                    <button onClick={() => setFilter('Edit_request')} className='bg-pink-700 p-2 rounded-sm hover:bg-pink-900 text-white'>Edit requests</button>
+                    <button onClick={() => setFilter('All')} className='bg-pink-700 p-2 rounded-sm hover:bg-pink-900 text-white px-4'>All</button>
+
                 </div>
                 {availableOrders.length > 0 ? (
                     <div className='space-y-5 '>
@@ -104,31 +120,44 @@ function Order() {
                                     return order.status === 'Pending' && order.accepted === 'Yes';
                                 case 'Completed':
                                     return order.status === 'Completed';
-                                case 'Requests':
+                                case 'New_Requests':
                                     return order.accepted === 'No';
+                                case 'Edit_request':
+                                    return order.updateRequest == 'Requested'
                                 default:
                                     return true;
                             }
-                        }).map((order: Order, index) => { // Corrected the order of arguments
+                        }).map((order: Order, index) => { 
                             return (
-                                <div key={index} className='space-y-3 bg-gray-200 rounded-md p-4'>
+                                <div key={index} className='space-y-2 bg-gray-200 rounded-md p-2'>
                                     {order.accepted == 'No' ? (
                                         <div className='p-2 rounded-md hover:border-black space-x-5 text-center border border-gray-300  bg-white'>
                                             <h1>Do you want accept the order?</h1>
                                             <button className='bg-green-700 text-white rounded-full px-3 py-2 hover:bg-black hover:text-white hover:shadow-md' onClick={() => handleAccept(order._id)}>Accept</button>
-                                            <button className='bg-red-600 text-white rounded-full px-3 py-2 hover:bg-black hover:text-white hover:shadow-md' onClick={()=>handleReject(order._id)}>Reject</button>
+                                            <button className='bg-red-600 text-white rounded-full px-3 py-2 hover:bg-black hover:text-white hover:shadow-md' onClick={() => handleReject(order._id)}>Reject</button>
                                         </div>
                                     ) : null}
-                                    <div className='p-2 flex justify-evenly text-xl'>
+                                    <div className=' flex justify-evenly text-xl'>
                                         <h1>Sales Executive: {order.salesExecId.username}</h1>
                                         <h1>Retailer : {order.retailerId.retailerName}</h1>
                                     </div>
                                     <div className='flex justify-evenly'>
                                         {order.accepted == 'Yes' ? (
-                                    
 
-                                            <div>
-                                                <h1>hello</h1>
+
+                                            <div className=' flex space-x-10 items-center'>
+                                                <h1>{order.status}</h1>
+                                                {order.updateRequest == 'Requested' ? (
+                                                    <div className='flex space-x-3 items-center bg-white p-2 rounded-md hover:border-2 border-gray-500'>
+
+                                                        <h1>Requested for Updating order:</h1>
+                                                        <button  className='bg-green-700 text-white rounded-full px-3 py-2 hover:bg-black hover:text-white hover:shadow-md' onClick={()=> handlePermitEdit(order._id, role='task')}>Grand</button>
+                                                        <button className='bg-red-600 text-white rounded-full px-3 py-2 hover:bg-black hover:text-white hover:shadow-md'>Deny</button>
+                                                    </div>
+                                                ) : null}
+
+
+
                                             </div>
                                         ) : null}
 
