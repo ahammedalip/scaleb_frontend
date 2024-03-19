@@ -6,6 +6,7 @@ import SalesProd from '../pages/Sales/SalesProd'
 import IndividualProdProfile from '../pages/Sales/IndividualProdProfile'
 import Profile from '../pages/Sales/Profile'
 import Orders from '../pages/Sales/Orders'
+import Messages from '../pages/Sales/Messages'
 
 function SalesRoutes() {
     return (
@@ -17,6 +18,7 @@ function SalesRoutes() {
                     <Route path='/prod/ind-profile' element = {<IndividualProdProfile/>}/>
                     <Route path='/profile' element = {<Profile/>}/>
                     <Route path='/orders' element = {<Orders/>}/>
+                    <Route path='/messages' element = {<Messages/>} />
                 </Route>
             </Routes>
 

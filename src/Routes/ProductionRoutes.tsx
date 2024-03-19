@@ -7,6 +7,7 @@ import ProductionHome from '../pages/Production/home/ProductionHome'
 import ProfilePage from '../pages/Production/Profile/ProfilePage'
 import ShowReq from '../pages/Production/ViewRequest/Requests'
 import Orders from '../pages/Production/Orders/Orders'
+import Messages from '../pages/Production/Messages/Messages'
 
 function ProductionRoutes() {
   return (
@@ -20,7 +21,7 @@ function ProductionRoutes() {
             <Route path='/profile' element= {<ProfilePage/>}/>
             <Route path='/requests' element={<ShowReq/>}/>
             <Route path= '/order' element = {<Orders/>}/>
-            
+            <Route path='/messages' element ={<Messages/>}/>            
             
         </Route>
     </Routes>
