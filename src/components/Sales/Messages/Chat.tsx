@@ -4,12 +4,14 @@ import api from '../../../axios/api';
 import ClipLoader from "react-spinners/ClipLoader";
 import toast from 'react-hot-toast';
 import moment from 'moment';
+import { socket } from '../../../socket/socket';
 
 
 interface ChatProps {
     selectedUser: {
         userId: string;
         userName: string;
+
     };
 }
 
@@ -25,8 +27,9 @@ function Chat({ selectedUser }) {
     const [conversations, setConversations] = useState()
     const [loading, setLoading] = useState<boolean>(false)
     const [text, setText] = useState<string>('')
-    const [messages, setMessages] = useState([])
-    const [currentChat, setCurrentChat] = useState([])
+    const [arrivalMessage, setArrivalMessage] = useState<Message>()
+    const [messages, setMessages] = useState<Message>([])
+    const socketRef = useRef(socket);
     const messagesEndRef = useRef<HTMLDivElement>(null); // Create a ref for the messages end
 
 
@@ -36,13 +39,38 @@ function Chat({ selectedUser }) {
 
     }, [selectedUser]);
 
+    useEffect(() => {
+        socketRef.current.on('getMessage', data => {
+            //   console.log('getting the messages')
+
+            //         // console.log('selected user', selectedUser)
+            //         console.log('sender id, ', data.receiverId, 'selectedUdser.id', userId)
+            //         if(data.receiverId === userId){  
+
+            setArrivalMessage({
+                sender: data.senderId,
+                text: data.text,
+                createdAt: data.createdAt
+            })
+            // }
+
+        })
+        console.log('getting the messages')
+    }, [])
+
+    useEffect(() => {
+
+        if (arrivalMessage) {
+            setMessages([...messages, arrivalMessage])
+        }
+    }, [arrivalMessage])
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" }); // Scroll to bottom when new messages are added
     }, [messages]);
 
     const fetchRecentConversations = async () => {
-        console.log('selecteduser', selectedUser)
+        // console.log('fetch recent convo')
         try {
             setLoading(true)
             const token = localStorage.getItem('retailerSales_token');
@@ -54,7 +82,7 @@ function Chat({ selectedUser }) {
                 if (response.data.success == true) {
 
                     setConversations(response.data.conversation)
-                    console.log('conversations data', response.data.conversation)
+                    // console.log('conversations data', response.data.conversation)
                     setLoading(false)
                 }
             }
@@ -84,14 +112,16 @@ function Chat({ selectedUser }) {
 
     const getMessage = async () => {
         try {
-            console.log('get message recipient', selectedUser)
-            console.log('conversation data for getting id to fetch messages', conversations)
+            // console.log('get message recipient', selectedUser)
+            // console.log('conversation data for getting id to fetch messages', conversations)
+            setLoading(true)
             const response = await api.get(`/messages/?sender=${userId}&recipient=${selectedUser._id}`)
 
             if (response.data.success) {
-                console.log('data of messages', response.data)
+                // console.log('data of messages', response.data)
                 setMessages(response.data.messages)
                 setConversationId(response.data.conversationId)
+                setLoading(false)
             }
         } catch (error) {
             console.log('error fetching mesages', error)
@@ -105,6 +135,13 @@ function Chat({ selectedUser }) {
             text: trimmedText,
             conversationId: conversationId
         }
+
+        socketRef.current.emit('sendMessage', {
+            senderId: userId,
+            receiverId: selectedUser._id,
+            text: trimmedText
+        })
+
         try {
             const response = await api.post('/messages/', message)
             if (response.data.success) {
@@ -124,8 +161,8 @@ function Chat({ selectedUser }) {
 
             {selectedUser.productionName == undefined ? (
                 <div className='bg-white rounded-lg w-full py-4 px-2 space-y-2 flex flex-col' style={{ height: '85%' }}>
-                    <div className='flex items-center justify-center h-full'> 
-                        <h1 className='text-gray-300 font-normal text-5xl'>Please select a chat</h1>
+                    <div className='flex items-center justify-center h-full'>
+                        <h1 className='text-gray-300 text-center font-normal text-5xl'>Please select a chat</h1>
                     </div>
                 </div>
             ) : loading ? (

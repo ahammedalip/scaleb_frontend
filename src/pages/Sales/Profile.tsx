@@ -12,7 +12,7 @@ function Profile() {
                 <SalesMenu />
 
                 <AdditionalMenu />
-                </div>
+                </div>    
                     
                
             </div>

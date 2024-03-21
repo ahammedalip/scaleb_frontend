@@ -23,7 +23,7 @@ function ChatList({ onUserSelect }) {
       const request = await api.get('/sales/available-prod')
 
       const response = request.data
-      console.log('fetch production', response);
+      // console.log('fetch production', response);
       if (response.success) {
         setProductionList(response.availableProduction)
       }
@@ -46,7 +46,7 @@ function ChatList({ onUserSelect }) {
         if (response.data.success == true) {
 
           setConversations(response.data.conversation)
-          console.log('vindfefiei-------', response.data.conversation)
+          // console.log('vindfefiei-------', response.data.conversation)
           setLoading(false)
         }
 

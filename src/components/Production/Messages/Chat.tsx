@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import api from '../../../axios/api';
 import ClipLoader from "react-spinners/ClipLoader";
 import toast from 'react-hot-toast';
-import { socket } from '../../../socket.io/socket'
+import { socket } from '../../../socket/socket'
 import moment from 'moment';
 
 interface ChatProps {
@@ -27,7 +27,11 @@ function Chat({ selectedUser }) {
     const [loading, setLoading] = useState<boolean>(false)
     const [text, setText] = useState<string>('')
     const [messages, setMessages] = useState([])
+    const [arrivalMessage, setArrivalMessage] = useState<Message>()
+    const [recipientId, setRecipientId] = useState('')
     const [currentChat, setCurrentChat] = useState([])
+    const socketRef = useRef(socket);
+
     const messagesEndRef = useRef<HTMLDivElement>(null); // Create a ref for the messages end
 
     useEffect(() => {
@@ -36,6 +40,27 @@ function Chat({ selectedUser }) {
         getMessage()
     }, [selectedUser]);
 
+    useEffect(()=>{
+        // console.log('hello into this useEffect')
+        // socketRef.current.on('welcome',(message)=>{
+        //     console.log('message from back welcomin',message)
+        // })
+
+        socketRef.current.on('getMessage', data=>{
+            setArrivalMessage({
+                sender: data.senderId,
+                text:data.text,
+                createdAt: data.createdAt
+            })
+        })
+    },[])
+
+    useEffect(()=>{
+      
+        if(arrivalMessage ){
+            setMessages([...messages, arrivalMessage])
+        }
+    },[arrivalMessage])
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" }); // Scroll to bottom when new messages are added
@@ -67,6 +92,10 @@ function Chat({ selectedUser }) {
     const getMessage = async () => {
         try {
             console.log('get message recipient', selectedUser)
+            // console.log('receiver id is , ', selectedUser._id)
+            if(selectedUser){
+                setRecipientId(selectedUser._id)
+            }
             console.log('conversation data for getting id to fetch messages', conversations)
             const response = await api.get(`/messages/?sender=${userId}&recipient=${selectedUser._id}`)
 
@@ -104,10 +133,17 @@ function Chat({ selectedUser }) {
             text: trimmedText,
             conversationId: conversationId
         }
+
+        socketRef.current.emit('sendMessage',{
+            senderId: userId,
+            receiverId: recipientId,
+            text: trimmedText
+        })
+
         try {
             const response = await api.post('/messages/', message)
             if (response.data.success) {
-                setMessages([...messages, response.data.savedMessage])
+                setMessages((prev)=>[...prev, response.data.savedMessage])
                 setText('')
             }
         } catch (error) {

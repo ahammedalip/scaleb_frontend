@@ -32,7 +32,7 @@ function ProductionMenu() {
                         </li>
                     </div>
 
-                    <div className=' hover:bg-pink-700/85 transition duration-1000 ease-in-out group'>
+                    {/* <div className=' hover:bg-pink-700/85 transition duration-1000 ease-in-out group'>
                         <li>
                             <Link to='/production/sales_exec' className='flex items-center hover:text-white py-2'>
                                 <span className='inline-flex items-center pl-5 sm:pl-0'>
@@ -43,7 +43,7 @@ function ProductionMenu() {
                                     <h3 className='ml-2 group-hover:text-white'>Sales Executives</h3>
                                 </span></Link>
                         </li>
-                    </div>
+                    </div> */}
                     <div className='group  hover:bg-pink-700/85 transition duration-1000 ease-in-out'>
 
                         <li>

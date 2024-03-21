@@ -8,6 +8,9 @@ import ProfilePage from '../pages/Production/Profile/ProfilePage'
 import ShowReq from '../pages/Production/ViewRequest/Requests'
 import Orders from '../pages/Production/Orders/Orders'
 import Messages from '../pages/Production/Messages/Messages'
+import RetailerProfile from '../pages/Production/RetailersProfile/RetailerProfile'
+import RetailerList from '../pages/Production/RetailerList/RetailerList'
+import RetailerReqProfile from '../pages/Production/RetailersProfile/RetailerReqProf'
 
 function ProductionRoutes() {
   return (
@@ -22,7 +25,9 @@ function ProductionRoutes() {
             <Route path='/requests' element={<ShowReq/>}/>
             <Route path= '/order' element = {<Orders/>}/>
             <Route path='/messages' element ={<Messages/>}/>            
-            
+            <Route path= '/retailers' element = {<RetailerList/>}/>
+            <Route path = '/retailer/ind-profile' element = {<RetailerProfile/>}/>
+            <Route path = '/retailer/req-profile' element = {<RetailerReqProfile/>}/>
         </Route>
     </Routes>
     

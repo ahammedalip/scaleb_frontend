@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import api from '../../../axios/api'
 import toast from 'react-hot-toast';
+import {socket} from '../../../socket/socket'
 
 export default function RecentChats({ conversation, id, onUserSelect }) {
 
   const [user, setUser] = useState()
+  const socketRef = useRef(socket)
 
 
   useEffect(() => {
     const salesId = conversation.members.find((m: string) => m !== id);
-    console.log('sales id ', salesId);
+    // console.log('sales id ', salesId);
     const getSales = async () => {
       try {
         const response = await api.post(`/production/sales-prof`, { salesId });
         if (response.data.success) {
-          console.log('sales exec', response.data.salesExecutive);
+          // console.log('sales exec', response.data.salesExecutive);
           setUser(response.data.salesExecutive)
         }
       } catch (error) {
@@ -25,6 +27,23 @@ export default function RecentChats({ conversation, id, onUserSelect }) {
 
     getSales();
   }, []);
+
+      // to take event from server we can use socket.on 
+      useEffect(() => {
+     
+  
+        // Emit the 'addUser' event with the userId
+        socketRef.current.emit('addUser', id);
+        
+        // socketRef.current.on('getUsers', (users)=>{
+        //     console.log('users are ===>',users)
+        // })
+  
+        return () => {
+            socketRef.current.off('getUsers');
+        };
+  
+    }, [id])
 
   const handleonclick = (user) => {
     console.log('user details on click', user);

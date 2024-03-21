@@ -1,18 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../components/header/Header'
 import SalesMenu from '../../components/Sales/Menu/SalesMenu'
 import Chat from '../../components/Sales/Messages/Chat'
 import ChatList from '../../components/Sales/Messages/ChatList'
+import { sendMessage, socket } from '../../socket/socket'
 
 function Messages() {
 
     const [selectedUser, setSelectedUser] = useState({});
 
-
     const handleUserSelect =(user:object) =>{
       
       setSelectedUser(user)
-      console.log('selected user form messges page',selectedUser)
+    //   console.log('selected user form messges page',selectedUser)
      
     }
 
