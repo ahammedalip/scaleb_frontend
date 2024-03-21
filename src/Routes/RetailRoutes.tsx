@@ -9,6 +9,7 @@ import ProductionList from '../pages/Retailer/ProductionList/ProductionList'
 import ProfilePage from '../pages/Retailer/Profile/ProfilePage'
 import IndProfileProd from '../components/Retailer/IndividualProfileProd/IndividualProfile'
 import ProductionProfile from '../pages/Retailer/ProductionProfile/ProductionProfile'
+import RetailOrder from '../pages/Retailer/Order/Order'
 
 function RetailRoutes() {
   return (
@@ -22,6 +23,7 @@ function RetailRoutes() {
             <Route path='/prod_unit' element={<ProductionList/>}/>
             <Route path = '/profile' element = {<ProfilePage/>}/>
             <Route path='/prod/ind-profile' element= {<ProductionProfile/>}/>
+            <Route path= '/order' element = {<RetailOrder/>}/>
 
         </Route>
     </Routes>
