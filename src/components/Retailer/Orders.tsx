@@ -65,17 +65,17 @@ export default function Orders() {
         <div className='bg-white rounded-md text-center shadow-md w-9/12 p-5'>
             <p className='p-5'>Orders</p>
             <div className='px-4'>
-                <div className='bg-gray-300 flex flex-col space-y-5 p-5 rounded-md shadow-md'>
+                <div className=' flex flex-col  '>
                     {loading ? (
                         <div>
                             <ClipLoader color="rgb(10, 10, 10)" size={60} />
                         </div>
                     ) : (
                         <>
-                            <div className='space-y-4'>
+                            <div className='space-y-5'>
                                 {orders.map((order, index) => (
 
-                                    <div key={order._id} className='flex flex-col space-y-2'>
+                                    <div key={order._id} className='flex flex-col bg-gradient-to-r from-stone-100 to-stone-50 p-5 rounded-md '>
                                         <div className='flex justify-evenly'>
                                             <h1>Production name: {order.productionId.productionName}</h1>
                                             <h1>Sales exec: {order.salesExecId.username}</h1>
@@ -87,8 +87,8 @@ export default function Orders() {
                                             <h1>Status: {order.status}</h1>
                                             <h1>Payment: {order.accepted}</h1>
                                         </div>
-                                        <div className='flex justify-evenly'>
-                                            <div className='bg-slate-50 rounded-md p-2'>
+                                        <div className='flex justify-evenly px-3 p-3'>
+                                            <div className='bg-slate-50 rounded-md p-2 '>
                                                 <p>Description: {order.description}</p>
                                             </div>
 
