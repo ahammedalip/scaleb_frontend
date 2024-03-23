@@ -1,9 +1,10 @@
 
 import axios from 'axios';
+import { API_BASE_URL } from '../config/apiConfig';
 
 //  use config file 
 const api = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL:  API_BASE_URL
 });
 
 // Single interceptor to handle authorization
