@@ -8,7 +8,10 @@ export default function RetailerProfile() {
         <div>
             <Header/>
             <div className='bg-red-50/40 min-h-screen pt-20 flex space-x-5'>
+                <div className='w-1/5'>
                 <ProductionMenu/>
+                </div>
+                    
                 <RetailerProf/>
             </div>
     </div>

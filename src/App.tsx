@@ -5,6 +5,9 @@ import AdminRoutes from './Routes/AdminRoutes'
 import RetailRoutes from './Routes/RetailRoutes'
 import ProductionRoutes from './Routes/ProductionRoutes'
 import SalesRoutes from './Routes/SalesRoute'
+import PaymentSuccess from './components/PaymentSuccess'
+import PaymentFailed from './components/PaymentFailed'
+
 
 
 function App() {
@@ -17,6 +20,9 @@ function App() {
         <Route path='/retail/*' element={<RetailRoutes/>}/>
         <Route path='/sales/*' element= {<SalesRoutes/>}/>
         <Route path='/production/*' element={<ProductionRoutes/>}/>
+        <Route path= '/success' element= {<PaymentSuccess/>}/>
+        <Route path= '/failed' element= {<PaymentFailed/>}/>
+
       </Routes>
     </BrowserRouter>
   )

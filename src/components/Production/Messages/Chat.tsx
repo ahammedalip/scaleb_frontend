@@ -128,6 +128,9 @@ function Chat({ selectedUser }) {
     const sendMessage = async () => {
 
         const trimmedText = text.trim()
+        if(trimmedText == ''){
+            return 
+        }
         const message = {
             sender: userId,
             text: trimmedText,

@@ -15,11 +15,14 @@ function RetailerHome() {
   return (
     <>
       <Header />
-      <div className='bg-red-50/40 min-h-screen pt-20 flex'>
+      <div className='bg-red-50/40 min-h-screen pt-20 flex space-x-5'>
         <div className='w-1/5'>
           <RetailerMenu />
         </div>
-        <HomeRetailer />
+        <div className='w-9/12'>
+          <HomeRetailer />
+
+        </div>
       </div>
     </>
   )

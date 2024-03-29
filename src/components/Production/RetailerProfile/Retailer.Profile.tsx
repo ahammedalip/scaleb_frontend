@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react'
 import api from '../../../axios/api'
 import toast from 'react-hot-toast'
 import ClipLoader from "react-spinners/ClipLoader";
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 interface Profile {
   retailerName: string;
   description: string;
-  _id:string
+  _id: string
 
 }
 
@@ -16,6 +20,11 @@ export default function RetailerProf() {
   const [loading, setLoading] = useState(false)
   const [displayReqButton, setDisplayReqButton] = useState(false)
   const [loadingButton, setLoadingButton] = useState(false)
+  const [ratingValue, setRatingValue] = useState(0)
+  const [reviewText, setReviewText] = useState('')
+  const [retailerId, setRetailerId] = useState('')
+  const [rating, setRating] = useState(0)
+
 
   useEffect(() => {
     fetchUserData()
@@ -24,35 +33,27 @@ export default function RetailerProf() {
   const fetchUserData = async () => {
 
     const params = new URLSearchParams(location.search)
-    const id = params.get('id')
-
+    const retailId = params.get('id')
+    if(retailId){
+      setRetailerId(retailId)
+    }
     const token = localStorage.getItem('production_token');
     if (token) {
       const decoded = decodeJWT(token)
       // console.log(decoded)
-      const id = decoded.id
+      const productionId = decoded.id
       setProductionId(decoded.id)
     }
 
     try {
-      console.log('production id from try top', productionId)
+      // console.log('production id from try top', productionId)
       setLoading(true)
-      const response = await api.get(`/production/ret-profile?id=${id}`)
+      const response = await api.get(`/production/ret-profile?id=${retailId}`)
       if (response.data.success) {
         const profileData = response.data.retailerProfile
-        console.log('profile is ==========', profileData)
         setProfileDetails(profileData)
-        console.log('profile is ==========', profileData.connectedProduction)
-
-        // const isThere = profileData.connectedProduction.includes(productionId)
-        // // console.log('is there',isThere, 'prductioaid', productionId)
-        // if(!isThere){
-        //   setDisplayReqButton(!displayReqButton)
-        // }
-
-        // Check if productionId is in the connectedProduction array
+        setRating(response.data.rating)
         const isProductionIdInConnectedProduction = profileData.connectedProduction.includes(productionId);
-        // Set displayReqButton based on the presence of productionId in the array
         setDisplayReqButton(!isProductionIdInConnectedProduction);
 
         setLoading(false)
@@ -71,9 +72,9 @@ export default function RetailerProf() {
         productionId,
         retailId: profileDetails._id
       }
-      const response = await api.patch('/production/conn-req',data)
+      const response = await api.patch('/production/conn-req', data)
 
-      if(response.data.success){
+      if (response.data.success) {
 
 
         setLoadingButton(false)
@@ -85,6 +86,54 @@ export default function RetailerProf() {
 
     }
   }
+
+
+
+  const handleRatingChange = (event, newValue) => {
+    setRatingValue(newValue);
+  };
+
+  const handleReviewTextChange = (event) => {
+    setReviewText(event.target.value);
+  };
+
+  const handleShareReview = async () => {
+    console.log('rating value', ratingValue, 'review text', reviewText)
+    console.log('id of opposit', retailerId)
+    if (ratingValue == 0) {
+      toast.error('Minimum rating is 1')
+      return
+    }
+    if (reviewText.length == 0) {
+      toast.error('Type review')
+      return
+    }
+    const token = localStorage.getItem('production_token')
+    if (token) {
+      const decodedToken = decodeJWT(token);
+      console.log('decoded token', decodedToken)
+      const productionId = decodedToken.id
+
+      try {
+        const response = await api.post('/review/submit?reviewer=productionUnit&reviewee=retailer', {
+          reviewerId: productionId,
+          revieweeId: retailerId,
+          rating: ratingValue,
+          review: reviewText,
+        });
+        console.log(response.data);
+        if (response.data.success) {
+          setRatingValue(0)
+          setReviewText('')
+          toast.success('Successfully Shared Review')
+        }
+
+      } catch (error) {
+        console.error('Error sharing review:', error);
+        toast.error('Please try again')
+      }
+    }
+  };
 
 
   function decodeJWT(token: string) {
@@ -105,24 +154,31 @@ export default function RetailerProf() {
 
 
   return (
-    <div className='bg-slate-100 rounded-lg shadow-lg flex flex-col items-center justify-center overflow-y-auto pb-3 w-9/12'>
+    <div className='bg-white rounded-lg shadow-lg flex flex-col items-center justify-center overflow-y-auto pb-3 w-9/12 pt-4'>
       {loading ? (
         <div className='p-5  h-40 flex flex-col items-center justify-center'>
           <ClipLoader color="rgb(10, 10, 10)" size={60} />
         </div>
       ) : (
         <>
-          <div className='text-center pt-7'>
-            <img src="../../../../public/images/shop-icon.jpg" alt="" className='w-36 rounded-xl shadow-slate-800 shadow-md' />
-          </div>
-          <h1 className='text-center font-bold  p-5 productionName' style={{ fontSize: '32px' }}>{profileDetails.retailerName}</h1>
-          {displayReqButton ? (
+          <div className='flex justify-between items-center rounded-md p-8 bg-slate-100'>
             <div>
-              <button className='bg-blue-500 p-2 rounded-md text-white hover:bg-blue-700 ease-in-out duration-200'
-                onClick={handleSendRequest}
-                disabled={loadingButton}>{loadingButton ? 'Loading' : 'Send connection request'}</button>
+              <img src="../../../../public/images/shop-icon.jpg" alt="" className='w-36 rounded-xl shadow-slate-800 shadow-md' />
             </div>
-          ) : null}
+            <div className='pl-3'>
+              <h1 className='text-center font-bold p-5 productionName' style={{ fontSize: '32px' }}>{profileDetails.retailerName}</h1>
+              <Stack spacing={1}>
+                <Rating name="half-rating-read" defaultValue={rating} precision={0.5} size='large' readOnly />
+              </Stack>
+              {displayReqButton ? (
+                <div>
+                  <button className='bg-blue-500 p-2 rounded-md text-white hover:bg-blue-700 ease-in-out duration-200'
+                    onClick={handleSendRequest}
+                    disabled={loadingButton}>{loadingButton ? 'Loading' : 'Send connection request'}</button>
+                </div>
+              ) : null}
+            </div>
+          </div>
 
           <div className='p-8'>
             <div className='border-2 rounded-lg bg-red-50/40 border-pink-700/10 p-5 box-border text-center description min-w-80'>
@@ -133,13 +189,52 @@ export default function RetailerProf() {
                 {profileDetails.description}
               </h2>
             </div>
-            {/* <h2>Sales Executives</h2>
-            <div>
-
-            </div> */}
           </div>
         </>
+
       )}
+
+      <div className='border border-gray-300 flex flex-col items-center space-y-3 p-3 rounded-md'>
+        <div className='w-full flex justify-center'>
+          <h1 className='text-center font-sans'>Post your review</h1>
+        </div>
+        <div className='w-full flex justify-between items-center'>
+          <div className='flex flex-col items-center'>
+            <Stack spacing={1}>
+              <Rating name="half-rating" defaultValue={0}
+                precision={0.5}
+                size='large'
+                onChange={handleRatingChange}
+                value={ratingValue}
+              />
+            </Stack>
+            <Box
+              component="form"
+              sx={{
+                '& .MuiTextField-root': { m: 1, width: '35ch' },
+              }}
+              noValidate
+              autoComplete="off"
+            >
+              <div>
+                <TextField
+                  id="outlined-textarea"
+                  label="Review"
+                  placeholder="Write your review.."
+                  multiline
+                  value={reviewText}
+                  onChange={handleReviewTextChange}
+                />
+              </div>
+            </Box>
+          </div>
+          <div>
+            <button className='border rounded-full bg-slate-400 hover:bg-black hover:text-white p-2'
+              onClick={handleShareReview}
+            >Share review</button>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

@@ -9,16 +9,16 @@ function Header() {
   const [showSignupDropdown, setShowSignupDropdown] = useState(false);
 
   const retailerToken: any = localStorage.getItem("retailer_token")
-  const isRetailerLoggedIn =  !!retailerToken;
+  const isRetailerLoggedIn = !!retailerToken;
 
   const retailerSalesToken: any = localStorage.getItem("retailerSales_token")
   const isRetailerSalesLoggedIn = !!retailerSalesToken
 
-  const superAdminToken :any = localStorage.getItem('superAdmin_token')
-  const isSuperAdminloggedIn= !! superAdminToken
+  const superAdminToken: any = localStorage.getItem('superAdmin_token')
+  const isSuperAdminloggedIn = !!superAdminToken
 
-  const productionToken : any = localStorage.getItem('production_token')
-  const isProductionLoggedIn= !! productionToken
+  const productionToken: any = localStorage.getItem('production_token')
+  const isProductionLoggedIn = !!productionToken
 
   const handleLoginMouseEnter = () => {
     setShowLoginDropdown(true);
@@ -42,34 +42,42 @@ function Header() {
         <h2 className="headerLogo pl-5 text-xl">SCALE.B</h2>
         {isRetailerLoggedIn ? (
           <div className='flex items-center space-x-10 mr-4'>
-            
+            <Link to='/retail/home'>
+              <h1>Home</h1>
+            </Link>
             <Link to='/retail/profile'>
-            <img src="../../../public/images/profileC.png" alt=""  className='w-8 h-8 '/>
+              <img src="../../../public/images/profileC.png" alt="" className='w-8 h-8 ' />
             </Link>
           </div>
         ) : isRetailerSalesLoggedIn ? (
           <div className='flex items-center space-x-10 mr-4'>
-            
+            <Link to='/sales/home'>
+              <h1>Home</h1>
+            </Link>
             <Link to='/sales/profile'>
-            <img src="../../../public/images/profileC.png" alt=""  className='w-8 h-8 '/>
+              <img src="../../../public/images/profileC.png" alt="" className='w-8 h-8 ' />
             </Link>
           </div>
 
-        ):isProductionLoggedIn?(
+        ) : isProductionLoggedIn ? (
           <div className='flex items-center space-x-10 mr-4'>
-            
+            <Link to='/production/home'>
+              <h1>Home</h1>
+            </Link>
             <Link to='/production/profile'>
-            <img src="../../../public/images/profileC.png" alt=""  className='w-8 h-8 '/>
+              <img src="../../../public/images/profileC.png" alt="" className='w-8 h-8 ' />
             </Link>
           </div>
-        ): isSuperAdminloggedIn? (
+        ) : isSuperAdminloggedIn ? (
           <div className='flex items-center space-x-10 mr-4'>
-            
+            <Link to='/admin/home'>
+              <h1>Home</h1>
+            </Link>
             <Link to='/admin/profile'>
-            <img src="../../../public/images/profileC.png" alt=""  className='w-8 h-8 '/>
+              <img src="../../../public/images/profileC.png" alt="" className='w-8 h-8 ' />
             </Link>
           </div>
-        ) :(
+        ) : (
           <div className="flex items-center space-x-4 mr-4 pr-8">
             <Link to='/action'><button>Home</button></Link>
             <div className="relative" onMouseEnter={handleLoginMouseEnter} onMouseLeave={handleLoginMouseLeave}>
