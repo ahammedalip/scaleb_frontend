@@ -10,7 +10,7 @@ export default function Subscription() {
     return (
         <div>
             <Header />
-            <div className='bg-red-50/40 pt-20 flex space-x-4'>
+            <div className='bg-red-50/40 pt-20 flex space-x-4 h-screen'>
                 <div className='space-y-5'>
                     <RetailerMenu />
                     <AdditionalMenu />

@@ -9,6 +9,8 @@ interface JwtPayload {
 
 function PaymentSuccess() {
   const [id, setId] = useState('')
+  const [token, setToken]= useState('')
+
   useEffect(() => {
     updateProfile()
   }, [id])
@@ -22,6 +24,7 @@ function PaymentSuccess() {
 
     if (retailerToken) {
       // console.log('retialer')
+      setToken('retailer')
       const decodedToken = jwtDecode<JwtPayload>(retailerToken)
       const id = decodedToken.id
       setId(id)
@@ -29,7 +32,7 @@ function PaymentSuccess() {
 
     } else if (productionToken) {
       // console.log('production')
-
+      setToken('production')
       const decodedToken = jwtDecode<JwtPayload>(productionToken)
       const id = decodedToken.id
       setId(id)
@@ -40,13 +43,15 @@ function PaymentSuccess() {
   return (
     <div>
       <Header />
-      <div className="flex justify-center pt-36 h-screen">
+      <div className="flex justify-center pt-36 h-screen bg-red-50/40">
 
 
-        <div className='border pt-7 text-center h-96 rounded-md'>
-          <h1 className='text-green-600 font-bold'>Payment success</h1>
+        <div className='border pt-7 text-center h-96 rounded-md bg-white shadow-md'>
+          
           <img src="../../public/images/3d-hand.jpg" alt="" className='h-60' />
+          <h1 className='text-green-600 font-bold'>Payment success</h1>
         </div>
+       
       </div>
     </div>
   );
