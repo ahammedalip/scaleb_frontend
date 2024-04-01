@@ -226,7 +226,7 @@ const SubscriptionPlans: React.FC<SubscriptionPlansProps> = ({ role }) => {
                             <p className='text-center'>validity: <span className='bold'>{new Date(subscriptionData.endDate).toLocaleDateString()}</span></p>
                         </div>
                     ) : (
-                        <>
+                        <div>
                             <div className='text-center '>
                                 <h1 className='font-bold' style={{ fontSize: '1.9rem' }}>Unlock the features with <span className='text-orange-300 p-1' style={{ backgroundColor: 'gold', color: 'black', textShadow: '2px 2px 2px rgba(0, 0, 0, 0.3)' }}>PREMIUM</span></h1>
                                 <h1 style={{ fontSize: '1.2rem' }}>Pick the plans that's best for you</h1>
@@ -283,7 +283,7 @@ const SubscriptionPlans: React.FC<SubscriptionPlansProps> = ({ role }) => {
                                 </div>
 
                             </div>
-                        </>
+                        </div>
                     )}
 
                 </>

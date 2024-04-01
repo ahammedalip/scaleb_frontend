@@ -6,6 +6,7 @@ import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import { useNavigate } from 'react-router-dom';
 
 interface Profile {
   retailerName: string;
@@ -30,11 +31,12 @@ export default function RetailerProf() {
     fetchUserData()
   }, [productionId])
 
+  const navigate = useNavigate()
   const fetchUserData = async () => {
 
     const params = new URLSearchParams(location.search)
     const retailId = params.get('id')
-    if(retailId){
+    if (retailId) {
       setRetailerId(retailId)
     }
     const token = localStorage.getItem('production_token');
@@ -73,17 +75,19 @@ export default function RetailerProf() {
         retailId: profileDetails._id
       }
       const response = await api.patch('/production/conn-req', data)
-
-      if (response.data.success) {
-
-
+      if (response.data.success && response.data.message == 'not_subscribed') {
+        navigate('/production/subscription')
+        toast.error('Please subscribe to get premium feature')
+      }
+      else if (response.data.success) {
         setLoadingButton(false)
         setDisplayReqButton(!displayReqButton)
         toast.success(response.data.message)
       }
 
     } catch (error) {
-
+      console.log('error while sending connection request')
+      toast.error('Error sending request, please try later!')
     }
   }
 

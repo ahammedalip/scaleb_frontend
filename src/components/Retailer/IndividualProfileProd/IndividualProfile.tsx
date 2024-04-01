@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import api from '../../../axios/api'
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
@@ -27,11 +27,14 @@ const IndProfileProd: React.FC = () => {
   const [ratingValue, setRatingValue] = useState(0);
   const [reviewText, setReviewText] = useState('');
   const [rating, setRating] = useState(0)
+
   useEffect(() => {
 
     fetchUserData()
 
   }, [])
+
+  const navigate = useNavigate()
 
   const fetchUserData = async () => {
     const params = new URLSearchParams(location.search)
@@ -74,6 +77,9 @@ const IndProfileProd: React.FC = () => {
         } else {
           toast.success('Requested successfully')
         }
+      } else if (response.data.success == false && response.data.message == 'not_subscribed') {
+        toast.error('Purchase premium plan to access this feature')
+        navigate('/retail/subscription-plans')
       }
     } catch (error) {
       console.error('Error making the request:', error);
