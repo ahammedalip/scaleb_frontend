@@ -9,24 +9,25 @@ import { socket } from '../../../socket/socket';
 import { BsFillImageFill } from "react-icons/bs";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { app } from '../../../firebase/firebaseConfig'
+import EmojiPicker from 'emoji-picker-react';
+import { MdOutlineEmojiEmotions } from "react-icons/md";
 
-
-interface ChatProps {
-    selectedUser: {
-        userId: string;
-        userName: string;
-
-    };
-}
 
 interface Message {
     sender: string;
     text: string;
     createdAt: Date;
     imageUrl?: string;
+    videoUrl?:string;
 }
 
-function Chat({ selectedUser }) {
+interface SelectedUser {
+    _id: string;
+    productionName: string;
+}
+
+function Chat({ selectedUser }: { selectedUser: SelectedUser }) {
+    const [selectedUserDetails, setSelectedUserDetails] = useState<any>({})
     const [userId, setUserId] = useState('')
     const [conversationId, setConversationId] = useState('')
     const [conversations, setConversations] = useState()
@@ -36,36 +37,52 @@ function Chat({ selectedUser }) {
     const [messages, setMessages] = useState<Message[]>([])
     const socketRef = useRef(socket);
     const messagesEndRef = useRef<HTMLDivElement>(null); // Create a ref for the messages end
-    const [imageAsFile, setImageAsFile] = useState(null);
+    const [imageAsFile, setImageAsFile] = useState<File | null>(null);
     const [imageUrl, setImageUrl] = useState('');
     const [imageLoading, setImageLoading] = useState(false)
+    const [isTyping, setIsTyping] = useState(false)
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [videoUrl, setVideoUrl] = useState('');
 
-    const fileInputRef = useRef(null);
 
     useEffect(() => {
         fetchRecentConversations();
         getMessage()
+        setSelectedUserDetails(selectedUser)
 
     }, [selectedUser]);
 
     useEffect(() => {
-        
-        socketRef.current.on('getMessage', data => {
-          console.log('the socket message is coming here,,,')
+        socketRef.current.on('statusTyping', (data: { senderId: string }) => {
+            console.log(selectedUser)
+            setSelectedUserDetails(selectedUser)
+            if (selectedUser._id === data.senderId) {
+                setIsTyping(true)
+            }
+            setTimeout(() => {
+                setIsTyping(false);
+            }, 3000);
+        })
+    }, [selectedUser])
 
+    useEffect(() => {
+        socketRef.current.on('getMessage', (data: any) => {
             setArrivalMessage({
                 sender: data.senderId,
                 text: data.text,
-                imageUrl:data.imageUrl,
+                imageUrl: data.imageUrl,
                 createdAt: data.createdAt
-            })       
+            })
         })
     }, [])
 
     useEffect(() => {
-
         if (arrivalMessage) {
-            setMessages([...messages, arrivalMessage])
+            // console.log('ghajkefkahdskf')
+            if (selectedUserDetails._id == arrivalMessage.sender) {
+                setMessages([...messages, arrivalMessage])
+            }
         }
     }, [arrivalMessage])
 
@@ -74,11 +91,20 @@ function Chat({ selectedUser }) {
     }, [messages]);
 
     useEffect(() => {
-    if (imageUrl) {
-        sendImgUrlMessage();
-    }
-}, [imageUrl]); // This useEffect will run whenever imageUrl changes
+        if (imageUrl) {
+            sendImgUrlMessage();
+        }
+    }, [imageUrl]); // This useEffect will run whenever imageUrl changes
 
+    useEffect(() => {
+        if (videoUrl) {
+            sendVidUrlMessage()
+        }
+    }, [videoUrl])
+
+    useEffect(() => {
+        handleTyping()
+    }, [text])
 
     const fetchRecentConversations = async () => {
         try {
@@ -107,12 +133,9 @@ function Chat({ selectedUser }) {
         if (parts.length !== 3) {
             throw new Error('Invalid token format');
         }
-
         const base64Url = parts[1];
         const base64 = base64Url.replace('-', '+').replace('_', '/');
-        // Decode the Base64 string to a JSON object
         const payload = JSON.parse(window.atob(base64));
-
         return payload;
     }
 
@@ -133,6 +156,10 @@ function Chat({ selectedUser }) {
     }
 
     const sendMessage = async () => {
+
+        if (showEmojiPicker == true) {
+            setShowEmojiPicker(false)
+        }
         const trimmedText = text.trim()
         if (trimmedText == '') {
             return
@@ -163,18 +190,24 @@ function Chat({ selectedUser }) {
 
     }
 
-    const uploadImageToFirebase = async (image) => {
-        if (image === null) {
+    const uploadImageToFirebase = async (file: File) => {
+        if (file === null) {
             console.error('No image file selected');
             return;
         }
 
-        const storage = getStorage(app);
-        const storageRef = ref(storage, `chat/${image.name}`);
+        const isVideo = file.type.startsWith('video/');
 
-        await uploadBytes(storageRef, image);
+        const storage = getStorage(app);
+        const storageRef = ref(storage, `chat/${file.name}`);
+
+        await uploadBytes(storageRef, file);
         const url = await getDownloadURL(storageRef)
-        setImageUrl(url);
+        if (isVideo) {
+            setVideoUrl(url); 
+        } else {
+            setImageUrl(url);
+        }
     }
 
     const sendImgUrlMessage = async () => {
@@ -202,19 +235,63 @@ function Chat({ selectedUser }) {
             toast.error('Error, please send again')
         }
     }
+// send video as message
+    const sendVidUrlMessage = async () => {
+        const message = {
+            sender: userId,
+            conversationId: conversationId,
+            videoUrl: videoUrl
+        }
 
-    const handleImageAsFile = async (e) => {
-        setImageLoading(true)
-        const image = e.target.files[0]
-        setImageAsFile(image);
-        console.log(imageAsFile)
-        uploadImageToFirebase(image).then(() => setImageLoading(false))
+        socketRef.current.emit('sendMessage', {
+            senderId: userId,
+            receiverId: selectedUser._id,
+            videoUrl: videoUrl
+        })
+
+        try {
+            const response = await api.post('/messages/', message)
+            if (response.data.success) {
+                setMessages([...messages, response.data.savedMessage])
+                setText('');
+                setVideoUrl('');
+            }
+        } catch (error) {
+            console.log('error while sending message', error)
+            toast.error('Error, please send again')
+        }
+    }
+
+    const handleImageAsFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]; // Use optional chaining to safely access files
+        if (!file) {
+            console.error('No image file selected');
+            return;
+        }
+        // setImageAsFile(file);
+        setImageLoading(true);
+        uploadImageToFirebase(file).then(() => setImageLoading(false));
     };
 
+    const handleTyping = () => {
+        // setSelectedUserDetails(selectedUser)
+        socketRef.current.emit('typing', {
+            senderId: userId,
+            receiverId: selectedUser._id
+        })
+    }
+
+    const onEmojiClick = (event: any) => {
+        setText((currentText) => currentText + event.emoji);
+    };
+
+    // Function to toggle the EmojiPicker visibility
+    const toggleEmojiPicker = () => {
+        setShowEmojiPicker(!showEmojiPicker);
+    };
 
     return (
         <div className='bg-slate-00 p-2 w-7/12' style={{ borderRight: '4px solid #6F6A69' }}>
-
             {selectedUser.productionName == undefined ? (
                 <div className='bg-white rounded-lg w-full py-4 px-2 space-y-2 flex flex-col' style={{ height: '85%' }}>
                     <div className='flex items-center justify-center h-full'>
@@ -227,19 +304,46 @@ function Chat({ selectedUser }) {
                 </div>
             ) : (
                 <>
-                    <div className='text-center text-lg pb-3' >
-                        <div className='w-auto rounded-full bg-white p-2'>
-                            <h1 className='font-semibold'>{selectedUser.productionName}</h1>
+                    <div className='text-center text-lg pb-3'>
+                        <div className='w-auto rounded-full bg-white h-12  py-2 px-2 sm:p-1 md:p-1 flex flex-col space-x-5 sm:flex-row md:flex-row items-center justify-center'>
+                            <h1 className='font-semibold'>{selectedUser.productionName}   {isTyping && <p className='text-xs text-gray-400 font-thin'>Typing...</p>} </h1>
                         </div>
-
                     </div>
+
                     <div className='bg-white rounded-lg w-full py-4 px-2 space-y-2 flex flex-col' style={{ height: '82%', overflowY: 'scroll', backgroundImage: "linear-gradient(135deg, rgba(49, 49, 49,0.07) 0%, rgba(49, 49, 49,0.07) 12.5%,rgba(76, 76, 76,0.07) 12.5%, rgba(76, 76, 76,0.07) 25%,rgba(102, 102, 102,0.07) 25%, rgba(102, 102, 102,0.07) 37.5%,rgba(129, 129, 129,0.07) 37.5%, rgba(129, 129, 129,0.07) 50%,rgba(155, 155, 155,0.07) 50%, rgba(155, 155, 155,0.07) 62.5%,rgba(182, 182, 182,0.07) 62.5%, rgba(182, 182, 182,0.07) 75%,rgba(208, 208, 208,0.07) 75%, rgba(208, 208, 208,0.07) 87.5%,rgba(235, 235, 235,0.07) 87.5%, rgba(235, 235, 235,0.07) 100%),linear-gradient(45deg, rgba(5, 5, 5,0.07) 0%, rgba(5, 5, 5,0.07) 12.5%,rgba(39, 39, 39,0.07) 12.5%, rgba(39, 39, 39,0.07) 25%,rgba(73, 73, 73,0.07) 25%, rgba(73, 73, 73,0.07) 37.5%,rgba(107, 107, 107,0.07) 37.5%, rgba(107, 107, 107,0.07) 50%,rgba(141, 141, 141,0.07) 50%, rgba(141, 141, 141,0.07) 62.5%,rgba(175, 175, 175,0.07) 62.5%, rgba(175, 175, 175,0.07) 75%,rgba(209, 209, 209,0.07) 75%, rgba(209, 209, 209,0.07) 87.5%,rgba(243, 243, 243,0.07) 87.5%, rgba(243, 243, 243,0.07) 100%),linear-gradient(90deg, #ffffff,#ffffff)" }}>
-                        {messages.map((message: Message, index: number) => (
-                            <div key={index} className={message.sender == userId ? 'flex justify-end' : 'flex justify-start'}>
-                                <div>
-                                    {message.imageUrl ? (
-                                        <img src={message.imageUrl} alt="Chat image" className='w-60 h-60 rounded-2xl border' />
-                                    ) : (
+                        {showEmojiPicker && (
+                            <div className="emoji-picker-moda absolute z-40">
+                                <EmojiPicker onEmojiClick={onEmojiClick} height={400} width={400} />
+                            </div>
+                        )}
+                        <div>
+                            {messages.map((message: Message, index: number) => (
+                                <div key={index} className={message.sender == userId ? 'flex justify-end' : 'flex justify-start'}>
+                                    {/* <div>
+                                        {message.imageUrl ? (
+                                            <img src={message.imageUrl} alt="Chat image" className='w-60 h-60 rounded-2xl border object-cover' />
+                                        ) : (
+                                            <div className={message.sender == userId ? 'border w-fit p-2 rounded-2xl bg-white ' : 'border w-fit p-2 rounded-2xl bg-white '}>
+                                                {message.text?.split('\n').map((line, lineIndex) => (
+                                                    <h1 key={lineIndex}>
+                                                        {line}
+                                                        <br />
+                                                    </h1>
+                                                ))}
+                                            </div>
+                                        )}
+                                        <p className={message.sender == userId ? "text-xs text-gray-400 text-end pr-4" : 'text-xs text-gray-400 pl-3'}>{moment(message.createdAt).fromNow()}</p>
+                                    </div> */}
+                                    <div>
+                                        {message.imageUrl ? (
+                                            <img src={message.imageUrl} alt="Chat image" className='w-60 h-60 rounded-2xl border object-cover' />
+                                        ) : null}
+                                        {message.videoUrl ? (
+                                            <video controls className='w-60 h-60 rounded-2xl border object-cover'>
+                                                <source src={message.videoUrl} type="video/mp4" />
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        ) : null}
                                         <div className={message.sender == userId ? 'border w-fit p-2 rounded-2xl bg-white ' : 'border w-fit p-2 rounded-2xl bg-white '}>
                                             {message.text?.split('\n').map((line, lineIndex) => (
                                                 <h1 key={lineIndex}>
@@ -248,22 +352,35 @@ function Chat({ selectedUser }) {
                                                 </h1>
                                             ))}
                                         </div>
-                                    )}
-                                    <p className={message.sender == userId ? "text-xs text-gray-400 text-end pr-4" : 'text-xs text-gray-400 pl-3'}>{moment(message.createdAt).fromNow()}</p>
+                                        <p className={message.sender == userId ? "text-xs text-gray-400 text-end pr-4" : 'text-xs text-gray-400 pl-3'}>{moment(message.createdAt).fromNow()}</p>
+                                    </div>
                                 </div>
-
-                            </div>
-                        ))}
-                        {imageLoading ? (
-
-                            <div className='justify-end flex pr-8'>
-                                <BeatLoader color="rgb(10, 10, 10)" size={20} />
-                            </div>
-                        ) : null}
-                        <div ref={messagesEndRef} />
-
+                            ))}
+                            {imageLoading ? (
+                                <div className='justify-end flex pr-8'>
+                                    <BeatLoader color="rgb(10, 10, 10)" size={10} />
+                                </div>
+                            ) : null}
+                            <div ref={messagesEndRef} />
+                        </div>
                     </div>
+
                     <div className='pt-2 flex space-x-3'>
+                        <div className='flex-shrink-0 pr-2  flex items-center justify-center text-3xl hover:cursor-pointer space-x-3'>
+                            <button onClick={toggleEmojiPicker} className="custom-upload-button z-50">
+                                <MdOutlineEmojiEmotions size={30} />
+                            </button>
+                        </div>
+                        <button onClick={() => fileInputRef.current?.click()} className="custom-upload-button">
+                            <BsFillImageFill size={24} />
+                        </button>
+                        <input
+                            type="file"
+                            accept='image/*,.png,.jpg,.jpeg,.gif,.mp4'
+                            ref={fileInputRef}
+                            style={{ display: 'none' }}
+                            onChange={handleImageAsFile}
+                        />
                         <div className='flex-grow'>
                             <label>
                                 <textarea
@@ -271,30 +388,23 @@ function Chat({ selectedUser }) {
                                     name="myInput"
                                     placeholder='Type something..'
                                     value={text}
-                                    onChange={(e) => setText(e.target.value)}
+                                    onChange={(e) => {
+                                        setText(e.target.value);
+                                        handleTyping();
+
+                                        console.log('text is', text)
+                                    }}
                                     rows={1}
                                 />
                             </label>
+
                         </div>
                         <div className='flex-shrink-0 pr-2  flex items-center justify-center text-3xl hover:cursor-pointer space-x-3' onClick={sendMessage}>
                             <SendIcon fontSize="large" />
-                            <button onClick={() => fileInputRef.current?.click()} className="custom-upload-button">
-                                <BsFillImageFill size={24} />
-                            </button>
-                            <input
-                                type="file"
-                                accept='image/*,.png,.jpg,.jpeg,.gif'
-                                ref={fileInputRef}
-                                style={{ display: 'none' }}
-                                onChange={handleImageAsFile}
-                            />
-
                         </div>
                     </div>
                 </>
             )}
-
-
         </div>
     );
 }
