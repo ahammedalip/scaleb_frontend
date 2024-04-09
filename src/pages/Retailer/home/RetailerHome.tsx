@@ -5,12 +5,7 @@ import RetailerMenu from '../../../components/Retailer/menu/RetailerMenu'
 import Header from '../../../components/header/Header'
 function RetailerHome() {
 
-  // const token = localStorage.getItem('access_token1');
-  // const decodedToken = token ? jwtDecode(token) : null;
 
-  // // Extract the required fields from the decoded token
-  // const validUser = decodedToken?.validUser
-  // console.log('valid user', validUser);
 
   return (
     <>

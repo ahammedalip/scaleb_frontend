@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Header from '../../../components/header/Header'
 import Chat from '../../../components/Production/Messages/Chat'
 import ChatList from '../../../components/Production/Messages/ChatList'
@@ -6,6 +6,9 @@ import ProductionMenu from '../../../components/Production/Menu/ProductionMenu'
 import api from '../../../axios/api'
 import { jwtDecode } from 'jwt-decode'
 import { useNavigate } from 'react-router-dom'
+import { socket } from '../../../socket/socket'
+import toast from 'react-hot-toast'
+
 
 interface JwtPayload {
   id: string
@@ -18,9 +21,20 @@ function Messages() {
   const [selectedUser, setSelectedUser] = useState({});
   const [premium, setPremium] = useState(true)
 
+  const socketRef = useRef(socket);
+
   useEffect(() => {
-    // fetchSubscription()
+    fetchSubscription()
   }, [])
+
+  useEffect(() => {
+    socketRef.current.on('getMessage', (data: {
+        senderId: string,
+        text: string,
+    }) => {
+        toast('You have a message')
+    })
+}, [])
 
   const navigate = useNavigate()
 
@@ -32,10 +46,10 @@ function Messages() {
       try {
         const response = await api.get(`/production/profile?id=${id}`)
         if (response.data.success) {
-          console.log('hksjkahdkfkjakjdsf', response.data.userDetails)
+          // console.log('hksjkahdkfkjakjdsf', response.data.userDetails)
           const subscribed = response.data.userDetails.subscribed
 
-          console.log('sub here------', subscribed)
+          // console.log('sub here------', subscribed)
           if (subscribed.active == true) {
             setPremium(true)
           }

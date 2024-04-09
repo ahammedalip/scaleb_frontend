@@ -11,24 +11,25 @@ import IndProfileProd from '../components/Retailer/IndividualProfileProd/Individ
 import ProductionProfile from '../pages/Retailer/ProductionProfile/ProductionProfile'
 import RetailOrder from '../pages/Retailer/Order/Order'
 import Subscription from '../pages/Retailer/subscription/Subscription'
+import Report from '../pages/Retailer/Report'
 
 function RetailRoutes() {
   return (
     <>
-    <Routes>
-        <Route path='/login' element={<RetailerLogin/>}/>
-        <Route path= '/signup' element={<RetailerSignUp/>}/>
-        <Route element={<RetailerPrivateRoute/>}>
-            <Route path='/home' element={<RetailerHome/>}/>
-            <Route path='/sales_exec' element={<SalesExec/>}/>
-            <Route path='/prod_unit' element={<ProductionList/>}/>
-            <Route path = '/profile' element = {<ProfilePage/>}/>
-            <Route path='/prod/ind-profile' element= {<ProductionProfile/>}/>
-            <Route path= '/order' element = {<RetailOrder/>}/>
-            <Route path = '/subscription-plans' element= { <Subscription/>}/>
-
+      <Routes>
+        <Route path='/login' element={<RetailerLogin />} />
+        <Route path='/signup' element={<RetailerSignUp />} />
+        <Route element={<RetailerPrivateRoute />}>
+          <Route path='/home' element={<RetailerHome />} />
+          <Route path='/sales_exec' element={<SalesExec />} />
+          <Route path='/prod_unit' element={<ProductionList />} />
+          <Route path='/profile' element={<ProfilePage />} />
+          <Route path='/prod/ind-profile' element={<ProductionProfile />} />
+          <Route path='/order' element={<RetailOrder />} />
+          <Route path='/subscription-plans' element={<Subscription />} />
+          <Route path='/report' element={<Report />} />
         </Route>
-    </Routes>
+      </Routes>
     </>
   )
 }

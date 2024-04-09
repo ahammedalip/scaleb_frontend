@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import api from '../../../axios/api'
 import toast from 'react-hot-toast';
 import ClipLoader from "react-spinners/ClipLoader";
-import ReactPaginate from 'react-paginate';
 
 interface Order {
     _id: string
@@ -21,8 +20,6 @@ interface Order {
     updateRequest: string;
     // username:string;
     // retailerName:string;
-
-
 }
 
 function Order() {
@@ -33,35 +30,10 @@ function Order() {
     const [filter, setFilter] = useState('All');
 
     useEffect(() => {
-        fetchOrder(currentPage, 10); // Assuming 10 items per page
+        fetchOrder(currentPage); // Assuming 10 items per page
     }, [currentPage, filter]);
 
-
-    // useEffect(() => {
-    //     fetchOrder()
-    // }, [])
-
-    // const fetchOrder = async () => {
-    //     setLoading(true)
-    //     try {
-    //         const request = await api.get('/production/orders', {
-
-    //         })
-    //         const response = request.data
-    //         console.log('result', response);
-    //         if (response.success) {
-    //             const sortedOrders = response.orders.sort((a: Order, b: Order) => new Date(a.scheduledDate).getTime() - new Date(b.scheduledDate).getTime());
-    //             setAvailableOrders(sortedOrders);
-    //             setTotalPages(response.totalPages)
-
-    //             setLoading(false)
-    //         }
-    //     } catch (error) {
-    //         console.log('error while fetching data', error)
-    //     }
-
-    // }
-    const fetchOrder = async (page = 1, limit = 10) => {
+    const fetchOrder = async (page = 1) => {
         setLoading(true);
         try {
             let url = `/production/orders?page=${page}`;
@@ -135,81 +107,7 @@ function Order() {
             toast.success('')
         }
     }
-
-    const handleFetchOrder = async () => {
-        fetchOrder()
-    }
-    const handleEditReq = async () => {
-        setLoading(true)
-        try {
-            const request = await api.get('/production/orders?add=editReq', {
-
-            })
-            const response = request.data
-            console.log('result', response);
-            if (response.success) {
-                const sortedOrders = response.orders.sort((a: Order, b: Order) => new Date(a.scheduledDate).getTime() - new Date(b.scheduledDate).getTime());
-                setAvailableOrders(sortedOrders);
-                setLoading(false)
-            }
-        } catch (error) {
-            console.log('error while fetching data', error)
-        }
-    }
-
-    const handleNewReq = async () => {
-        setLoading(true)
-        try {
-            const request = await api.get('/production/orders?add=newReq', {
-
-            })
-            const response = request.data
-            console.log('result', response);
-            if (response.success) {
-                const sortedOrders = response.orders.sort((a: Order, b: Order) => new Date(a.scheduledDate).getTime() - new Date(b.scheduledDate).getTime());
-                setAvailableOrders(sortedOrders);
-                setLoading(false)
-            }
-        } catch (error) {
-            console.log('error while fetching data', error)
-        }
-    }
-
-    const handlePending = async () => {
-        setLoading(true)
-        try {
-            const request = await api.get('/production/orders?add=pending', {
-
-            })
-            const response = request.data
-            console.log('result', response);
-            if (response.success) {
-                const sortedOrders = response.orders.sort((a: Order, b: Order) => new Date(a.scheduledDate).getTime() - new Date(b.scheduledDate).getTime());
-                setAvailableOrders(sortedOrders);
-                setLoading(false)
-            }
-        } catch (error) {
-            console.log('error while fetching data', error)
-        }
-    }
-
-    // const handleCompleted = async () => {
-    //     setLoading(true)
-    //     try {
-    //         const request = await api.get('/production/orders?add=completed', {
-
-    //         })
-    //         const response = request.data
-    //         console.log('result', response);
-    //         if (response.success) {
-    //             const sortedOrders = response.orders.sort((a: Order, b: Order) => new Date(a.scheduledDate).getTime() - new Date(b.scheduledDate).getTime());
-    //             setAvailableOrders(sortedOrders);
-    //             setLoading(false)
-    //         }
-    //     } catch (error) {
-    //         console.log('error while fetching data', error)
-    //     }
-    // }
+    
     return (
 
         <div className='bg-white rounded-md shadow-md w-full sm:w-8/12 md:w-9/12 lg:w-9/12 xl:w-9/12 pb-5'>
@@ -220,12 +118,6 @@ function Order() {
                     <h1 className='text-2xl'>Orders</h1>
                 </div>
                 <div className='pl-3 space-x-2 p-2' >
-                    {/* <button onClick={handleFetchOrder} className='bg-pink-700 p-2 rounded-sm hover:bg-pink-900 text-white px-4'>All</button>
-                    <button onClick={handleEditReq} className='bg-pink-700 p-2 rounded-sm hover:bg-pink-900 text-white'>Edit requests</button>
-                    <button onClick={handleNewReq} className='bg-pink-600 p-2 rounded-sm hover:bg-pink-800 text-white'>New Requests</button>
-                    <button onClick={handleCompleted} className='bg-pink-500 p-2 rounded-sm hover:bg-pink-700 text-white'>Completed</button>
-                    <button onClick={handlePending} className='bg-pink-400 p-2 rounded-sm hover:bg-pink-600 text-white'>Pending</button> */}
-
                     <button onClick={() => { setFilter('All'); setCurrentPage(1); }} className='bg-pink-700 p-2 rounded-sm hover:bg-pink-900 text-white px-4'>All</button>
                     <button onClick={() => { setFilter('Edit_request'); setCurrentPage(1); }} className='bg-pink-700 p-2 rounded-sm hover:bg-pink-900 text-white'>Edit requests</button>
                     <button onClick={() => { setFilter('New_Requests'); setCurrentPage(1); }} className='bg-pink-600 p-2 rounded-sm hover:bg-pink-800 text-white'>New Requests</button>

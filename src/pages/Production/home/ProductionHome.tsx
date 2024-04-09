@@ -12,7 +12,10 @@ function ProductionHome() {
 
           <ProductionMenu />
         </div>
+        <div className='w-[90%] pr-5'>
+
         <Productionhome />
+        </div>
       </div>
     </div>
   )

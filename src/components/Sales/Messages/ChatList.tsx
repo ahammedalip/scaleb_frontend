@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import api from '../../../axios/api'
 import ClipLoader from "react-spinners/ClipLoader";
 import RecentChats from './RecentChats';
 import toast from 'react-hot-toast';
+import { socket } from '../../../socket/socket';
 
 
 function ChatList({ onUserSelect }) {
@@ -10,6 +11,8 @@ function ChatList({ onUserSelect }) {
   const [loading, setLoading] = useState(false)
   const [conversations, setConversations] = useState([])
   const [id, setId] = useState('')
+  const socketRef = useRef(socket);
+  const [usersList, setUsersList] = useState([])
 
 
   useEffect(() => {
@@ -17,11 +20,17 @@ function ChatList({ onUserSelect }) {
     fetchRecentConversations()
   }, [])
 
+  useEffect(() => {
+    socketRef.current.on('onlineUsers', data => {
+      console.log('users are', data)
+      setUsersList(data)
+    })
+  }, [usersList])
+
   const fetchProduction = async () => {
     try {
       setLoading(true)
       const request = await api.get('/sales/available-prod')
-
       const response = request.data
       // console.log('fetch production', response);
       if (response.success) {
@@ -32,7 +41,6 @@ function ChatList({ onUserSelect }) {
     } finally {
       setLoading(false)
     }
-
   }
 
   const fetchRecentConversations = async () => {
@@ -44,12 +52,10 @@ function ChatList({ onUserSelect }) {
         setId(decoded.id)
         const response = await api.get(`/conversation/${decoded.id}`)
         if (response.data.success == true) {
-
           setConversations(response.data.conversation)
           // console.log('vindfefiei-------', response.data.conversation)
           setLoading(false)
         }
-
       }
     } catch (error) {
       console.error('Error fetching sales executives:', error);
@@ -59,7 +65,6 @@ function ChatList({ onUserSelect }) {
   }
 
   function decodeJWT(token: string) {
-
     const parts = token.split('.');
     if (parts.length !== 3) {
       throw new Error('Invalid token format');
@@ -70,16 +75,15 @@ function ChatList({ onUserSelect }) {
 
     // Decode the Base64 string to a JSON object
     const payload = JSON.parse(window.atob(base64));
-
     return payload;
   }
 
   const createConversation = async (productionId: string, productionName: string) => {
-
     const ids = {
       senderId: id,
       recipientId: productionId
     }
+
     try {
       const response = await api.post('/conversation/', ids)
       if (response.data.existing) {
@@ -136,7 +140,7 @@ function ChatList({ onUserSelect }) {
               </div>
             )
           })}
-         
+
         </div>
       )}
 

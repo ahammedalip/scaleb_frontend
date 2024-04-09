@@ -302,7 +302,7 @@ function CreateOrder({ onOrderCreated }) {
                 label="Description"
                 multiline
                 rows={4}
-                defaultValue="Write your description here..."
+                placeholder='Enter description..'
                 fullWidth
                 onChange={handleDescription}
               />

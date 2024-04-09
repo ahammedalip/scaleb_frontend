@@ -5,6 +5,7 @@ import AdminLogin from '../pages/SuperAdmin/AdminLogin'
 import AdminPrivateRoute from '../components/SuperAdmin/AdminPrivateRoutes/AdminPrivateRoute'
 import RetailerList from '../pages/SuperAdmin/RetailerList'
 import ProductionList from '../pages/SuperAdmin/ProductionList'
+import RevenueList from '../pages/SuperAdmin/RevenueList'
 
 function AdminRoutes() {
   return (
@@ -15,6 +16,7 @@ function AdminRoutes() {
             <Route path='/home' element={<AdminHome/>}/>
             <Route path='/retail' element={<RetailerList/>}/>
             <Route path= '/prod' element = {<ProductionList/>}/>
+            <Route path='/revenue' element = {<RevenueList/>}/>
         </Route>
     </Routes>
     </>

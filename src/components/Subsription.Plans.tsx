@@ -67,12 +67,20 @@ const SubscriptionPlans: React.FC<SubscriptionPlansProps> = ({ role }) => {
                 const response = await api.get('/production/profile')
                 if (response.data.success) {
                     // console.log(response.data.userDetails)
-                    if (response.data.userDetails.subscribed.active) {
-                        console.log('active')
-                        setSubscriptionData(response.data.userDetails.subscribed)
-                        setSub(true)
+                    if (response.data.userDetails.subscribed) {
+                        console.log('active', response.data.userDetails.subscribed)
+                        const subscribed = response.data.userDetails.subscribed
+
+                        if (subscribed.active) {
+                            setSubscriptionData(response.data.userDetails.subscribed)
+                            setSub(true)
+                            setLoading(false)
+                        }
+                    } else {
+                        console.log('come here')
                         setLoading(false)
                     }
+
                 }
             } catch (error) {
                 console.log('Error while fetching subscription data', error)
