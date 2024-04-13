@@ -1,5 +1,4 @@
-// import { SignupProd2 } from '../../../components/Production/Signup/SignupProd2'
-// import {SignupProduction} from '../../../components/Production/Signup/SignupProduction'
+
 import { useState } from 'react'
 import Header from '../../../components/header/Header'
 import './prod.css'
@@ -76,114 +75,113 @@ export const ProductionSignup: React.FC = () => {
   return (
     <div>
       <Header />
-      {/* <SignupProduction /> */}
+
       <div className='body-bg h-screen pt-20'>
 
-        {/* <SignupProd2/> */}
 
         <div className='flex justify-center items-center pt-5 '>
-    {!isOtpSent ? (
+          {!isOtpSent ? (
 
-        <form onSubmit={handleSubmitSignup(onSubmit)} className=' backdrop-blur-md bg-opacity-40 shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-full max-w-md' style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)' }}>
-            <div className=' mb-4 text-center font-medium text-2xl'>
+            <form onSubmit={handleSubmitSignup(onSubmit)} className=' backdrop-blur-md bg-opacity-40 shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-full max-w-md' style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)' }}>
+              <div className=' mb-4 text-center font-medium text-2xl'>
                 <h2 className='heading_font'>Production Unit Signup</h2>
-            </div>
-            <div className='mb-4'>
+              </div>
+              <div className='mb-4'>
                 {authError && (
-                    <div className='mb-4 text-red-500 text-center'>{authError}</div>
+                  <div className='mb-4 text-red-500 text-center'>{authError}</div>
                 )}
-            </div>
-            <div className='mb-4'>
+              </div>
+              <div className='mb-4'>
                 <label htmlFor="productionName" className='block text-gray-700 text-sm font-semibold mb-2'>
-                    Production Name
+                  Production Name
                 </label>
                 <input
-                    id='productionName' className='border shadow rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    {...registerSignup('productionName', {
-                        required: 'Name is required',
-                        minLength: {
-                            value: 6,
-                            message: 'Name should be atleast 6 character'
-                        }
-                    })} />
+                  id='productionName' className='border shadow rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  {...registerSignup('productionName', {
+                    required: 'Name is required',
+                    minLength: {
+                      value: 6,
+                      message: 'Name should be atleast 6 character'
+                    }
+                  })} />
                 {errorsSignup.productionName && <p className='text-red-500 text-xs italic'>{errorsSignup.productionName.message}</p>}
-            </div>
+              </div>
 
-            <div className='mb-4'>
+              <div className='mb-4'>
                 <label htmlFor="email" className=' block text-gray-700 font-semibold text-sm mb-2'> Email</label>
                 <input id='email' className='border shadow rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    {...registerSignup('email', {
-                        required: 'Email is mandatory',
-                        pattern: {
-                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                            message: 'Invalid email address'
-                        }
-
+                  {...registerSignup('email', {
+                    required: 'Email is mandatory',
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                      message: 'Invalid email address'
                     }
-                    )} />
+
+                  }
+                  )} />
                 {errorsSignup.email && <p className='text-red-500 text-xs italic'> {errorsSignup.email.message} </p>}
 
-            </div>
+              </div>
 
-            <div className='mb-4'>
+              <div className='mb-4'>
                 <label htmlFor="password" className='block text-gray-700 font-semibold text-sm mb-2'>Password</label>
                 <input type="password"
-                    id='password'
-                    className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outlin'
-                    {...registerSignup('password', {
-                        required: "Password is required",
-                        minLength: {
-                            value: 6,
-                            message: "Password must be at least 6 characters"
-                        }
-                    })} />
+                  id='password'
+                  className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outlin'
+                  {...registerSignup('password', {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters"
+                    }
+                  })} />
                 {errorsSignup.password && <p className='text-red-500 text-xs italic'> {errorsSignup.password.message} </p>}
-            </div>
-            <div className='flex items-center justify-center'>
+              </div>
+              <div className='flex items-center justify-center'>
                 <button className='bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline' type='submit'>
-                    Request OTP
+                  Request OTP
                 </button>
-            </div>
-            <div className='text-center pt-3'>
+              </div>
+              <div className='text-center pt-3'>
                 <h2>Already a user? <Link to='/production/login' className="text-blue-500"> Click here</Link></h2>
-            </div>
-        </form>
-    ) : (
+              </div>
+            </form>
+          ) : (
 
-        <form onSubmit={handleSubmitOTP(onOtpSubmit)} className='bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-full max-w-md mt-4'>
-            <div className='mb-4 text-center'>
+            <form onSubmit={handleSubmitOTP(onOtpSubmit)} className='bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-full max-w-md mt-4'>
+              <div className='mb-4 text-center'>
                 <h2 className='text-2xl font- '>VERIFY OTP</h2>
-            </div>
-            <div className='mb-4'>
+              </div>
+              <div className='mb-4'>
                 {otpError && (
-                    <div className='mb-4 text-red-500 text-center'>{otpError}</div>
+                  <div className='mb-4 text-red-500 text-center'>{otpError}</div>
                 )}
-            </div>
-            <div className='mb-4'>
+              </div>
+              <div className='mb-4'>
                 <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='otp'>
-                    Enter OTP
+                  Enter OTP
                 </label>
                 <input
-                    id='otp'
-                    type='text'
-                    className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    {...registerOTP('otp', { required: 'OTP is required' })}
-                    value={otp}
-                    onChange={e => setOtp(e.target.value)}
+                  id='otp'
+                  type='text'
+                  className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  {...registerOTP('otp', { required: 'OTP is required' })}
+                  value={otp}
+                  onChange={e => setOtp(e.target.value)}
                 />
                 {errorsOTP.otp && <p className='text-red-500 text-xs italic'>{errorsOTP.otp.message}</p>}
-            </div>
-            <div className='flex items-center justify-center'>
+              </div>
+              <div className='flex items-center justify-center'>
 
                 <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' type='submit'>
-                    verify & Sign Up
+                  verify & Sign Up
                 </button>
-            </div>
+              </div>
 
-        </form>
-    )}
+            </form>
+          )}
 
-</div>
+        </div>
       </div>
     </div>
   )
