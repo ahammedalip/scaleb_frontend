@@ -13,7 +13,7 @@ import RetailerReqProfile from '../pages/Production/RetailersProfile/RetailerReq
 import Subscription from '../pages/Production/subscription/Subscription'
 import Report from '../pages/Production/reports/Report'
 
-function ProductionRoutes() {
+const ProductionRoutes:React.FC =()=> {
   return (
     
     <>

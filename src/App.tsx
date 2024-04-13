@@ -10,7 +10,7 @@ import PaymentFailed from './components/PaymentFailed'
 
 
 
-function App() {
+const  App: React.FC=()=> {
   return (
     <BrowserRouter>
       <Routes>
