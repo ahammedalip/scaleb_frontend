@@ -2,7 +2,7 @@ import {  useState } from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom'
 
-function Header() {
+const Header:React.FC=()=> {
 
   const [showLoginDropdown, setShowLoginDropdown] = useState(false);
   const [showSignupDropdown, setShowSignupDropdown] = useState(false);
