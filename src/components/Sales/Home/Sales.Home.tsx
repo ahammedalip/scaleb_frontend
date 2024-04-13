@@ -4,6 +4,7 @@ import ClipLoader from 'react-spinners/ClipLoader'
 import api from '../../../axios/api'
 import { BarChart } from '@mui/x-charts/BarChart';
 import { PieChart } from '@mui/x-charts/PieChart';
+import img1 from "../../../../public/images/sales-wall.jpg"
 
 interface BarChart {
   retailerName: string;
@@ -40,7 +41,7 @@ export default function ReportSales() {
   return (
     <div className='rounded-md shadow-md bg-white w-[80% h-[95%] '
       style={{
-        backgroundImage: 'url("../../../../public/images/sales-wall.jpg")',
+        backgroundImage: `url(${img1})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
 

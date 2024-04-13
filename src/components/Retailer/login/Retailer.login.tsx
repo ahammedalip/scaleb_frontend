@@ -58,8 +58,8 @@ function Retailerlogin() {
     };
 
     return (
-        <div className='flex justify-center items-center h-screen bg-gray-200'>
-            <form onSubmit={handleSubmit(onSubmit)} className='bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-full max-w-sm'>
+        <div className='flex justify-center items-center'>
+            <form onSubmit={handleSubmit(onSubmit)} className='bg-slate-50 bg-opacity-35 shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-full max-w-sm'>
                 <div className='mb-4 text-center'>
                     <h2 className='text-2xl font-bold '>Retailers Login</h2>
                 </div>
