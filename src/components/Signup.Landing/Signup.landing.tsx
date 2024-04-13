@@ -3,12 +3,13 @@ import './Signup.landing.css'
 import { Link } from 'react-router-dom'
 import img1 from "../../../public/images/store image.jpg"
 import img2 from "../../../public/images/fact.jpg"
+import img3 from '../../../public/images/landing_soc.jpg'
 
 
 function Signuplanding() {
   return (
     <div>
-      <div className="bg-[url('../../../public/images/landing_soc.jpg')] bg-cover h-auto shadow-md">
+      <div className="bg-cover bg-landing h-auto shadow-md">
         <div className='flex pt-24 ml-48'>
           <div className='flex-1 pb-10'>
             <img src={img1} alt="" className='sideImage12' />

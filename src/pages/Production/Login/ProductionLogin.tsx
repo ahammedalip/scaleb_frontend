@@ -1,5 +1,4 @@
 
-// import {LoginProduction} from '../../../components/Production/Login/LoginProduction'
 import { Link, useNavigate } from 'react-router-dom'
 import Header from '../../../components/header/Header'
 import { useEffect, useState } from 'react'
@@ -49,7 +48,6 @@ const  ProductionLogin:React.FC=() =>{
   return (
     <div>
       <Header />
-      {/* <LoginProduction/> */}
 
       <div className='flex justify-center items-center h-screen background1' >
       <form onSubmit={handleSubmit(onSubmit)} className='bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-full max-w-sm'>

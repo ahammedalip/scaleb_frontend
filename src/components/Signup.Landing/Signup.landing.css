@@ -1,4 +1,8 @@
 
+.bg-landing{
+    background-image: url('../../../public/images/landing_soc.jpg');
+    
+}
 
 .sideImage12 {
     height: 300px;
