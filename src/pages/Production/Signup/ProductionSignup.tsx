@@ -5,7 +5,7 @@ function ProductionSignup() {
   return (
     <div>
       <Header />
-      <SignupProduction />
+      <SignupProduction/>
     </div>
   )
 }
