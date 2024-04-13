@@ -1,11 +1,12 @@
 import SignupProduction from '../../../components/Production/Signup/SignupProduction'
 import Header from '../../../components/header/Header'
 
-function ProductionSignup() {
+
+const ProductionSignup: React.FC = () => {
   return (
     <div>
       <Header />
-      <SignupProduction/>
+      <SignupProduction />
     </div>
   )
 }
