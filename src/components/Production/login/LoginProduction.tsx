@@ -9,7 +9,7 @@ interface LoginForm {
   password: number
 }
 
-const LoginProduction: React.FC = () => {
+export const LoginProduction: React.FC = () => {
   const [authError, setAuthError] = useState<string>('')
   const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>()
   const navigate = useNavigate()
@@ -96,5 +96,3 @@ const LoginProduction: React.FC = () => {
     </div>
   )
 }
-
-export default LoginProduction;
