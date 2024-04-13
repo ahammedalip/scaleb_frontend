@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import api from '../../../axios/api'
 import { Link, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import './login.css'
 
 interface LoginForm {
   productionName: string,
@@ -44,7 +45,8 @@ export const LoginProduction: React.FC = () => {
 
 
   return (
-    <div className='flex justify-center items-center h-screen bg-gray-200'>
+     
+    <div className='flex justify-center items-center h-screen background1' >
       <form onSubmit={handleSubmit(onSubmit)} className='bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-full max-w-sm'>
         <div className='mb-4 text-center'>
           <h2 className='text-2xl font- '>LOGIN</h2>
