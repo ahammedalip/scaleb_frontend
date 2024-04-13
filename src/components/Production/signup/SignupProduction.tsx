@@ -1,4 +1,4 @@
-import  { useState } from 'react'
+import { useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useNavigate, Link } from 'react-router-dom'
 import './SignupProduction.css'
@@ -13,7 +13,8 @@ interface SignupForm {
 interface OTP {
     otp: number
 }
-const  SignupProduction:React.FC=()=> {
+
+ export const SignupProduction: React.FC = () => {
     const [otp, setOtp] = useState('');
     const [otpError, setOtpError] = useState('');
     const [isOtpSent, setIsOtpSent] = useState(false)
@@ -175,4 +176,3 @@ const  SignupProduction:React.FC=()=> {
     )
 }
 
-export default SignupProduction

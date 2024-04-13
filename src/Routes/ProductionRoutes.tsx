@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import ProductionSignup from '../pages/Production/Signup/ProductionSignup'
+import {ProductionSignup} from '../pages/Production/Signup/ProductionSignup'
 import ProductionLogin from '../pages/Production/Login/ProductionLogin'
 import ProductionPrivateRoutes from '../components/Production/ProductionPrivateRoutes/ProductionPrivateRoutes'
 import ProductionHome from '../pages/Production/home/ProductionHome'
