@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import api from '../../../axios/api'
 import { jwtDecode } from 'jwt-decode'
-import ClipLoader from 'react-spinners/ClipLoader'
+// import ClipLoader from 'react-spinners/ClipLoader'
 import toast from 'react-hot-toast';
 
 interface RetailerItem {
@@ -16,7 +16,7 @@ interface JwtPayload {
 }
 
 function Retailerlist() {
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
   const [adminId, setAdminId] = useState('')
   const [retailerList, setRetailerList] = useState<RetailerItem[]>([]);
   const [currentPage, setCurrentPage] = useState(1)
@@ -42,17 +42,17 @@ function Retailerlist() {
   const getRetailersList = async (page = 1) => {
 
     try {
-      setLoading(true)
+      // setLoading(true)
       const response = await api.get(`/admin/retailer_list?id=${adminId}& page=${page}`)
       const retailerList = response.data
       if (response.data.success) {
         setRetailerList(retailerList.userlist)
         setTotalPages(response.data.totalPages)
-        setLoading(false)
+        // setLoading(false)
       }
     } catch (error) {
       console.log('error at retail list fetch', error);
-      setLoading(false)
+      // setLoading(false)
       toast.error('Please try again')
     }
   }

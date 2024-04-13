@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import api from '../../../axios/api'
 import toast from 'react-hot-toast'
 import ClipLoader from "react-spinners/ClipLoader";
@@ -43,7 +43,7 @@ export default function RetailerProf() {
     if (token) {
       const decoded = decodeJWT(token)
       // console.log(decoded)
-      const productionId = decoded.id
+      // const productionId = decoded.id
       setProductionId(decoded.id)
     }
 
@@ -93,11 +93,14 @@ export default function RetailerProf() {
 
 
 
-  const handleRatingChange = (event, newValue) => {
-    setRatingValue(newValue);
+  const handleRatingChange = (event: React.ChangeEvent<{}>, newValue: number | null) => {
+    if (newValue !== null) {
+      setRatingValue(newValue);
+      console.log(event)
+  }
   };
 
-  const handleReviewTextChange = (event) => {
+  const handleReviewTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setReviewText(event.target.value);
   };
 
@@ -208,8 +211,8 @@ export default function RetailerProf() {
               <Rating name="half-rating" defaultValue={0}
                 precision={0.5}
                 size='large'
-                onChange={handleRatingChange}
-                value={ratingValue}
+                onChange={(event,newValue)=>handleRatingChange(event,newValue)}
+              
               />
             </Stack>
             <Box

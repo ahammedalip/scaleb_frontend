@@ -31,10 +31,15 @@ const modalStyle = {
   p: 4,
 };
 
+interface Production{
+productionId: string;
+productionName:string
+}
+
 interface Order {
   _id: string
   productionName: string;
-  // productionId: string;
+  productionId: Production;
   salesExec: string;
   retailerId: string;
   scheduledDate: Date;
@@ -59,7 +64,7 @@ interface UpdateOrder {
 
 function ExistingOrders() {
   const [orders, setOrders] = useState([]);
-  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  // const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [open, setOpen] = React.useState(false);
   const [date, setDate] = React.useState<Dayjs | null>();
   const [quantity, setQuantity] = useState<number>(0)
@@ -71,17 +76,17 @@ function ExistingOrders() {
   const [totalPages, setTotalPages] = useState(1)
   const [loading, setLoading] = useState(false)
 
-  const [errorMessages, setErrorMessages] = useState({
-    production: '',
-    product: '',
-    date: '',
-    quantity: '',
-  });
+  // const [errorMessages, setErrorMessages] = useState({
+  //   production: '',
+  //   product: '',
+  //   date: '',
+  //   quantity: '',
+  // });
 
 
   const handleOpen = (order: Order) => {
     setOrderId(order._id)
-    setSelectedOrder(order);
+    // setSelectedOrder(order);
     setDate(dayjs(order.scheduledDate));
     setQuantity(order.quantity);
     setDescription(order.description);
@@ -206,11 +211,11 @@ function ExistingOrders() {
     }
   }
 
-
+// onOrderCreated={fetchOrders}
   return (
     <div className='bg-white rounded-md shadow-md'>
       <div className='text-center'>
-        <CreateOrder onOrderCreated={fetchOrders} />
+        <CreateOrder />
       </div>
 
       {orders.length > 0 ? (
@@ -302,8 +307,8 @@ function ExistingOrders() {
                               InputLabelProps={{
                                 shrink: true,
                               }}
-                              error={!!errorMessages.quantity}
-                              helperText={errorMessages.quantity}
+                              // error={!!errorMessages.quantity}
+                              // helperText={errorMessages.quantity}
                             />
                           </div>
 

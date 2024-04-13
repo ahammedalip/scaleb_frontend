@@ -1,4 +1,3 @@
-import React from 'react';
 import Header from '../../../components/header/Header';
 import ProductionMenu from '../../../components/Production/Menu/ProductionMenu';
 import AdditionalMenu from '../../../components/Production/AdditionalMenu/AdditionalMenu';

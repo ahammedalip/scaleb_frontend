@@ -1,4 +1,3 @@
-import React from 'react'
 import Header from '../../components/header/Header'
 import SalesMenu from '../../components/Sales/Menu/SalesMenu'
 import IndProfileProd from '../../components/Sales/ProducitonProfile/ProductionProfile'

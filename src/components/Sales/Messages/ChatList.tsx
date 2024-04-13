@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import api from '../../../axios/api'
 import ClipLoader from "react-spinners/ClipLoader";
 import RecentChats from './RecentChats';
@@ -6,8 +6,8 @@ import toast from 'react-hot-toast';
 import { socket } from '../../../socket/socket';
 
 
-function ChatList({ onUserSelect }) {
-  const [productionList, setProductionList] = useState([])
+function ChatList({ onUserSelect }: { onUserSelect: any }) {
+  const [productionList, setProductionList] = useState<{ _id: string; productionName: string }[]>([])
   const [loading, setLoading] = useState(false)
   const [conversations, setConversations] = useState([])
   const [id, setId] = useState('')
@@ -128,7 +128,7 @@ function ChatList({ onUserSelect }) {
 
           <h1>Available Chats</h1>
           {productionList.filter(production => {
-            return !conversations.some(conv => conv.members.includes(production._id))
+            return !conversations.some((conv:any) => conv.members.includes(production._id))
           }).map((production: {
             productionName: string;
             _id: string;

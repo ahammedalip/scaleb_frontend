@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import api from '../../../axios/api';
 import ClipLoader from "react-spinners/ClipLoader";
 import RecentChats from './RecentChats';
 import toast from 'react-hot-toast';
 
 
-function ChatList({ onUserSelect }) {
+
+function ChatList({ onUserSelect }:{onUserSelect: any}) {
   const [conversations, setConversations] = useState([])
-  const [salesList, setSalesList] = useState([]);
+  const [salesList, setSalesList] = useState<{ _id: string; username: string }[]>([]);
   const [loading, setLoading] = useState(false)
   const [id, setId] = useState('')
 
@@ -90,9 +91,7 @@ function ChatList({ onUserSelect }) {
       const user ={
         _id:salesId,
         username: username
-
       }
-
       onUserSelect(user)
     } catch (error) {
       console.log('error at creating conversations', error)
@@ -122,8 +121,8 @@ function ChatList({ onUserSelect }) {
 
 
           <h1>Available Chats</h1>
-          {salesList.filter(sales => {
-            return !conversations.some(conv => conv.members.includes(sales._id));
+          {salesList.filter((sales) => {
+            return !conversations.some((conv:any) => conv.members.includes(sales._id));
           }).map((sales:
             {
             username:string;

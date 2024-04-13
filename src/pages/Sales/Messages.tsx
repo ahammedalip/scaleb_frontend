@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Header from '../../components/header/Header'
 import SalesMenu from '../../components/Sales/Menu/SalesMenu'
 import Chat from '../../components/Sales/Messages/Chat'
 import ChatList from '../../components/Sales/Messages/ChatList'
 import { jwtDecode } from 'jwt-decode'
 import api from '../../axios/api'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { socket } from '../../socket/socket'
 
@@ -14,11 +14,17 @@ import { socket } from '../../socket/socket'
 interface JwtPayload {
     id: string;
 }
-
+interface User {
+    _id: string,
+    productionName: string
+  }
 
 function Messages() {
 
-    const [selectedUser, setSelectedUser] = useState({});
+    const [selectedUser, setSelectedUser] = useState({
+        _id: '',
+        productionName: ''
+    });
     const [premium, setPremium] = useState(true)
     const socketRef = useRef(socket);
 
@@ -28,15 +34,12 @@ function Messages() {
     }, [])
 
     useEffect(() => {
-        socketRef.current.on('getMessage', (data: {
-            senderId: string,
-            text: string,
-        }) => {
+        socketRef.current.on('getMessage', () => {
             toast('You have a message')
         })
     }, [])
 
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const fetchUser = async () => {
         const token = localStorage.getItem('retailerSales_token')
         if (token) {
@@ -53,13 +56,14 @@ function Messages() {
                         console.log('coming to undefined')
                         setPremium(false)
                     }
+                    
                 }
             } catch (error) {
                 console.log('error while checking subscribed')
             }
         }
     }
-    const handleUserSelect = (user: object) => {
+    const handleUserSelect = (user: User) => {
         setSelectedUser(user)
     }
 

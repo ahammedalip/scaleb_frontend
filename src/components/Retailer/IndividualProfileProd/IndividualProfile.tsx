@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import api from '../../../axios/api'
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
@@ -17,14 +17,14 @@ interface JwtPayload {
 
 const IndProfileProd: React.FC = () => {
   const [loading, setLoading] = useState(false)
-  const [retailerid, setRetailerId] = useState('')
+  // const [retailerid, setRetailerId] = useState('')
   const [profileName, setProfileName] = useState('')
   const [description, setDescription] = useState('')
   const [items, setItems] = useState([])
   const [id, setId] = useState<number>()
   const [connected, setConnected] = useState<boolean>(false)
   const location = useLocation();
-  const [ratingValue, setRatingValue] = useState(0);
+  const [ratingValue, setRatingValue] = React.useState<number | null>(2);
   const [reviewText, setReviewText] = useState('');
   const [rating, setRating] = useState(0)
 
@@ -86,12 +86,14 @@ const IndProfileProd: React.FC = () => {
     }
   }
 
-
-  const handleRatingChange = (event, newValue) => {
-    setRatingValue(newValue);
+  const handleRatingChange = (event: React.ChangeEvent<{}>,newValue: number | null) => {
+    if (newValue !== null) {
+      setRatingValue(newValue);
+      console.log(event)
+    }
   };
 
-  const handleReviewTextChange = (event) => {
+  const handleReviewTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setReviewText(event.target.value);
   };
 
@@ -142,7 +144,7 @@ const IndProfileProd: React.FC = () => {
             </div>
             {!connected ? (
               <div>
-                <button className='bg-blue-500 p-2 rounded-md shadow-md text-white hover:bg-blue-800' onClick={() => handleRequest(id)}>Send connection request</button>
+                <button className='bg-blue-500 p-2 rounded-md shadow-md text-white hover:bg-blue-800' onClick={() => id && handleRequest(id)}>Send connection request</button>
               </div>
             ) : null}
           </div>
@@ -183,7 +185,7 @@ const IndProfileProd: React.FC = () => {
                     <Rating name="half-rating" defaultValue={0}
                       precision={0.5}
                       size='large'
-                      onChange={handleRatingChange} />
+                      onChange={(event, newValue)=>{ handleRatingChange(event,newValue)}} />
                   </Stack>
                   <Box
                     component="form"

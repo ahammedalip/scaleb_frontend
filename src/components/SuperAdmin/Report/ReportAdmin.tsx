@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 import api from '../../../axios/api';
 
+interface Chart {
+    month: number;
+    totalPayment: number;
+}
+
 export default function ReportAdmin() {
-    const [revenue, setRevenue] = useState([]);
+    const [revenue, setRevenue] = useState<Chart[]>([]);
 
     useEffect(() => {
         fetchReport();

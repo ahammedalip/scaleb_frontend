@@ -1,15 +1,15 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import api from '../../../axios/api';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { signInSuccess, signInStart } from '../../../redux/Retailer/slice';
+import { signInSuccess } from '../../../redux/Retailer/slice';
 import toast from 'react-hot-toast';
 
 interface IFormInput {
     retailerName: string,
     password: string,
-    role : string
+    role: string
 }
 
 function Retailerlogin() {
@@ -18,13 +18,13 @@ function Retailerlogin() {
     const navigate = useNavigate();
     const dispatch = useDispatch()
 
-    useEffect(()=>{
-        const token1= localStorage.getItem('retailer_token')
+    useEffect(() => {
+        const token1 = localStorage.getItem('retailer_token')
         const token2 = localStorage.getItem('retailerSales_token')
-        if(token1){
+        if (token1) {
             navigate('/retail/home')
         }
-        if(token2){
+        if (token2) {
             navigate('/sales/home')
         }
     })
@@ -43,8 +43,8 @@ function Retailerlogin() {
                 localStorage.setItem('retailer_token', result?.token)
                 toast.success('Login Success!')
                 navigate('/retail/home')
-            }else if(result.success == true && result.user.role == 'retailer_sales' ){
-                dispatch(signInSuccess({user: result.user}))
+            } else if (result.success == true && result.user.role == 'retailer_sales') {
+                dispatch(signInSuccess({ user: result.user }))
                 localStorage.setItem('retailerSales_token', result?.token)
                 toast.success('Login Success!')
                 navigate('/sales/home')
@@ -107,30 +107,31 @@ function Retailerlogin() {
                         Role
                     </label>
                     <div className='flex items-center space-x-4'>
-                    <div className='flex items-center'>
-                        <input
-                            id='retailAdmin'
-                            name='role'
-                            type='radio'
-                            value='retailAdmin'
-                            className='mr-2'
-                            {...register('role', { required: 'Role is required' })}
-                        />
-                        <label htmlFor='retailAdmin' className='text-gray-700'>Retail Admin</label>
+                        <div className='flex items-center'>
+                            <input
+                                id='retailAdmin'
+                                // name='role'
+                                type='radio'
+                                value='retailAdmin'
+                                className='mr-2'
+                                {...register('role', { required: 'Role is required' })}
+                            />
+                            <label htmlFor='retailAdmin' className='text-gray-700'>Retail Admin</label>
+                        </div>
+                        <div className='flex items-center'>
+                            <input
+                                id='salesExecutive'
+                                // name='role'
+                                type='radio'
+                                value='salesExecutive'
+                                className='mr-2'
+
+                                {...register('role', { required: 'Role is required' })}
+                            />
+                            <label htmlFor='salesExecutive' className='text-gray-700'>Sales Executive</label>
+                        </div>
                     </div>
-                    <div className='flex items-center'>
-                        <input
-                            id='salesExecutive'
-                            name='role'
-                            type='radio'
-                            value='salesExecutive'
-                            className='mr-2'
-                            {...register('role', { required: 'Role is required' })}
-                        />
-                        <label htmlFor='salesExecutive' className='text-gray-700'>Sales Executive</label>
-                    </div>
-                    </div>
-                    
+
                     {errors.role && <p className='text-red-500 text-xs italic'>{errors.role.message}</p>}
                 </div>
                 <div className='text-center pt-3'>

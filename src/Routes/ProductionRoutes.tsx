@@ -1,4 +1,3 @@
-import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import ProductionSignup from '../pages/Production/Signup/ProductionSignup'
 import ProductionLogin from '../pages/Production/Login/ProductionLogin'

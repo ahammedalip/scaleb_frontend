@@ -1,4 +1,3 @@
-import React from 'react'
 import Revenuelist from '../../components/SuperAdmin/Revenue/Revenue.list'
 import Header from '../../components/header/Header'
 import Menu from '../../components/SuperAdmin/menu/Menu'

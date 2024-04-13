@@ -30,7 +30,7 @@ function Chat({ selectedUser }: { selectedUser: SelectedUser }) {
     const [selectedUserDetails, setSelectedUserDetails] = useState<any>({})
     const [userId, setUserId] = useState('')
     const [conversationId, setConversationId] = useState('')
-    const [conversations, setConversations] = useState()
+    // const [conversations, setConversations] = useState()
     const [loading, setLoading] = useState<boolean>(false)
     const [text, setText] = useState<string>('')
     const [messages, setMessages] = useState<Message[]>([])
@@ -38,7 +38,7 @@ function Chat({ selectedUser }: { selectedUser: SelectedUser }) {
     const [recipientId, setRecipientId] = useState('')
     const [isTyping, setIsTyping] = useState(false)
     const socketRef = useRef(socket);
-    const [imageAsFile, setImageAsFile] = useState<File | null>(null);
+    // const [imageAsFile, setImageAsFile] = useState<File | null>(null);
     const [imageUrl, setImageUrl] = useState('');
     const [imageLoading, setImageLoading] = useState(false)
     const messagesEndRef = useRef<HTMLDivElement>(null); // Create a ref for the messages end
@@ -113,7 +113,7 @@ function Chat({ selectedUser }: { selectedUser: SelectedUser }) {
                 setUserId(decoded.id)
                 const response = await api.get(`/conversation/${userId}`)
                 if (response.data.success == true) {
-                    setConversations(response.data.conversation)
+                    // setConversations(response.data.conversation)
                     setLoading(false)
                 }
             }

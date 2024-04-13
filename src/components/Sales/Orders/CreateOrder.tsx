@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import api from '../../../axios/api'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import dayjs, { Dayjs } from 'dayjs';
+import { Dayjs } from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -21,28 +21,30 @@ interface Production {
   productionName: string;
   availableItems: string[];
 }
-interface Order {
-  productionName: string;
-  // productionId: string;
-  salesExec: string;
-  retailerId: string;
-  scheduledDate: Date;
-  imageURL: string[];
-  quantity: number;
-  status: string;
-  blocked: boolean;
-  accepted: boolean;
-  description: string;
-  item: string;
+// interface Order {
+//   productionName: string;
+//   // productionId: string;
+//   salesExec: string;
+//   retailerId: string;
+//   scheduledDate: Date;
+//   imageURL: string[];
+//   quantity: number;
+//   status: string;
+//   blocked: boolean;
+//   accepted: boolean;
+//   description: string;
+//   item: string;
 
-}
+// }
 
-interface CreateOrderProps {
-  orderToEdit?: Order; // Assuming you have an Order interface defined
-  isEditMode?: boolean;
- }
-
-function CreateOrder({ onOrderCreated }) {
+// interface CreateOrderProps {
+//   orderToEdit?: Order; // Assuming you have an Order interface defined
+//   isEditMode?: boolean;
+//  }
+// function CreateOrder({ onOrderCreated }) {
+  
+ 
+function CreateOrder() {
   const [createOrder, setCreateOrder] = useState<boolean>(false);
   const [availableProduction, setAvailableProduction] = useState<Production[]>([]);
   const [selectedProduction, setSelectedProduction] = useState('');
@@ -50,7 +52,7 @@ function CreateOrder({ onOrderCreated }) {
   const [date, setDate] = React.useState<Dayjs | null>();
   const [quantity, setQuantity] = useState<number>(0)
   const [images, setImages] = useState<File[]>([]);
-  const [downloadURLs, setDownloadURLs] = useState<string[]>([]);
+  // const [downloadURLs, setDownloadURLs] = useState<string[]>([]);
   const [description, setDescription] = useState<string>('')
   const [errorMessages, setErrorMessages] = useState({
     production: '',
@@ -69,7 +71,7 @@ function CreateOrder({ onOrderCreated }) {
     setDate(null);
     setQuantity(0);
     setImages([]);
-    setDownloadURLs([]);
+    // setDownloadURLs([]);
     setErrorMessages({
       production: '',
       product: '',
@@ -177,7 +179,7 @@ function CreateOrder({ onOrderCreated }) {
         setCreateOrder(false)
         toast.success('Order Created!')
         resetForm()
-        onOrderCreated();
+        // onOrderCreated();
       }
 
     } catch (error) {

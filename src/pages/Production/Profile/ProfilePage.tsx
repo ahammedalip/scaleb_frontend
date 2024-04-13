@@ -1,4 +1,3 @@
-import React from 'react';
 import Header from '../../../components/header/Header';
 import ProfileProd from '../../../components/Production/Profile/Profile.Prod';
 import ProductionMenu from '../../../components/Production/Menu/ProductionMenu';

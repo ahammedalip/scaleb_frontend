@@ -1,4 +1,3 @@
-import React from 'react'
 import Header from '../../components/header/Header'
 import SalesMenu from '../../components/Sales/Menu/SalesMenu'
 import AdditionalMenu from '../../components/Sales/Menu/AdditionalMenu'

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 import Header from './header/Header';
 import api from '../axios/api';
 import { jwtDecode } from 'jwt-decode'
@@ -9,15 +9,15 @@ interface JwtPayload {
 }
 
 function PaymentSuccess() {
-  const [id, setId] = useState('')
-  const [token, setToken]= useState('')
-  const [isLoading, setIsLoading] = useState(false);
+  // const [id, setId] = useState('')
+  // const [token, setToken]= useState('')
+  // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     updateProfile()
   }, [])
   const updateProfile = async () => {
-    setIsLoading(true);
+    // setIsLoading(true);
     const params = new URLSearchParams(location.search)
     const duration = params.get('time')
     // console.log('duration', duration)
@@ -26,20 +26,25 @@ function PaymentSuccess() {
 try{
   if (retailerToken) {
     // console.log('retialer')
-    setToken('retailer')
+    // setToken('retailer')
     const decodedToken = jwtDecode<JwtPayload>(retailerToken)
     const id = decodedToken.id
-    setId(id)
+    // setId(id)
     const response = await api.patch(`/retailer/subscription?time=${duration}&id=${id}`)
+    if(response.data.success){
+      toast.success('Success')
+    }
 
   } else if (productionToken) {
     // console.log('production')
-    setToken('production')
+    // setToken('production')
     const decodedToken = jwtDecode<JwtPayload>(productionToken)
     const id = decodedToken.id
-    setId(id)
+    // setId(id)
     const response = await api.patch(`/production/subscription?time=${duration}&id=${id}`)
-
+    if(response.data.success){
+      toast.success('Success')
+    }
   }
 }catch(error){
 console.log('error while updating profile')

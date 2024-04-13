@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import api from '../../../axios/api'
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Rating from '@mui/material/Rating';
 import ClipLoader from "react-spinners/ClipLoader";
@@ -14,7 +14,7 @@ const IndProfileProd: React.FC = () => {
   const [profileName, setProfileName] = useState('')
   const [description, setDescription] = useState('')
   const [items, setItems] = useState([])
-  const [id, setId] = useState<number>()
+  // const [id, setId] = useState<number>()
   const [rating, setRating] = useState(0)
   const [loading, setLoading] = useState(false);
   const location = useLocation();
@@ -44,7 +44,7 @@ const IndProfileProd: React.FC = () => {
         console.log('userdetails', userDetails)
         setProfileName(userDetails.userDetails.productionName)
         setDescription(userDetails.userDetails.description)
-        setId(userDetails.userDetails._id)
+        // setId(userDetails.userDetails._id)
         setItems(userDetails.userDetails.availableItems)
         setRating(userDetails.rating)
         setLoading(false)

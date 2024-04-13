@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import api from '../../../axios/api'
 import { jwtDecode } from 'jwt-decode'
 import ClipLoader from 'react-spinners/ClipLoader'

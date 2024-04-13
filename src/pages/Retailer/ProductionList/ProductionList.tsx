@@ -1,5 +1,3 @@
-import React from 'react'
-import ProductionAssociated from '../../../components/Retailer/ProductionUnits/AssociatedProduction'
 import ProductionAvailable from '../../../components/Retailer/ProductionUnits/AvailableProduction'
 import Header from '../../../components/header/Header'
 import RetailerMenu from '../../../components/Retailer/menu/RetailerMenu'

@@ -1,4 +1,3 @@
-import React from 'react'
 import Admnhome from '../../components/SuperAdmin/AdminHome/Admn.home'
 import Header from '../../components/header/Header'
 import Menu from '../../components/SuperAdmin/menu/Menu'

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import ClipLoader from 'react-spinners/ClipLoader'
 import api from '../../axios/api'
@@ -71,9 +71,3 @@ export default function ReportsProd() {
     )
 }
 
-
-// data: [
-//     { id: 0, value: 10, label: 'series A' },
-//     { id: 1, value: 15, label: 'series B' },
-//     { id: 2, value: 20, label: 'series C' },
-//   ],

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast';
 import api from '../../../axios/api';
 import { socket } from '../../../socket/socket'
@@ -8,10 +8,17 @@ interface User {
 }
 
 interface Conversation {
-  userId: string
+  members: string[];
+  // Add other properties if conversation has more fields
 }
 
-export default function RecentChats({ conversation, id, onUserSelect }) {
+interface Props {
+  conversation: Conversation;
+  id: string;
+  onUserSelect: (user: User) => void;
+}
+
+export default function RecentChats({ conversation, id, onUserSelect }: Props) {
 
   const [user, setUser] = useState<User>()
   const socketRef = useRef(socket);
@@ -36,7 +43,7 @@ export default function RecentChats({ conversation, id, onUserSelect }) {
 
   useEffect(() => {
     const prodId = conversation.members.find((m: string) => m !== id);
-    setProdId(prodId)
+    setProdId(prodId!)
     // console.log('production id for recent chat ', prodId);
     const getSales = async () => {
       try {

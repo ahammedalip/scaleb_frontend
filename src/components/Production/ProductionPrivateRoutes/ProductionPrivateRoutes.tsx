@@ -1,17 +1,19 @@
 import { jwtDecode } from 'jwt-decode'
-import React from 'react'
-import { Navigate, Outlet, useNavigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
+
+interface JwtPayload {
+  id: string;
+  role: string; // Add the role property
+}
+
 
 function ProductionPrivateRoutes() {
-    const navigate = useNavigate()
-    // console.log('coming here');
     const token = localStorage.getItem('production_token')
-    if(token){
-        const decodedToken = token? jwtDecode(token): null; 
-        // console.log('decoded token from production private route', decodedToken);
-       if(decodedToken?.role == "productionAdmin"){
-        return <Outlet/>
-       }
+    if (token) {
+      const decodedToken = jwtDecode<JwtPayload>(token); // Decode the token with JwtPayload type
+      if (decodedToken?.role === "productionAdmin") {
+        return <Outlet />;
+      }
     }
   return <Navigate to='/production/login' />
 }

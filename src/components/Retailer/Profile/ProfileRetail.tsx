@@ -2,10 +2,6 @@ import React, { useEffect, useState } from 'react'
 import api from '../../../axios/api'
 // import './ProfileProd.css'
 
-type Item = {
-  id: string;
-  name: string;
-};
 
 const ProfileRet: React.FC = () => {
 

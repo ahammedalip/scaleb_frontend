@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import api from '../../../axios/api';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 function AvailableRequests() {
     const [requestedRetailers, setRequestedRetailers] = useState([]);
-    const [acceptedRetailers, setAcceptedRetailers] = useState({});
+    const [acceptedRetailers, setAcceptedRetailers] = useState<{ [key: string]: boolean }>({});
+
 
     const navigate = useNavigate()
 
@@ -24,7 +25,7 @@ function AvailableRequests() {
                 data.forEach((item: {
                     retailerName: string,
                     _id: number
-                }, index: number) => {
+                }) => {
                     console.log('Retailer Name:', item.retailerName);
                     console.log('ObjectId:', item._id);
                 });

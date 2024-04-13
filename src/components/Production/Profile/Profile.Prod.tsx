@@ -4,16 +4,13 @@ import toast from 'react-hot-toast';
 import ClipLoader from 'react-spinners/ClipLoader'
 // import './ProfileProd.css'
 
-type Item = {
-  id: string;
-  name: string;
-};
+
 
 const ProfileProd: React.FC = () => {
 
   const [profileName, setProfileName] = useState('')
   const [description, setDescription] = useState('')
-  const [items, setItems] = useState<Item[]>([])
+  const [items, setItems] = useState([])
   const [showInput, setShowInput] = useState(false);
   const [newItemName, setNewItemName] = useState('');
   const [loading, setLoading] = useState(false)
@@ -31,7 +28,7 @@ const ProfileProd: React.FC = () => {
       const response = await api.get('/production/profile')
       if (response.data.success) {
         const userDetails = response.data;
-        console.log(userDetails.userDetails);
+        console.log('userdetails',userDetails.userDetails);
         setProfileName(userDetails.userDetails.productionName)
         setDescription(userDetails.userDetails.description)
         setItems(userDetails.userDetails.availableItems)
@@ -69,7 +66,7 @@ const ProfileProd: React.FC = () => {
     <div className='bg-white rounded-lg shadow-lg flex flex-col items-center justify-center mainClass overflow-y-auto pb-3'>
       {loading ? (
         <div>
-            <ClipLoader color="rgb(10, 10, 10)" size={60} />
+          <ClipLoader color="rgb(10, 10, 10)" size={60} />
         </div>
       ) : (
         <>
@@ -93,9 +90,7 @@ const ProfileProd: React.FC = () => {
 
             <div className='flex'>
               <div className='space-x-3 flex p-3'>
-                {items.map((item: {
-
-                }, index) => {
+                {items.map((item, index) => {
                   return (
                     <div key={index} className='bg-slate-300 rounded-md array-of-items'>
                       <h1 className='p-2'>{item}</h1>

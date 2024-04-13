@@ -1,4 +1,3 @@
-import React from 'react'
 import Header from '../../components/header/Header'
 import SalesMenu from '../../components/Sales/Menu/SalesMenu'
 import ProductionList from '../../components/Sales/ProductionList/ProductionList'

@@ -1,14 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import api from '../../../axios/api'
 import toast from 'react-hot-toast';
 import ClipLoader from "react-spinners/ClipLoader";
+interface Retailer {
+    _id: string;
+    retailerName: string;
+}
+
+interface SalesExec {
+    _id: string;
+    username: string;
+}
 
 interface Order {
     _id: string
     productionName: string;
     // productionId: string;
-    salesExecId: string;
-    retailerId: string;
+    salesExecId: SalesExec;
+    retailerId: Retailer;
     scheduledDate: Date;
     imageURL: string[];
     quantity: number;
@@ -107,7 +116,7 @@ function Order() {
             toast.success('')
         }
     }
-    
+
     return (
 
         <div className='bg-white rounded-md shadow-md w-full sm:w-8/12 md:w-9/12 lg:w-9/12 xl:w-9/12 pb-5'>

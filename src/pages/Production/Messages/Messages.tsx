@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Header from '../../../components/header/Header'
 import Chat from '../../../components/Production/Messages/Chat'
 import ChatList from '../../../components/Production/Messages/ChatList'
@@ -14,11 +14,19 @@ interface JwtPayload {
   id: string
 }
 
+interface User {
+  _id: string,
+  username: string
+}
+
 function Messages() {
 
   // const [conversation, setConversation] = useState([]);
 
-  const [selectedUser, setSelectedUser] = useState({});
+  const [selectedUser, setSelectedUser] = useState({
+    _id: '',
+    username: ''
+  });
   const [premium, setPremium] = useState(true)
 
   const socketRef = useRef(socket);
@@ -28,10 +36,8 @@ function Messages() {
   }, [])
 
   useEffect(() => {
-    socketRef.current.on('getMessage', (data: {
-      senderId: string,
-      text: string,
-    }) => {
+    socketRef.current.on('getMessage', () => {
+
       toast('You have a message')
     })
   }, [])
@@ -59,7 +65,7 @@ function Messages() {
           }
         }
       } catch (error) {
-        console.log('error while fetching subscription',error)
+        console.log('error while fetching subscription', error)
         toast.error('please refresh again')
       }
     }
@@ -67,7 +73,7 @@ function Messages() {
 
 
 
-  const handleUserSelect = (user: object) => {
+  const handleUserSelect = (user: User) => {
 
     setSelectedUser(user)
     console.log('selected user form messges page', selectedUser)
@@ -83,11 +89,18 @@ function Messages() {
       <Header />
       <div className='bg-red-50/40 max-h-screen min-h-screen pt-20 flex space-x-5 pb-5'>
         <ProductionMenu />
+        {premium == false ? (
 
-        <div className='flex bg-white rounded-lg shadow-lg p-5 w-9/12 bg-gradient-to-r from-zinc-200 to-gray-400'>
-          <Chat selectedUser={selectedUser} />
-          <ChatList onUserSelect={handleUserSelect} />
-        </div>
+          <div className='flex items-center justify-center h-60 bg-white rounded-lg shadow-lg p-5 w-9/12 bg-gradient-to-r from-zinc-200 to-gray-400'>
+            <h1 className='text-white text-center font-normal text-5xl'>This is a premium feature, Please subscribe to get this feature</h1>
+          </div>
+        ) : (
+
+          <div className='flex bg-white rounded-lg shadow-lg p-5 w-9/12 bg-gradient-to-r from-zinc-200 to-gray-400'>
+            <Chat selectedUser={selectedUser} />
+            <ChatList onUserSelect={handleUserSelect} />
+          </div>
+        )}
 
       </div>
     </div>

@@ -1,5 +1,4 @@
-import React from 'react'
-// import Header from '../header/header'
+
 import './landing.first.css'
 import { Link } from 'react-router-dom';
 

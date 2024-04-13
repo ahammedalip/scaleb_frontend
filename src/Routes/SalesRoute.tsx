@@ -1,4 +1,3 @@
-import React from 'react'
 import {  Route,  Routes } from 'react-router-dom'
 import SalesPrivateRoute from '../components/Sales/SalesPrivateRoutes/SalesPrivateRoute'
 import SalesHome from '../pages/Sales/SalesHome'

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form'
 import api from '../../axios/api';
-import {jwtDecode} from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode'
 import toast from 'react-hot-toast';
 
 interface UserModalProps {
@@ -10,49 +10,50 @@ interface UserModalProps {
     onClose: () => void;
 }
 
-interface Iform {
-    username: string,
-    email: string,
-    password: string
+interface JwtPayload {
+    id: string;
+    validUser: string;
 }
 
 const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
-    const [id, setId] = useState()
-    const [retailerUsername, setRetailerUsername] = useState()
+    const [id, setId] = useState('')
+    const [retailerUsername, setRetailerUsername] = useState('')
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    useEffect(()=>{
+    useEffect(() => {
         getToken()
-      
-    },[])
 
-    const getToken = async()=>{
-        const token= localStorage.getItem('retailer_token');
-        const decodedToken =  token?jwtDecode(token) : null
-        // console.log('here decoded token is ',decodedToken);
-        setId(decodedToken.id)
-        setRetailerUsername(decodedToken.validUser)
-    
-    }
+    }, [])
 
-    const onSubmit = async(data: any) => {
-        try{
-        console.log(data);
-        const response = await api.post('/retailer/add_sales', {data,id},{
-            headers:{
-                "Content-Type": 'application/json'
+    const getToken = async () => {
+        const token = localStorage.getItem('retailer_token');
+        if (token) {
+            const decodedToken =  jwtDecode<JwtPayload>(token)
+            if (decodedToken) {
+                setId(decodedToken.id)
+                setRetailerUsername(decodedToken.validUser)
             }
-        })
-        const result = response.data
-        console.log('result from here adding sales exec',result);
-        if(result.success=== true){
-            toast.success('Sales executive added successfully!')
-            onClose()
         }
-    }catch(error){
-        console.log('error at post', error);
     }
-        
+
+    const onSubmit = async (data: any) => {
+        try {
+            console.log(data);
+            const response = await api.post('/retailer/add_sales', { data, id }, {
+                headers: {
+                    "Content-Type": 'application/json'
+                }
+            })
+            const result = response.data
+            console.log('result from here adding sales exec', result);
+            if (result.success === true) {
+                toast.success('Sales executive added successfully!')
+                onClose()
+            }
+        } catch (error) {
+            console.log('error at post', error);
+        }
+
     };
 
 

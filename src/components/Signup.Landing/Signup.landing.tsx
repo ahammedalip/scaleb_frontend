@@ -1,7 +1,7 @@
-import React from 'react'
+
 import './Signup.landing.css'
 import { Link } from 'react-router-dom'
-import bg from '../../../public/images/5588665.jpg'
+
 
 function Signuplanding() {
   return (

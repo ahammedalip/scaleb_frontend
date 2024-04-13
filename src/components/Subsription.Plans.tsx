@@ -107,17 +107,14 @@ const SubscriptionPlans: React.FC<SubscriptionPlansProps> = ({ role }) => {
                 try {
                     const response = await api.post('/stripe/create-checkout-session-six', data);
 
-                    const sessionId = response.data.id; // Adjust this line based on your actual API response structure
+                    const sessionId = response.data.id; 
 
                     // Redirect to Stripe Checkout
                     stripe?.redirectToCheckout({
                         sessionId: sessionId,
-                        // Redirect the user to the Stripe Checkout page using the session ID
-
+    
                     }).then(function (result) {
-                        // If `redirectToCheckout` fails due to a browser or network
-                        // error, you should display the localized error message to your
-                        // customer using `error.message`.
+                       
                         if (result.error) {
                             alert(result.error.message);
                         }

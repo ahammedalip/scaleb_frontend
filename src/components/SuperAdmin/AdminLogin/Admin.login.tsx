@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../axios/api.ts'
 
@@ -42,12 +42,10 @@ function Adminlogin() {
 
         navigate('/admin/home');
       }
-      
-
     } catch (error) {
-      console.error(error?.response.data);
+      console.error('error while logging in ',error);
       // setError(error? error.response.data: "An error occured")
-      setError(error?.response.data.message || 'An error occurred');
+      setError('An error occurred');
 
     }
   };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import api from '../../../axios/api';
 import { useNavigate } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader";
@@ -23,6 +23,7 @@ function ProductionList() {
       const result = response.data;
       if (result.success == true) {
         setAvailableProduction(result.availableProduction)
+        setTotalPages(1)
         setLoading(false)
       }
 

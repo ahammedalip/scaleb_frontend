@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import api from '../../../axios/api'
 import { Link, useNavigate } from 'react-router-dom'

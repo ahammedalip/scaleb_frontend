@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import ClipLoader from "react-spinners/ClipLoader";
 import api from '../../../axios/api';
 import toast from 'react-hot-toast';

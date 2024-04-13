@@ -1,5 +1,4 @@
-import React from 'react'
-import { jwtDecode } from 'jwt-decode'
+
 import HomeRetailer from '../../../components/Retailer/home/Home.retailer'
 import RetailerMenu from '../../../components/Retailer/menu/RetailerMenu'
 import Header from '../../../components/header/Header'

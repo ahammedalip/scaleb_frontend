@@ -1,7 +1,5 @@
-import React from 'react'
 import Header from '../../components/header/Header'
 import SalesMenu from '../../components/Sales/Menu/SalesMenu'
-import CreateOrder from '../../components/Sales/Orders/CreateOrder'
 import ExistingOrders from '../../components/Sales/Orders/Orders'
 
 function Orders() {

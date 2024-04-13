@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import api from '../../../axios/api'
 import toast from 'react-hot-toast';
 import { socket } from '../../../socket/socket'
@@ -8,8 +8,18 @@ import { socket } from '../../../socket/socket'
 interface User {
   username: string
 }
+interface Conversation {
+  members: string[];
+  // Add other properties if conversation has more fields
+}
 
-export default function RecentChats({ conversation, id, onUserSelect }) {
+interface Props {
+  conversation: Conversation;
+  id: string;
+  onUserSelect: (user: User) => void;
+}
+
+export default function RecentChats({ conversation, id, onUserSelect }: Props) {
 
   const [user, setUser] = useState<User>()
   const [salesId, setSalesId] = useState('')
@@ -21,7 +31,7 @@ export default function RecentChats({ conversation, id, onUserSelect }) {
   useEffect(() => {
     const salesId = conversation.members.find((m: string) => m !== id);
     // console.log('sales id ', salesId);
-    setSalesId(salesId)
+    setSalesId(salesId!)
     const getSales = async () => {
       try {
         const response = await api.post(`/production/sales-prof`, { salesId });
@@ -75,12 +85,12 @@ export default function RecentChats({ conversation, id, onUserSelect }) {
   return (
     <div>
       <div className='bg-slate-200 flex justify-between items-center pl-7 text-lg rounded-full p-2 hover:bg-white hover:cursor-pointer duration-150 ease-in-out' onClick={() => { if (user) handleonclick(user) }} >
-      <div className='w-[80%]'>
-        <h1>{user?.username}</h1>
-      </div>
-      <div className=' flex justify-center w-[20%]'>
-        {online && <p className='h-3 w-3 rounded-full bg-green-400'></p> }
-      </div>
+        <div className='w-[80%]'>
+          <h1>{user?.username}</h1>
+        </div>
+        <div className=' flex justify-center w-[20%]'>
+          {online && <p className='h-3 w-3 rounded-full bg-green-400'></p>}
+        </div>
       </div>
     </div>
   )

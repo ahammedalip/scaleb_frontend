@@ -1,4 +1,3 @@
-import React from 'react'
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -105,7 +104,3 @@ function Menu() {
 }
 
 export default Menu
-
-
-
-

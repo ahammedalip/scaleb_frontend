@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import api from '../../axios/api';
 import toast from 'react-hot-toast';
 import ClipLoader from "react-spinners/ClipLoader";
@@ -73,7 +73,7 @@ export default function Orders() {
                     ) : (
                         <>
                             <div className='space-y-5'>
-                                {orders.map((order, index) => (
+                                {orders.map((order) => (
 
                                     <div key={order._id} className='flex flex-col bg-gradient-to-r from-stone-100 to-stone-50 p-5 rounded-md '>
                                         <div className='flex justify-evenly'>

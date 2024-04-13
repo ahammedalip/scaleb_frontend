@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import api from '../../../axios/api';
 import toast from 'react-hot-toast';
 import { BarChart } from '@mui/x-charts/BarChart';
