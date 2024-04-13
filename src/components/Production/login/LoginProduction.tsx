@@ -9,36 +9,36 @@ interface LoginForm {
   password: number
 }
 
-function LoginProduction() {
+const LoginProduction: React.FC = () => {
   const [authError, setAuthError] = useState<string>('')
   const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>()
   const navigate = useNavigate()
 
-useEffect(()=>{
-  const token= localStorage.getItem('production_token')
-  if(token){
-    navigate('/production/home')
-  }
-})
+  useEffect(() => {
+    const token = localStorage.getItem('production_token')
+    if (token) {
+      navigate('/production/home')
+    }
+  })
 
 
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
     try {
-      const response = await api.post('/production/auth/login',data,{
-        headers:{
+      const response = await api.post('/production/auth/login', data, {
+        headers: {
           "Content-Type": 'application/json'
         }
       })
       const result = response.data
       console.log(result);
-      if(result.success== true){
+      if (result.success == true) {
         localStorage.setItem('production_token', result.token)
         toast.success('Login succesfull!')
         navigate('/production/home')
       }
-    } catch (error:any) {
+    } catch (error: any) {
       console.log(error?.response.data);
-      setAuthError(error?.response.data.message || "An error occured")     
+      setAuthError(error?.response.data.message || "An error occured")
     }
   }
 
@@ -88,9 +88,9 @@ useEffect(()=>{
             Sign In
           </button>
         </div>
-            <div className='text-center pt-4'>
-            <h3>New user?<Link to='/production/signup' className='text-blue-500' > Click here</Link> </h3>
-            </div>
+        <div className='text-center pt-4'>
+          <h3>New user?<Link to='/production/signup' className='text-blue-500' > Click here</Link> </h3>
+        </div>
 
       </form>
     </div>
