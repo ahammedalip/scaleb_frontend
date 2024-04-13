@@ -1,6 +1,7 @@
 
 import './landing.first.css'
 import { Link } from 'react-router-dom';
+import image1 from "../../../public/images/6685.jpg"
 
 function LandingFirst() {
   return (
@@ -15,7 +16,7 @@ function LandingFirst() {
           </div>
 
           <div className='pl-20 flex-1'>
-            <img src="../../../public/images/6685.jpg" alt="Your Alt Text" className="sideImage " />
+            <img src={image1} alt="Your Alt Text" className="sideImage " />
 
           </div>
 
