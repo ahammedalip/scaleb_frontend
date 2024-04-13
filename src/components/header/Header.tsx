@@ -2,7 +2,7 @@ import {  useState } from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom'
 
-export const Header:React.FC=()=> {
+const Header:React.FC=()=> {
 
   const [showLoginDropdown, setShowLoginDropdown] = useState(false);
   const [showSignupDropdown, setShowSignupDropdown] = useState(false);
@@ -107,3 +107,4 @@ export const Header:React.FC=()=> {
 }
 
 
+export default Header
