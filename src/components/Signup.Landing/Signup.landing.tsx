@@ -1,6 +1,8 @@
 
 import './Signup.landing.css'
 import { Link } from 'react-router-dom'
+import img1 from "../../../public/images/store image.jpg"
+import img2 from "../../../public/images/fact.jpg"
 
 
 function Signuplanding() {
@@ -9,7 +11,7 @@ function Signuplanding() {
       <div className="bg-[url('../../../public/images/landing_soc.jpg')] bg-cover h-auto shadow-md">
         <div className='flex pt-24 ml-48'>
           <div className='flex-1 pb-10'>
-            <img src={"../../../public/images/store image.jpg"} alt="" className='sideImage12' />
+            <img src={img1} alt="" className='sideImage12' />
           </div>
           <div className='flex-1 mr-16 '>
             <div className='grid place-items-center'>
@@ -36,7 +38,7 @@ function Signuplanding() {
           </Link>
         </div>
         <div className='flex-1 pt-8 ml-12'>
-          <img className='h-80 sideImage22' src="../../../public/images/fact.jpg" alt="" />
+          <img className='h-80 sideImage22' src={img2} alt="" />
         </div>
       </div>
     </div>

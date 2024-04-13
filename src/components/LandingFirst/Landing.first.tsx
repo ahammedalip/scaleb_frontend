@@ -2,6 +2,7 @@
 import './landing.first.css'
 import { Link } from 'react-router-dom';
 import image1 from "../../../public/images/6685.jpg"
+import image2 from "../../../public/images/buisiness meet.jpg"
 
 function LandingFirst() {
   return (
@@ -27,7 +28,7 @@ function LandingFirst() {
       <div className=' flex landingSecond bg-gradient-to-bl from-slate-300 via-slate-200 to-gray-50'>
 
         <div className='flex-1 grid place-items-center'>
-          <img src="../../../public/images/buisiness meet.jpg" alt="" className='sideImage2' />
+          <img src={image2} alt="" className='sideImage2' />
         </div>
         <div className='flex-1 text-center grid pt-20'>
           <p className=' ml-16 mr-16 font-medium'>Transform your wholesale and retail business with our advanced management app. Streamline operations,
