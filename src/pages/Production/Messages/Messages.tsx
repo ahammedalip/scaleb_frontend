@@ -29,12 +29,12 @@ function Messages() {
 
   useEffect(() => {
     socketRef.current.on('getMessage', (data: {
-        senderId: string,
-        text: string,
+      senderId: string,
+      text: string,
     }) => {
-        toast('You have a message')
+      toast('You have a message')
     })
-}, [])
+  }, [])
 
   const navigate = useNavigate()
 
@@ -59,10 +59,10 @@ function Messages() {
           }
         }
       } catch (error) {
-
+        console.log('error while fetching subscription',error)
+        toast.error('please refresh again')
       }
     }
-
   }
 
 

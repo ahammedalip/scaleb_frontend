@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom'
-import { jwtDecode } from 'jwt-decode';
 
 function Header() {
 
@@ -69,13 +68,11 @@ function Header() {
             </Link>
           </div>
         ) : isSuperAdminloggedIn ? (
-          <div className='flex items-center space-x-10 mr-4'>
+          <div className='flex items-center  space-x-10 mr-4'>
             <Link to='/admin/home'>
               <h1>Home</h1>
             </Link>
-            <Link to='/admin/profile'>
-              <img src="../../../public/images/profileC.png" alt="" className='w-8 h-8 ' />
-            </Link>
+            
           </div>
         ) : (
           <div className="flex items-center space-x-4 mr-4 pr-8">

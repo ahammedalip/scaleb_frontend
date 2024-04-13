@@ -31,10 +31,12 @@ const IndProfileProd: React.FC = () => {
     const id = params.get('id')
     console.log(id);
     try {
+      setLoading(true)
       const response = await api.get(`/sales/prod/profile?id=${id}`)
 
       const userDetails = response.data;
       if (userDetails.success == false) {
+        setLoading(false)
         toast.error(userDetails.message)
       }
 
@@ -45,9 +47,12 @@ const IndProfileProd: React.FC = () => {
         setId(userDetails.userDetails._id)
         setItems(userDetails.userDetails.availableItems)
         setRating(userDetails.rating)
+        setLoading(false)
       }
     } catch (error) {
       console.log('error at fetching user profile details', error);
+      setLoading(false)
+      toast.error('Please refresh later')
     }
   }
 

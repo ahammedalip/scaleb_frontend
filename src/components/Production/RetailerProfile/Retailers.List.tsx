@@ -4,80 +4,59 @@ import toast from 'react-hot-toast'
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from 'react-router-dom';
 import { CiSearch } from "react-icons/ci";
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+
 
 export default function RetailersList() {
   const [loading, setLoading] = useState<boolean>(false)
-  const [productionId, setProductionId] = useState<string>('')
   const [retailers, setRetailers] = useState([])
   const [title, setTitle] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [searchValue, setSearchValue] = useState('')
   const [sortValue, setSortValue] = useState(1)
-  useEffect(() => {
-
-    fetchRetailer()
-
-  }, [currentPage])
+  const [type, setType] = useState('associated')
 
   const navigate = useNavigate()
 
-  const fetchRetailer = async () => {
-    const token = localStorage.getItem('production_token');
-    if (token) {
-      const decoded = decodeJWT(token)
-      // console.log(decoded)
-      const id = decoded.id
-      setProductionId(decoded.id)
-
-      try {
-        setLoading(true)
-        const response = await api.get(`/production/conn-ret?id=${id}`)
-
-        if (response.data.success) {
-          console.log('data from back', response.data)
-          setRetailers(response.data.connected)
-          setTitle('Associated Retailers')
-          setLoading(false)
-        } else if (!response.data.success) {
-          setLoading(false)
-          toast.error('Error while fetching Retailers')
-        }
-      } catch (error) {
-        console.log('error while fetching retailers')
-        toast.error('Please try again')
-      }
-    }
-  }
-
-  function decodeJWT(token: string) {
-
-    const parts = token.split('.');
-    if (parts.length !== 3) {
-      throw new Error('Invalid token format');
-    }
-
-    const base64Url = parts[1];
-    const base64 = base64Url.replace('-', '+').replace('_', '/');
-
-    // Decode the Base64 string to a JSON object
-    const payload = JSON.parse(window.atob(base64));
-
-    return payload;
-  }
-  const handleFetchRetailers = async () => {
+  useEffect(() => {
     fetchRetailer()
-  }
+  }, [currentPage])
 
-  const handleFetchAvailable = async (page: number = 1) => {
+
+
+  useEffect(() => {
+    if (type == 'available') {
+      handleFetchAvailableReq()
+    } else {
+      fetchRetailer()
+    }
+  }, [type, sortValue])
+
+  const fetchRetailer = async () => {
+    console.log('datas associated:>', searchValue, type, sortValue)
     try {
       setLoading(true)
-      const response = await api.get(`/production/avail-ret?id=${productionId}&page=${page}`)
+      const response = await api.get(`/production/conn-ret?search=${searchValue}&sort=${sortValue}`)
+      if (response.data.success) {
+        console.log('data from back', response.data)
+        setRetailers(response.data.connected)
+        setTitle('Associated Retailers')
+        // setSortValue(1)
+        setLoading(false)
+      } else if (!response.data.success) {
+        setLoading(false)
+        toast.error('Error while fetching Retailers')
+      }
+    } catch (error) {
+      console.log('error while fetching retailers')
+      toast.error('Please try again')
+    }
+  }
+
+  const handleFetchAvailableReq = async () => {
+    try {
+      setLoading(true)
+      const response = await api.get(`/production/avail-ret?search=${searchValue}&sort=${sortValue}`)
       if (response.data.success) {
         console.log('data from back', response.data)
         setRetailers(response.data.availableRetailer)
@@ -96,93 +75,85 @@ export default function RetailersList() {
 
   }
 
+  const handleFetchRetailers = async () => {
+    setType('associated')
+  }
+
+  const handleFetchAvailable = async () => {
+    setType('available')
+
+  }
+
   const handleViewProfile = async (retailerId: string) => {
     navigate(`/production/retailer/ind-profile?id=${retailerId}`)
   }
 
-  const handleChange = async (e) => {
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value)
   }
 
   const handleSearch = async () => {
-    try {
-      const value = searchValue.trim()
-      if (value == '') {
-        return
-      }
-      setLoading(true)
-
-      const response = await api.get(`/production/search-user?value=${value}`)
-      if (response.data.success) {
-        if (response.data.retailers.length > 0) {
-          setRetailers(response.data.retailers)
-          setLoading(false)
-        } else {
-          setLoading(false)
-          toast.error('No retailer on that name exists.')
-        }
-      }
-    } catch (error) {
-      console.log('error while searching user')
-      setLoading(false)
-      toast.error('Please try again.')
+    if (type == 'available') {
+      handleFetchAvailableReq()
+    } else {
+      fetchRetailer()
     }
   }
 
-  const handleSort = async (e) => {
-    setSortValue(e.target.value);
-    console.log('sort value ', sortValue)
-    try {
-      setLoading(true)
-      const response = await api.get(`/production/retailer-sort?value=${sortValue}`)
-      if (response.data.success) {
-        setLoading(false)
-        setRetailers(response.data.sortedRetailers)
-      }
-    } catch (error) {
-      console.log('error while sort', error)
-      setLoading(false)
-      toast.error('Error sorting, Please try later')
-    }
+  const handleSort = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const sortDirection = e.target.id === 'low-high' ? 1 : -1;
+    setSortValue(sortDirection);
+  }
+  const handleQuery = async () => {
+    setType('associated')
+    setSearchValue('')
+    setSortValue(1)
   }
 
   return (
     <div className='flex flex-col w-9/12 items-center space-y-6'>
 
-      <div className='space-x-5 items-center bg-white w-full justify-center flex p-5 rounded-md shadow-md'>
+      <div className='space-x-5 items-center bg-gray-100 border w-full justify-center flex p-5 rounded-md shadow-md sm:flex-row'>
 
-
-        <div className=' items-center justify-center flex flex-row border-2 rounded-lg'>
+        <div className=' items-center justify-center flex flex-row border-2 border-gray-400/50 rounded-lg'>
           <input type="text"
             placeholder='Enter name'
-            className=' border-gray-300 bg-gray-100 h-10 px-5 pr-16 rounded-tl-lg rounded-bl-lg text-sm focus:outline-none'
+            className=' border-gray-300 bg-white h-10 px-5 pr-16 rounded-tl-lg rounded-bl-lg text-sm focus:outline-none'
             onChange={handleChange} />
-          <button className='px-2' onClick={handleSearch}>
+          <button className='px-2 ' onClick={handleSearch}>
             <CiSearch fontSize={'25px'} />
           </button>
         </div>
 
+        <div className='flex flex-col'>
+          <h1>Sort</h1>
+          <label htmlFor='low-high'>
+            <input type="radio" id='low-high' name='sort'
+              onChange={handleSort} />Low to High
+          </label>
 
-        <div className=''>
-          <FormControl>
-            <FormLabel id="demo-controlled-radio-buttons-group">Sort(Rating)</FormLabel>
-            <RadioGroup
-              aria-labelledby="demo-controlled-radio-buttons-group"
-              name="controlled-radio-buttons-group"
-              row
-              value={sortValue}
-              onChange={handleSort}
-            >
-              <FormControlLabel
-                value='1'
-                control={<Radio />} label="Low to High" />
-              <FormControlLabel
-                value='-1'
-                control={<Radio />} label="High to low" />
-            </RadioGroup>
-          </FormControl>
+          <label htmlFor='high-low'>
+            <input type="radio"
+              id='high-low'
+              name='sort'
+              onChange={handleSort} />High to Low
+          </label>
         </div>
 
+        <div className='text-center'>
+          <div className='space-x-5'>
+            <button className='bg-green-500 p-2 shadow-md rounded-lg  hover:bg-green-700 hover:text-white  duration-200 ease-in-out'
+              onClick={handleFetchRetailers}
+            >Associated Retailers</button>
+            <button className='bg-blue-400 p-2 shadow-md rounded-lg hover:bg-blue-700 hover:text-white duration-200 ease-in-out'
+              onClick={handleFetchAvailable}
+            >Available Retailers</button>
+          </div>
+        </div>
+
+        <div >
+          <button onClick={handleQuery} className='bg-black text-white rounded-md'>Clear Query</button>
+        </div>
       </div>
 
       <div className='bg-white p-3 rounded-lg shadow-lg flex flex-col h-full  pt-4 overflow-y-auto pb-5 w-full'>
@@ -192,16 +163,8 @@ export default function RetailersList() {
           </div>
         ) : (
           <>
-            <div className='text-center'>
-              <div className='space-x-5'>
-                <button className='bg-green-500 p-2 shadow-md rounded-lg  hover:bg-green-700 hover:text-white  duration-200 ease-in-out'
-                  onClick={handleFetchRetailers}
-                >Associated Retailers</button>
-                <button className='bg-blue-400 p-2 shadow-md rounded-lg hover:bg-blue-700 hover:text-white duration-200 ease-in-out'
-                  onClick={() => handleFetchAvailable(currentPage)}
-                >Available Retailers</button>
-              </div>
 
+            <div className='text-center'>
               <h1 className='pt-2' style={{ fontSize: '1.5rem' }}>{title}</h1>
 
             </div>
@@ -233,7 +196,6 @@ export default function RetailersList() {
               <p className='pt-2'>{currentPage}</p>
               <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages} className='border rounded-full p-2 shadow-sm'>Next</button>
             </div>
-
           </>
         )}
       </div>

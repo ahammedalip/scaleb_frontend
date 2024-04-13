@@ -12,6 +12,7 @@ import RetailerProfile from '../pages/Production/RetailersProfile/RetailerProfil
 import RetailerList from '../pages/Production/RetailerList/RetailerList'
 import RetailerReqProfile from '../pages/Production/RetailersProfile/RetailerReqProf'
 import Subscription from '../pages/Production/subscription/Subscription'
+import Report from '../pages/Production/reports/Report'
 
 function ProductionRoutes() {
   return (
@@ -30,6 +31,7 @@ function ProductionRoutes() {
             <Route path = '/retailer/ind-profile' element = {<RetailerProfile/>}/>
             <Route path = '/retailer/req-profile' element = {<RetailerReqProfile/>}/>
             <Route path= '/subscription' element= {<Subscription/>}/>
+            <Route path='/report' element = {<Report/>}/>
         </Route>
     </Routes>
     
