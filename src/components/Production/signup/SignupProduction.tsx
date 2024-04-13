@@ -13,8 +13,7 @@ interface SignupForm {
 interface OTP {
     otp: number
 }
-
-function SignupProduction() {
+const  SignupProduction:React.FC=()=> {
     const [otp, setOtp] = useState('');
     const [otpError, setOtpError] = useState('');
     const [isOtpSent, setIsOtpSent] = useState(false)
