@@ -3,7 +3,7 @@ import './Signup.landing.css'
 import { Link } from 'react-router-dom'
 import img1 from "../../../public/images/store image.jpg"
 import img2 from "../../../public/images/fact.jpg"
-import img3 from '../../../public/images/landing_soc.jpg'
+// import img3 from '../../../public/images/landing_soc.jpg'
 
 
 function Signuplanding() {
