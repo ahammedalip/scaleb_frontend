@@ -3,6 +3,8 @@ import Header from './header/Header';
 import api from '../axios/api';
 import { jwtDecode } from 'jwt-decode'
 import toast from 'react-hot-toast';
+import img from "../../public/images/3d-hand.jpg"
+
 
 interface JwtPayload {
   id: string
@@ -60,7 +62,7 @@ toast.error('Please refresh again')
 
         <div className='border pt-7 text-center h-96 rounded-md bg-white shadow-md'>
           
-          <img src="../../public/images/3d-hand.jpg" alt="" className='h-60' />
+          <img src={img} alt="" className='h-60' />
           <h1 className='text-green-600 font-bold'>Payment success</h1>
 
           <div className='text-left px-4 py-2'>

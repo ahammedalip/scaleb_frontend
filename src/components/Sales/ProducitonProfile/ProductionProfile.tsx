@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Rating from '@mui/material/Rating';
 import ClipLoader from "react-spinners/ClipLoader";
-
+import img from "../../../../public/images/Product_pro.png"
 // import './ProfileProd.css'
 
 
@@ -68,7 +68,7 @@ const IndProfileProd: React.FC = () => {
       ) : (
         <>
       <div className='text-center pt-7'>
-        <img src="../../../../public/images/Product_pro.png" alt="" className='w-36 rounded-xl shadow-slate-800 shadow-md' />
+        <img src={img} alt="" className='w-36 rounded-xl shadow-slate-800 shadow-md' />
       </div>
       <h1 className='text-center font-bold  p-5 productionName' style={{ fontSize: '32px' }}>{profileName} </h1>
       <Rating name="half-rating-read" defaultValue={rating} precision={0.5} readOnly />

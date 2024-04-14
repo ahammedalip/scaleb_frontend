@@ -3,6 +3,7 @@ import api from '../../../axios/api'
 import { jwtDecode } from 'jwt-decode'
 import ClipLoader from 'react-spinners/ClipLoader'
 import toast from 'react-hot-toast'
+import img from '../../../../public/images/3957.jpg'
 
 interface JwtPayload {
   id: string
@@ -40,7 +41,7 @@ function HomeRetailer() {
   return (
     <div className='bg-white rounded-md shadow-md h-full'
       style={{
-        backgroundImage: "url('../../../../public/images/3957.jpg')",
+        backgroundImage: `url(${img})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover'
       }}>

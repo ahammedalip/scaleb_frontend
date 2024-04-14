@@ -2,7 +2,7 @@ import  { useState, useEffect } from 'react'
 import api from '../../../axios/api'
 import toast from 'react-hot-toast'
 import ClipLoader from 'react-spinners/ClipLoader'
-
+import img from '../../../../public/images/justwall.jpg'
 
 function Admnhome() {
   const [loading, setLoading] = useState(false)
@@ -36,7 +36,7 @@ function Admnhome() {
 
     <div className="p-5 rounded-md shadow-md h-[95%]"
       style={{
-        backgroundImage: "url('../../../../public/images/justwall.jpg')",
+        backgroundImage: `url(${img})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}

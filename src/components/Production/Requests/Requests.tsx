@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import api from '../../../axios/api';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import img from '../../../../public/images/Product_pro.png'
 
 function AvailableRequests() {
     const [requestedRetailers, setRequestedRetailers] = useState([]);
@@ -92,7 +93,7 @@ function AvailableRequests() {
                             <div className=' shadow border border-gray-300 rounded-lg bg-gradient-to-r from-gray-100 to-gray-200 '>
 
                                 <div key={index} className='flex flex-col items-center justify-center p-3'>
-                                    <img key={index} src='../../../../public/images/Product_pro.png' alt={item.retailerName} className='w-24 rounded-md text-center border-gray-400 shadow-gray-400 shadow-md' />
+                                    <img key={index} src={img} alt={item.retailerName} className='w-24 rounded-md text-center border-gray-400 shadow-gray-400 shadow-md' />
                                     <div>
                                         <h2 >{item.retailerName}</h2>
                                     </div>

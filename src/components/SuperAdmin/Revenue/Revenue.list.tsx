@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import api from '../../../axios/api';
 import toast from 'react-hot-toast';
 import ClipLoader from "react-spinners/ClipLoader";
-
+import img from '../../../../public/images/admin-home.jpg'
 
 interface RevenueItem {
     _id: string;
@@ -66,7 +66,7 @@ export default function Revenuelist() {
     return (
         <div className='bg-white rounded-md shadow-md w-9/12'
             style={{
-                backgroundImage: "url('../../../../public/images/admin-home.jpg')",
+                backgroundImage: `url(${img})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center'
             }}>

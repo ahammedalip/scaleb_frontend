@@ -5,6 +5,7 @@ import api from '../axios/api';
 import { jwtDecode } from 'jwt-decode'
 import toast from 'react-hot-toast';
 import ClipLoader from "react-spinners/ClipLoader";
+import img from "../../public/images/store image.jpg"
 
 interface SubscriptionPlansProps {
     role: string;
@@ -225,7 +226,7 @@ const SubscriptionPlans: React.FC<SubscriptionPlansProps> = ({ role }) => {
                     {sub ? (
 
                         <div className='flex flex-col items-center justify-center p-5 w-fit bg-green-200/45 border rounded-sm'>
-                            <img src="../../public/images/store image.jpg" alt="" className='w-60' />
+                            <img src={img} alt="" className='w-60' />
                             <h1 className='text-center' style={{fontSize:'1.5rem', fontFamily:'serif'}}>ACTIVE</h1>
                             <h1 className='text-center'>Your subscription is active</h1>
                             <p className='text-center'>validity: <span className='bold'>{new Date(subscriptionData.endDate).toLocaleDateString()}</span></p>

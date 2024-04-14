@@ -18,7 +18,7 @@ interface Message {
     text: string;
     createdAt: Date;
     imageUrl?: string;
-    videoUrl?:string;
+    videoUrl?: string;
 }
 
 interface SelectedUser {
@@ -204,7 +204,7 @@ function Chat({ selectedUser }: { selectedUser: SelectedUser }) {
         await uploadBytes(storageRef, file);
         const url = await getDownloadURL(storageRef)
         if (isVideo) {
-            setVideoUrl(url); 
+            setVideoUrl(url);
         } else {
             setImageUrl(url);
         }
@@ -235,7 +235,7 @@ function Chat({ selectedUser }: { selectedUser: SelectedUser }) {
             toast.error('Error, please send again')
         }
     }
-// send video as message
+    // send video as message
     const sendVidUrlMessage = async () => {
         const message = {
             sender: userId,
@@ -343,15 +343,17 @@ function Chat({ selectedUser }: { selectedUser: SelectedUser }) {
                                                 <source src={message.videoUrl} type="video/mp4" />
                                                 Your browser does not support the video tag.
                                             </video>
-                                        ) : null}
-                                        <div className={message.sender == userId ? 'border w-fit p-2 rounded-2xl bg-white ' : 'border w-fit p-2 rounded-2xl bg-white '}>
-                                            {message.text?.split('\n').map((line, lineIndex) => (
-                                                <h1 key={lineIndex}>
-                                                    {line}
-                                                    <br />
-                                                </h1>
-                                            ))}
-                                        </div>
+                                        ) : (
+                                            <div className={message.sender == userId ? 'border w-fit p-2 rounded-2xl bg-white ' : 'border w-fit p-2 rounded-2xl bg-white '}>
+                                                {message.text?.split('\n').map((line, lineIndex) => (
+                                                    <h1 key={lineIndex}>
+                                                        {line}
+                                                        <br />
+                                                    </h1>
+                                                ))}
+                                            </div>
+                                        )}
+
                                         <p className={message.sender == userId ? "text-xs text-gray-400 text-end pr-4" : 'text-xs text-gray-400 pl-3'}>{moment(message.createdAt).fromNow()}</p>
                                     </div>
                                 </div>

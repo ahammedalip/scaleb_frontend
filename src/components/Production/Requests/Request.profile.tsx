@@ -3,6 +3,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import api from '../../../axios/api';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import img from "../../../../public/images/shop-icon.jpg"
 
 
 interface Profile {
@@ -90,7 +91,7 @@ export default function RequestProfile() {
             ) : (
                 <>
                     <div className='text-center pt-7'>
-                        <img src="../../../../public/images/shop-icon.jpg" alt="" className='w-36 rounded-xl shadow-slate-800 shadow-md' />
+                        <img src={img} alt="" className='w-36 rounded-xl shadow-slate-800 shadow-md' />
                     </div>
                     <h1 className='text-center font-bold  p-5 productionName' style={{ fontSize: '32px' }}>{retailerProf.retailerName}</h1>
                     {!buttonClick ? (

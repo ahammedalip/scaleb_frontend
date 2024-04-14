@@ -1,6 +1,7 @@
 import  { useEffect, useState } from 'react';
 import api from '../../../axios/api';
 import { useNavigate } from 'react-router-dom';
+import img from '../../../../public/images/Product_pro.png' 
 
 function ProductionAvailable() {
   const [availableProduction, setAvailableProduction] = useState([]);
@@ -39,7 +40,7 @@ function ProductionAvailable() {
           productionName:string
         }, index) => (
           <div key={index} className='flex flex-col items-center justify-center p-3'>
-            <img src='../../../../public/images/Product_pro.png' alt={unit.name} className='w-24 rounded-md text-center border-gray-400 shadow-gray-400 shadow-md' />
+            <img src={img} alt={unit.name} className='w-24 rounded-md text-center border-gray-400 shadow-gray-400 shadow-md' />
             <div>
               <h2>{unit.productionName}</h2>
             </div>

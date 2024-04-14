@@ -7,6 +7,7 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
+import img from "../../../../public/images/shop-icon.jpg"
 
 interface Profile {
   retailerName: string;
@@ -170,7 +171,7 @@ export default function RetailerProf() {
         <>
           <div className='flex justify-between items-center rounded-md p-8 bg-slate-100'>
             <div>
-              <img src="../../../../public/images/shop-icon.jpg" alt="" className='w-36 rounded-xl shadow-slate-800 shadow-md' />
+              <img src={img} alt="" className='w-36 rounded-xl shadow-slate-800 shadow-md' />
             </div>
             <div className='pl-3'>
               <h1 className='text-center font-bold p-5 productionName' style={{ fontSize: '32px' }}>{profileDetails.retailerName}</h1>

@@ -4,6 +4,7 @@ import toast from 'react-hot-toast'
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from 'react-router-dom';
 import { CiSearch } from "react-icons/ci";
+import img from '../../../../public/images/Product_pro.png'
 
 
 export default function RetailersList() {
@@ -179,7 +180,7 @@ export default function RetailersList() {
                   retailerName: string;
                 }, index) => (
                   <div key={index} className='flex flex-col items-center justify-center p-3'>
-                    <img src='../../../../public/images/Product_pro.png' alt='' className='w-24 rounded-md text-center border-gray-400 shadow-gray-400 shadow-md' />
+                    <img src={img} alt='' className='w-24 rounded-md text-center border-gray-400 shadow-gray-400 shadow-md' />
                     <div>
                       <h2>{unit.retailerName}</h2>
                     </div>

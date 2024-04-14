@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { jwtDecode } from 'jwt-decode';
 import ClipLoader from "react-spinners/ClipLoader";
+import img from "../../../../public/images/Product_pro.png"
 
 // import './ProfileProd.css'
 
@@ -136,7 +137,7 @@ const IndProfileProd: React.FC = () => {
         <>
           <div className='flex pt-3 items-center justify-evenly space-x-5 bg-pink-50/40 rounded-3xl p-5 '>
             <div className='text-center pt-3'>
-              <img src="../../../../public/images/Product_pro.png" alt="" className='w-36 rounded-full shadow-slate-800 shadow-md' />
+              <img src={img} alt="" className='w-36 rounded-full shadow-slate-800 shadow-md' />
             </div>
             <div>
               <h1 className='text-center font-bold  productionName' style={{ fontSize: '32px' }}>{profileName} </h1>
@@ -215,10 +216,6 @@ const IndProfileProd: React.FC = () => {
 
         </>
       )}
-
-
-
-
     </div>
   )
 }

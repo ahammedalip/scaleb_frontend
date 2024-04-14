@@ -98,7 +98,7 @@ function Productionlist() {
           <h1 className='text-2xl' style={{ fontFamily: 'cursive' }}>VERIFIED PRODUCTION FIRMS</h1>
         </div>
         <table className="min-w-full divide-y divide-gray-200 border rounded-md">
-          {/* ... rest of your table code ... */}
+     
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500  tracking-wider">

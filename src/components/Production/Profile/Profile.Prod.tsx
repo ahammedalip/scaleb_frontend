@@ -3,6 +3,7 @@ import api from '../../../axios/api'
 import toast from 'react-hot-toast';
 import ClipLoader from 'react-spinners/ClipLoader'
 // import './ProfileProd.css'
+import img from "../../../../public/images/Product_pro.png"
 
 
 
@@ -71,7 +72,7 @@ const ProfileProd: React.FC = () => {
       ) : (
         <>
           <div className='text-center pt-7'>
-            <img src="../../../../public/images/Product_pro.png" alt="" className='w-36 rounded-xl shadow-slate-800 shadow-md' />
+            <img src={img} alt="" className='w-36 rounded-xl shadow-slate-800 shadow-md' />
           </div>
           <h1 className='text-center font-bold  p-5 productionName' style={{ fontSize: '32px' }}>{profileName} </h1>
           <div className='p-8'>
