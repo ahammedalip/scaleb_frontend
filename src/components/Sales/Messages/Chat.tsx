@@ -337,22 +337,22 @@ function Chat({ selectedUser }: { selectedUser: SelectedUser }) {
                                     <div>
                                         {message.imageUrl ? (
                                             <img src={message.imageUrl} alt="Chat image" className='w-60 h-60 rounded-2xl border object-cover' />
-                                        ) : null}
-                                        {message.videoUrl ? (
-                                            <video controls className='w-60 h-60 rounded-2xl border object-cover'>
-                                                <source src={message.videoUrl} type="video/mp4" />
-                                                Your browser does not support the video tag.
-                                            </video>
-                                        ) : (
-                                            <div className={message.sender == userId ? 'border w-fit p-2 rounded-2xl bg-white ' : 'border w-fit p-2 rounded-2xl bg-white '}>
-                                                {message.text?.split('\n').map((line, lineIndex) => (
-                                                    <h1 key={lineIndex}>
-                                                        {line}
-                                                        <br />
-                                                    </h1>
-                                                ))}
-                                            </div>
-                                        )}
+                                        ) :
+                                            message.videoUrl ? (
+                                                <video controls className='w-60 h-60 rounded-2xl border object-cover'>
+                                                    <source src={message.videoUrl} type="video/mp4" />
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            ) : (
+                                                <div className={message.sender == userId ? 'border w-fit p-2 rounded-2xl bg-white ' : 'border w-fit p-2 rounded-2xl bg-white '}>
+                                                    {message.text?.split('\n').map((line, lineIndex) => (
+                                                        <h1 key={lineIndex}>
+                                                            {line}
+                                                            <br />
+                                                        </h1>
+                                                    ))}
+                                                </div>
+                                            )}
 
                                         <p className={message.sender == userId ? "text-xs text-gray-400 text-end pr-4" : 'text-xs text-gray-400 pl-3'}>{moment(message.createdAt).fromNow()}</p>
                                     </div>
