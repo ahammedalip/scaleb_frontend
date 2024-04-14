@@ -1,7 +1,7 @@
 import {  useState } from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom'
-
+import img from '../../../public/images/profileC.png'
 const Header:React.FC=()=> {
 
   const [showLoginDropdown, setShowLoginDropdown] = useState(false);
@@ -45,7 +45,7 @@ const Header:React.FC=()=> {
               <h1>Home</h1>
             </Link>
             <Link to='/retail/profile'>
-              <img src="../../../public/images/profileC.png" alt="" className='w-8 h-8 ' />
+              <img src={img} alt="" className='w-8 h-8 ' />
             </Link>
           </div>
         ) : isRetailerSalesLoggedIn ? (
@@ -54,7 +54,7 @@ const Header:React.FC=()=> {
               <h1>Home</h1>
             </Link>
             <Link to='/sales/profile'>
-              <img src="../../../public/images/profileC.png" alt="" className='w-8 h-8 ' />
+              <img src={img} alt="" className='w-8 h-8 ' />
             </Link>
           </div>
 
@@ -64,7 +64,7 @@ const Header:React.FC=()=> {
               <h1>Home</h1>
             </Link>
             <Link to='/production/profile'>
-              <img src="../../../public/images/profileC.png" alt="" className='w-8 h-8 ' />
+              <img src={img} alt="" className='w-8 h-8 ' />
             </Link>
           </div>
         ) : isSuperAdminloggedIn ? (
