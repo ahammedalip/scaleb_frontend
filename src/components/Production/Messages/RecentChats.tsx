@@ -84,7 +84,7 @@ export default function RecentChats({ conversation, id, onUserSelect }: Props) {
 
   return (
     <div>
-      <div className='bg-slate-200 flex justify-between items-center pl-7 text-lg rounded-full p-2 hover:bg-white hover:cursor-pointer duration-150 ease-in-out' onClick={() => { if (user) handleonclick(user) }} >
+      <div className='bg-slate-200 flex justify-between items-center sm:pl-7 text-lg rounded-full p-2 hover:bg-white hover:cursor-pointer duration-150 ease-in-out' onClick={() => { if (user) handleonclick(user) }} >
         <div className='w-[80%]'>
           <h1>{user?.username}</h1>
         </div>

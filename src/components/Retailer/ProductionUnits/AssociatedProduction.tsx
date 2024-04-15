@@ -28,12 +28,12 @@ function ProductionConnected() {
   }
 
   return (
-    <div className='bg-white rounded-lg shadow-md p-5'>
+    <div className='bg-white rounded-lg  shadow-md p-5'>
       <div className='text-center'>
         <h1 className='heading1 font-bold ' style={{fontSize:'20px',textShadow:'1px 3px 4px grey'}}>Connected Production Units</h1>
       </div>
 
-      <div className='profile text-center p-5 flex'>
+      <div className='profile text-center p-5 flex flex-col md:flex-row'>
         {ProductionList.map((unit:{
           _id:number,
           name: string,

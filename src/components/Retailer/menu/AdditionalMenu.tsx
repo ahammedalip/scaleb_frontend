@@ -50,7 +50,7 @@ function AdditionalMenu() {
                         </li>
                     </div>
 
-                    <div className='  hover:bg-pink-700/85 transition duration-1000 ease-in-out group'>
+                    {/* <div className='  hover:bg-pink-700/85 transition duration-1000 ease-in-out group'>
                         <li className='logout'>
                             <span className="inline-flex items-center pl-5 py-2">
 
@@ -61,7 +61,7 @@ function AdditionalMenu() {
                                 <h3 className="ml-2 group-hover:text-white">Reviews</h3>
                             </span>
                         </li>
-                    </div>
+                    </div> */}
 
                     <div className='  hover:bg-pink-700/85 transition duration-1000 ease-in-out group' onClick={handleLogout}>
                         <li className='logout'>

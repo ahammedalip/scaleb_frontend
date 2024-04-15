@@ -114,7 +114,7 @@ export default function RetailersList() {
   return (
     <div className='flex flex-col w-9/12 items-center space-y-6'>
 
-      <div className='space-x-5 items-center bg-gray-100 border w-full justify-center flex p-5 rounded-md shadow-md sm:flex-row'>
+      <div className='space-x-5 items-center bg-gray-200 border w-full justify-center flex flex-col space-y-4 p-5 rounded-md shadow-md md:flex-row'>
 
         <div className=' items-center justify-center flex flex-row border-2 border-gray-400/50 rounded-lg'>
           <input type="text"

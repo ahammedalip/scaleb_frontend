@@ -87,8 +87,11 @@ function Messages() {
     <div>
 
       <Header />
-      <div className='bg-red-50/40 max-h-screen min-h-screen pt-20 flex space-x-5 pb-5'>
-        <ProductionMenu />
+      <div className='flex flex-col-reverse sm:flex-row justify-start  bg-red-50/40 min-h-screen  pt-20 space-x-5'>
+        <div className=''>
+
+          <ProductionMenu />
+        </div>
         {premium == false ? (
 
           <div className='flex items-center justify-center h-60 bg-white rounded-lg shadow-lg p-5 w-9/12 bg-gradient-to-r from-zinc-200 to-gray-400'>
@@ -96,7 +99,8 @@ function Messages() {
           </div>
         ) : (
 
-          <div className='flex bg-white rounded-lg shadow-lg p-5 w-9/12 bg-gradient-to-r from-zinc-200 to-gray-400'>
+          <div className='flex bg-white rounded-lg shadow-lg p-2 sm:p-5 sm:w-9/12 bg-gradient-to-r from-zinc-200 to-gray-400 h-screen'>
+            
             <Chat selectedUser={selectedUser} />
             <ChatList onUserSelect={handleUserSelect} />
           </div>

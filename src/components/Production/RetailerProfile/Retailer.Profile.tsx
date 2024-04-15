@@ -162,7 +162,7 @@ export default function RetailerProf() {
 
 
   return (
-    <div className='bg-white rounded-lg shadow-lg flex flex-col items-center justify-center overflow-y-auto pb-3 w-9/12 pt-4'>
+    <div className='bg-white rounded-lg shadow-lg flex flex-col items-center justify-center overflow-y-auto pb-3  sm:w-9/12 pt-4'>
       {loading ? (
         <div className='p-5  h-40 flex flex-col items-center justify-center'>
           <ClipLoader color="rgb(10, 10, 10)" size={60} />

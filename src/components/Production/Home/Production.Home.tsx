@@ -32,7 +32,7 @@ function Productionhome() {
   }
 
   return (
-    <div className='bg-white rounded-md h-[95%] shadow-md opacity-95'
+    <div className='bg-white rounded-md h-[90%]  -mt-[135%] sm:-mt-0  shadow-md opacity-95'
       style={{
         backgroundImage: `url(${img1})`,
         backgroundSize: 'cover',

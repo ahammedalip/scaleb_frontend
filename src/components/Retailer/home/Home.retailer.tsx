@@ -39,7 +39,7 @@ function HomeRetailer() {
     }
   }
   return (
-    <div className='bg-white rounded-md shadow-md h-full'
+    <div className='bg-white rounded-md shadow-md h-full '
       style={{
         backgroundImage: `url(${img})`,
         backgroundPosition: 'center',

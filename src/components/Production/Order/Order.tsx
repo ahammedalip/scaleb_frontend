@@ -190,7 +190,7 @@ function Order() {
                                                     <h1 className='text-left pl-2'>Description:</h1>
                                                     <p className='text-left pl-2'>{order.description}</p>
                                                 </div>
-                                                <div className='px-5'>
+                                                <div className='px-5 overflow-x-auto'>
                                                     <h1>Images:</h1>
                                                     <div className='flex space-x-3 justify-center'>
                                                         {order.imageURL.map((url, idx) => (

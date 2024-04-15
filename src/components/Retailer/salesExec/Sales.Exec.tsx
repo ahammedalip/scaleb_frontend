@@ -87,7 +87,7 @@ function SalesList() {
   };
 
   return (
-    <div className='bg-white ml-14 w-4/6 shadow-lg rounded-lg'>
+    <div className='bg-white  shadow-lg rounded-lg'>
       <div className='flex justify-end items-center pt-5'>
         <p className='pr-6'>Add a new sales executive</p>
         <button

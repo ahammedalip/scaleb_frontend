@@ -5,15 +5,21 @@ import Order from '../../../components/Production/Order/Order'
 function Orders() {
   return (
     <div>
-        <Header/>
-        <div className='bg-red-50/40 min-h-screen pt-20 flex flex-col sm:flex-row space-y-5 sm:space-y-0 sm:space-x-5 pb-10'>
-      
-            <ProductionMenu/>
-            <Order/>
+      <Header />
+      <div className='flex flex-col-reverse sm:flex-row justify-start  bg-red-50/40 min-h-screen  pt-20 space-x-5'>
 
+        <div className='fixed bottom-8 sm:static md:w-1/4 w-full'>
+
+          <ProductionMenu />
         </div>
+     
 
-    </div>
+          <Order />
+  
+
+      </div>
+
+    </div >
   )
 }
 

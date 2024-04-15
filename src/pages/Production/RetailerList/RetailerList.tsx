@@ -5,11 +5,16 @@ import RetailersList from '../../../components/Production/RetailerProfile/Retail
 export default function RetailerList() {
   return (
     <div>
-        <Header/>
-        <div className='bg-red-50/40 min-h-screen pt-20 flex space-x-5'>
-                <ProductionMenu/>
-                <RetailersList/>
-            </div>
+      <Header />
+      <div className='flex flex-col-reverse sm:flex-row justify-start  bg-red-50/40 min-h-screen  pt-20 space-x-5'>
+        <div className='bottom-3 fixed sm:static md:w-1/4 w-full'>
+          <ProductionMenu />
+        </div>
+        <div className=''>
+
+        <RetailersList />
+        </div>
+      </div>
     </div>
   )
 }

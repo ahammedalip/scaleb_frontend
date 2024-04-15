@@ -293,7 +293,7 @@ function Chat({ selectedUser }: { selectedUser: SelectedUser }) {
     };
 
     return (
-        <div className='bg-slate-00 p-2 w-7/12' style={{ borderRight: '4px solid #6F6A69' }}>
+        <div className='bg-slate-00 p-2 w-7/12 h-[99%]' style={{ borderRight: '4px solid #6F6A69' }}>
 
             {selectedUser.username == undefined ? (
                 <div className='bg-white rounded-lg w-full py-4 px-2 space-y-2 flex flex-col' style={{ height: '85%' }}>

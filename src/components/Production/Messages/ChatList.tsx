@@ -101,7 +101,7 @@ function ChatList({ onUserSelect }:{onUserSelect: any}) {
   }
 
   return (
-    <div className='p-2 bg-gray-00 w-5/12'>
+    <div className='sm:p-2 bg-gray-00 w-5/12 '>
       <div className='text-center text-lg border-b-2 border-gray-400'>
         <h1>Chat List</h1>
       </div>
@@ -128,7 +128,7 @@ function ChatList({ onUserSelect }:{onUserSelect: any}) {
             username:string;
             _id: string
           }, index) => (
-            <div key={index} className='bg-slate-200 pl-7 text-lg rounded-full p-2 hover:bg-white hover:cursor-pointer duration-150 ease-in-out' onClick={() => createConversation(sales._id, sales.username)}>
+            <div key={index} className='bg-slate-200 sm:pl-7 text-lg rounded-full p-2 hover:bg-white hover:cursor-pointer duration-150 ease-in-out' onClick={() => createConversation(sales._id, sales.username)}>
               <h1>{sales.username}</h1>
             </div>
           ))}

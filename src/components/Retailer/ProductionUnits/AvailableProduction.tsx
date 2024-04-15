@@ -33,7 +33,7 @@ function ProductionAvailable() {
       <h1 className='heading1 font-bold ' style={{fontSize:'20px',textShadow:'1px 3px 4px grey', color:'black'}}>Production Companies Available for Connection</h1>
       </div>
 
-      <div className='profile text-center p-5 flex'>
+      <div className='profile text-center p-5 flex flex-col md:flex-row'>
         {availableProduction.map((unit:{
           _id:number,
           name: string,
