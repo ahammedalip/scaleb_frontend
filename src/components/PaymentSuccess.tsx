@@ -11,9 +11,7 @@ interface JwtPayload {
 }
 
 function PaymentSuccess() {
-  // const [id, setId] = useState('')
-  // const [token, setToken]= useState('')
-  // const [isLoading, setIsLoading] = useState(false);
+ 
 
   useEffect(() => {
     updateProfile()
@@ -21,7 +19,7 @@ function PaymentSuccess() {
   const updateProfile = async () => {
     // setIsLoading(true);
     const params = new URLSearchParams(location.search)
-    const duration = params.get('time')
+    const subPlanId = params.get('planId')
     // console.log('duration', duration)
     const retailerToken = localStorage.getItem('retailer_token')
     const productionToken = localStorage.getItem('production_token')
@@ -32,18 +30,17 @@ try{
     const decodedToken = jwtDecode<JwtPayload>(retailerToken)
     const id = decodedToken.id
     // setId(id)
-    const response = await api.patch(`/retailer/subscription?time=${duration}&id=${id}`)
+    const response = await api.patch(`/retailer/subscription?planId=${subPlanId}&id=${id}`)
     if(response.data.success){
       toast.success('Success')
     }
 
   } else if (productionToken) {
-    // console.log('production')
-    // setToken('production')
+   
     const decodedToken = jwtDecode<JwtPayload>(productionToken)
     const id = decodedToken.id
-    // setId(id)
-    const response = await api.patch(`/production/subscription?time=${duration}&id=${id}`)
+
+    const response = await api.patch(`/production/subscription?planId=${subPlanId}&id=${id}`)
     if(response.data.success){
       toast.success('Success')
     }

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import api from '../../../axios/api'
 import ClipLoader from 'react-spinners/ClipLoader'
 import toast from 'react-hot-toast'
-import img1 from '../../../../public/images/mid-century-modern-living-room-interior-design-with-monstera-tree (1).jpg'
+import img1 from '../../../../public/images/mid-century-modern-living-room-interior-design-with-monstera-tree.jpg'
 
 function Productionhome() {
   const [orderCount, setOrderCount] = useState(0)

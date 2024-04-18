@@ -6,20 +6,22 @@ import RetailerList from '../pages/SuperAdmin/RetailerList'
 import ProductionList from '../pages/SuperAdmin/ProductionList'
 import RevenueList from '../pages/SuperAdmin/RevenueList'
 import Report from '../pages/SuperAdmin/Report'
+import Subscription from '../pages/SuperAdmin/Subscription'
 
 function AdminRoutes() {
   return (
     <>
-    <Routes>
-        <Route path='/login' element = {<AdminLogin/>}/>
-        <Route element={<AdminPrivateRoute/>} >
-            <Route path='/home' element={<AdminHome/>}/>
-            <Route path='/retail' element={<RetailerList/>}/>
-            <Route path= '/prod' element = {<ProductionList/>}/>
-            <Route path='/revenue' element = {<RevenueList/>}/>
-            <Route path = '/report' element = {<Report/>}/>
+      <Routes>
+        <Route path='/login' element={<AdminLogin />} />
+        <Route element={<AdminPrivateRoute />} >
+          <Route path='/home' element={<AdminHome />} />
+          <Route path='/retail' element={<RetailerList />} />
+          <Route path='/prod' element={<ProductionList />} />
+          <Route path='/revenue' element={<RevenueList />} />
+          <Route path='/report' element={<Report />} />
+          <Route path='/subscriptions' element={<Subscription />} />
         </Route>
-    </Routes>
+      </Routes>
     </>
   )
 }

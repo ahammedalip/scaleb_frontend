@@ -55,6 +55,9 @@ function Messages() {
                     } else if (response.data.admin.active == undefined) {
                         console.log('coming to undefined')
                         setPremium(false)
+                    }else if(response.data.admin.active == false){
+                        setPremium(false)
+                        
                     }
                     
                 }
