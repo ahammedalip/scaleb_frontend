@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import UserModal from '../AddSalesExec';
 import api from '../../../axios/api';
-// import { jwtDecode } from 'jwt-decode'
-import { JwtPayload } from 'jwt-decode';
+
 import ClipLoader from 'react-spinners/ClipLoader'
 // import toast from 'react-hot-toast';
 
@@ -15,9 +14,7 @@ interface SalesExecList {
 
 }
 
-// interface CustomJwtPayload extends JwtPayload {
-//   id: string;
-// }
+
 
 function SalesList() {
   const [showModal, setShowModal] = useState<boolean>(false);
