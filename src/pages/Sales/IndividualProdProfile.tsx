@@ -6,11 +6,11 @@ function IndividualProdProfile() {
   return (
     <div>
         <Header/>
-        <div className='bg-red-50/40 pt-20 min-h-screen flex space-x-4'>
-          <div className='w-1/5'>
+        <div className='flex flex-col-reverse sm:flex-row justify-start  bg-red-50/40 min-h-screen  pt-20 space-x-5'>
+        <div className='fixed sm:static md:w-1/4 w-full bottom-2'>
             <SalesMenu/>
           </div>
-            <div className='w-9/12 pb-4'>
+            <div className='sm:w-9/12 pb-4 pr-5'>
             <IndProfileProd/>
             </div>           
 

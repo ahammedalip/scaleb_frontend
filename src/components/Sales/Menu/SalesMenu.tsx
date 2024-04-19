@@ -23,7 +23,7 @@ function SalesMenu() {
 
   }
   return (
-    <div className='w-full flex justify-center pl-4 '>
+    <div className='w-full flex justify-center '>
       <div className='bg-white py-2 flex flex-row rounded-lg shadow-lg'>
         <ul className='list-none flex sm:flex-col justify-evenly w-full'>
           <div className='group  hover:bg-pink-700 transition duration-1000 ease-in-out'>
