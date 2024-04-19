@@ -54,7 +54,7 @@ export default function Orders() {
     };
 
     return (
-        <div className='bg-white rounded-md text-center shadow-md sm:w-9/12 p-5'>
+        <div className='bg-white rounded-md text-center shadow-md  p-5'>
             <p className='p-5'>Orders</p>
             <div className='px-4'>
                 <div className=' flex flex-col  '>

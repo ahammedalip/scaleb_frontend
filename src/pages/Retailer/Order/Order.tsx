@@ -11,7 +11,7 @@ export default function RetailOrder() {
        <div className='fixed sm:static bottom-1 left-12'>
         <RetailerMenu />
        </div>
-       <div className='bottom-72'>
+       <div className='bottom-72 sm:w-9/12'>
 
         <Orders />
        </div>
