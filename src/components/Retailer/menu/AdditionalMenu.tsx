@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { TbUserDollar } from "react-icons/tb";
-import { FaHandshake } from "react-icons/fa";
+// import { FaHandshake } from "react-icons/fa";
 
 function AdditionalMenu() {
     const navigate = useNavigate()
