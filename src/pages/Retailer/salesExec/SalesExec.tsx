@@ -12,7 +12,7 @@ function SalesExec() {
 
       <RetailerMenu/>
         </div>
-        <div className='h-screen'>
+        <div className='h-screen sm:w-9/12'>
 
       <SalesList/>
         </div>

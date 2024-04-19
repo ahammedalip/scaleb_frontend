@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import UserModal from '../AddSalesExec';
 import api from '../../../axios/api';
-import { jwtDecode } from 'jwt-decode'
+// import { jwtDecode } from 'jwt-decode'
 import { JwtPayload } from 'jwt-decode';
 import ClipLoader from 'react-spinners/ClipLoader'
 // import toast from 'react-hot-toast';
@@ -15,21 +15,19 @@ interface SalesExecList {
 
 }
 
-interface CustomJwtPayload extends JwtPayload {
-  id: string;
-}
+// interface CustomJwtPayload extends JwtPayload {
+//   id: string;
+// }
 
 function SalesList() {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [adminId, setAdminId] = useState<string>()
+  // const [adminId, setAdminId] = useState<string>()
   const [salesExecList, setSalesExecList] = useState<SalesExecList[]>([]);
   const [loading, setLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
 
   useEffect(() => {
-
-    getToken();
     fetchSalesList(currentPage);
 
   }, [currentPage]);
@@ -37,7 +35,7 @@ function SalesList() {
   const fetchSalesList = async (page: number =1) => {
     try {
       setLoading(true)
-      const response = await api.get(`/retailer/sales_list?id=${adminId}&page=${page}`)
+      const response = await api.get(`/retailer/sales_list?page=${page}`)
       const userDetails = response.data
       // console.log(userDetails.salesExeclist);
       setSalesExecList(userDetails.salesExeclist);
@@ -50,15 +48,6 @@ function SalesList() {
     }
   };
 
-  const getToken = async () => {
-    const token = localStorage.getItem('retailer_token');
-    const decodedToken = token ? jwtDecode<CustomJwtPayload>(token) : null;
-    // console.log('here', decodedToken);
-    const id = decodedToken?.id;
-    // console.log('id is ', id);
-
-    setAdminId(id)
-  }
 
   const handleToggle = async (salesId: string, currentIsBlocked: boolean) => {
     // console.log('production', salesId);
