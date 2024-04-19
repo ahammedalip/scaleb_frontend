@@ -3,6 +3,8 @@ import UserModal from '../AddSalesExec';
 import api from '../../../axios/api';
 import { jwtDecode } from 'jwt-decode'
 import { JwtPayload } from 'jwt-decode';
+import ClipLoader from 'react-spinners/ClipLoader'
+// import toast from 'react-hot-toast';
 
 
 interface SalesExecList {
@@ -20,26 +22,31 @@ interface CustomJwtPayload extends JwtPayload {
 function SalesList() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [adminId, setAdminId] = useState<string>()
-  const [salesExecList, setSalesExecList] = useState<SalesExecList[]>([])
-
-  
+  const [salesExecList, setSalesExecList] = useState<SalesExecList[]>([]);
+  const [loading, setLoading] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
 
   useEffect(() => {
 
     getToken();
-    fetchSalesList();
+    fetchSalesList(currentPage);
 
-  }, [adminId]);
+  }, [currentPage]);
 
-  const fetchSalesList = async () => {
+  const fetchSalesList = async (page: number =1) => {
     try {
-      const response = await api.get(`/retailer/sales_list?id=${adminId}`)
+      setLoading(true)
+      const response = await api.get(`/retailer/sales_list?id=${adminId}&page=${page}`)
       const userDetails = response.data
       // console.log(userDetails.salesExeclist);
       setSalesExecList(userDetails.salesExeclist);
+      setTotalPages(userDetails.totalPages)
+      setLoading(false)
     } catch (error) {
       console.log('error at fetch list', error);
-
+      setLoading(false)
+      // toast.error('please try with different credentials')
     }
   };
 
@@ -66,7 +73,7 @@ function SalesList() {
       // console.log('coming here after api call');
       // console.log('response--->',response.data);
       if (response.status === 200) {
-         
+
         const updatedSalesList = response.data.userlist;
         setSalesExecList(updatedSalesList);
       } else {
@@ -79,7 +86,7 @@ function SalesList() {
 
   const handleOpenModal = () => {
     setShowModal(true);
-    
+
   };
 
   const handleCloseModal = (): void => {
@@ -99,55 +106,71 @@ function SalesList() {
           Add
         </button>
       </div>
-      <UserModal isOpen={showModal} onClose={handleCloseModal} />
+      <UserModal isOpen={showModal} onClose={handleCloseModal} fetchSalesList ={fetchSalesList}/>
 
       <div className="overflow-auto">
         <div className='p-4 '>
-          <div className="overflow-x-auto"> 
-            <table className="min-w-full divide-y divide-gray-200 border-black rounded-lg">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Username
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Email
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Is Blocked
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {salesExecList.map((exec, index) => (
-                  <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : ''}>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {exec?.username ?? ""}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {exec.email}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {exec.isBlocked ? 'Yes' : 'No'}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <label className="inline-flex items-center cursor-pointer">
-                        <input
-                          type="checkbox"
-                          className="sr-only peer"
-                          checked={exec.isBlocked}
-                          onChange={() => handleToggle(exec._id, exec.isBlocked)}
-                        />
-                        <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
-                      </label>
-                    </td>
+          <div className="overflow-x-auto">
+            {loading ? (
+              <div className='items-center flex justify-center'>
+                <ClipLoader />
+              </div>
+            ) : (
+
+              <table className="min-w-full divide-y divide-gray-200 border-black rounded-lg">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Username
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Email
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Is Blocked
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Action
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {salesExecList.map((exec, index) => (
+                    <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : ''}>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {exec?.username ?? ""}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {exec.email}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {exec.isBlocked ? 'Yes' : 'No'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <label className="inline-flex items-center cursor-pointer">
+                          <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            checked={exec.isBlocked}
+                            onChange={() => handleToggle(exec._id, exec.isBlocked)}
+                          />
+                          <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-red-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
+                        </label>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+            <div className='text-center justify-center flex space-x-5 pt-5'>
+            <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1} 
+             className="border rounded-full p-2 shadow-sm disabled:bg-white disabled:text-gray-500 disabled:cursor-not-allowed enabled:hover:bg-black enabled:hover:text-white"
+            >Prev</button>
+            <p className='pt-2'>{currentPage}</p>
+            <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages} 
+            className="border rounded-full p-2 shadow-sm disabled:bg-white disabled:text-gray-500 disabled:cursor-not-allowed enabled:hover:bg-black enabled:hover:text-white"
+            >Next</button>
+          </div>
           </div>
         </div>
       </div>

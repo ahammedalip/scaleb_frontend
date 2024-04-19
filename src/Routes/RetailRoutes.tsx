@@ -10,6 +10,7 @@ import ProductionProfile from '../pages/Retailer/ProductionProfile/ProductionPro
 import RetailOrder from '../pages/Retailer/Order/Order'
 import Subscription from '../pages/Retailer/subscription/Subscription'
 import Report from '../pages/Retailer/Report'
+import AvailableProd from '../pages/Retailer/ProductionList/AvailableProd'
 
 function RetailRoutes() {
   return (
@@ -20,7 +21,8 @@ function RetailRoutes() {
         <Route element={<RetailerPrivateRoute />}>
           <Route path='/home' element={<RetailerHome />} />
           <Route path='/sales_exec' element={<SalesExec />} />
-          <Route path='/prod_unit' element={<ProductionList />} />
+          <Route path='/conn_prod_unit' element={<ProductionList />} />
+          <Route path='/avail_prod_unit' element={<AvailableProd />} />
           <Route path='/profile' element={<ProfilePage />} />
           <Route path='/prod/ind-profile' element={<ProductionProfile />} />
           <Route path='/order' element={<RetailOrder />} />

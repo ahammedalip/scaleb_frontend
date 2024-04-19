@@ -76,13 +76,6 @@ function ExistingOrders() {
   const [totalPages, setTotalPages] = useState(1)
   const [loading, setLoading] = useState(false)
 
-  // const [errorMessages, setErrorMessages] = useState({
-  //   production: '',
-  //   product: '',
-  //   date: '',
-  //   quantity: '',
-  // });
-
 
   const handleOpen = (order: Order) => {
     setOrderId(order._id)
@@ -93,7 +86,6 @@ function ExistingOrders() {
     setOpen(true)
     console.log(orderId)
   }
-
 
   const handleClose = () => {
     fetchOrders()
@@ -161,7 +153,6 @@ function ExistingOrders() {
 
     }
   }
-
 
 
   const fetchOrders = async (page: number = 1) => {

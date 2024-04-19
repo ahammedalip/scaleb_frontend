@@ -201,59 +201,6 @@ const SubscriptionPlans: React.FC<SubscriptionPlansProps> = ({ role }) => {
         }
     }
 
-    // const handleOneYear = async () => {
-    //     const stripe = await loadStripe(import.meta.env.VITE_PUBLISHABLE_KEY)
-    //     if (role === 'retailer') {
-    //         const token = localStorage.getItem('retailer_token');
-    //         if (token) {
-    //             const decodedToken = jwtDecode<JwtPayload>(token);
-    //             console.log(decodedToken)
-    //             const id = decodedToken.id
-    //             try {
-    //                 const response = await api.post('/stripe/create-checkout-session-one', {
-    //                     userId: id
-    //                 });
-    //                 const sessionId = response.data.id; // Adjust this line based on your actual API response structure
-    //                 // Redirect to Stripe Checkout
-    //                 stripe?.redirectToCheckout({
-    //                     sessionId: sessionId,
-    //                     // Redirect the user to the Stripe Checkout page using the session ID
-    //                 }).then(function (result) {
-    //                     // If `redirectToCheckout` fails due to a browser or network
-    //                     if (result.error) {
-    //                         alert(result.error.message);
-    //                     }
-    //                 });
-    //             } catch (error) {
-    //                 console.error("Error processing payment:", error);
-    //             }
-    //         }
-    //     }
-    //     if (role == 'production') {
-    //         const token = localStorage.getItem('production_token');
-    //         if (token) {
-    //             const decodedToken = jwtDecode<JwtPayload>(token);
-    //             console.log(decodedToken)
-    //             const id = decodedToken.id
-    //             try {
-    //                 const response = await api.post('/stripe/create-checkout-session-one', {
-    //                     userId: id
-    //                 });
-    //                 const sessionId = response.data.id; // Adjust this line based on your actual API response structure
-    //                 // Redirect to Stripe Checkout
-    //                 stripe?.redirectToCheckout({
-    //                     sessionId: sessionId,
-    //                 }).then(function (result) {
-    //                     if (result.error) {
-    //                         alert(result.error.message);
-    //                     }
-    //                 });
-    //             } catch (error) {
-    //                 console.error("Error processing payment:", error);
-    //             }
-    //         }
-    //     }
-    // }
 
     return (
         <div className='bg-white rounded-md shadow-md p-5 justify-center w-9/12flex'>
@@ -310,39 +257,7 @@ const SubscriptionPlans: React.FC<SubscriptionPlansProps> = ({ role }) => {
                                         </div>
                                     </div>
                                 ))}
-                                {/* <div className="rounded-3xl border bg-gradient-to-b from-red-400 to-red-50 p-4 text-center ">
-                                    <h1 style={{ fontSize: '1.2rem' }}>6 Month Plan</h1>
-                                    <h1 className="font-bold" style={{ fontSize: '2rem', }} >249.00 $  </h1>
-                                    <h1 className="font-bold" style={{ fontSize: '1.5rem' }}>/month</h1>
-                                    <div className="text-left pt-10 pl-3 space-y-2 text-gray-800">
-                                        <p className="p-1 underline">Features</p>
-                                        <span style={{ display: 'inline-flex', alignItems: 'center' }}><TbPointFilled /><p></p></span>6 months plan
-                                        <span style={{ display: 'inline-flex', alignItems: 'center', fontSize: '' }}><TbPointFilled style={{ fontSize: '1.4rem' }} /><p>Unlimited association with retailer/production</p></span>
-                                        <span style={{ display: 'inline-flex', alignItems: 'center' }}><TbPointFilled style={{ fontSize: '1.4rem' }} /><p>Real time messaging with connections</p></span>
-                                    </div>
-                                    <div className="pt-10">
-
-                                        <button
-                                            className="bg-yellow-400 p-2 rounded-full shadow-md hover:bg-black hover:text-yellow-400"
-                                            onClick={handleSixMonth} >Subscribe</button>
-
-                                    </div>
-                                </div>
-
-                                <div className="rounded-3xl border bg-gradient-to-b from-amber-300 to-amber-50 p-4 text-center ">
-                                    <h1 style={{ fontSize: '1.2rem' }}>1 Year Plan</h1>
-                                    <h1 className="font-bold" style={{ fontSize: '2rem', }} >399.00 $</h1>
-                                    <h1 className="font-bold" style={{ fontSize: '1.5rem' }}>/month</h1>
-                                    <div className="text-left pt-10 pl-3 space-y-2 text-gray-800">
-                                        <p className="p-1 underline">Features</p>
-                                        <span style={{ display: 'inline-flex', alignItems: 'center' }}><TbPointFilled /><p>1 year plan</p></span>
-                                        <span style={{ display: 'inline-flex', alignItems: 'center' }}><TbPointFilled style={{ fontSize: '1.4rem' }} /><p>Unlimited association with retailer/production</p></span>
-                                        <span style={{ display: 'inline-flex', alignItems: 'center' }}><TbPointFilled style={{ fontSize: '1.4rem' }} /><p>Real time messaging with connections</p></span>
-                                    </div>
-                                    <div className="pt-10">
-                                        <button onClick={handleOneYear} className="bg-yellow-400 p-2  rounded-full shadow-md hover:bg-black hover:text-yellow-400">Subscribe</button>
-                                    </div>
-                                </div> */}
+                                
 
                             </div>
                             )}

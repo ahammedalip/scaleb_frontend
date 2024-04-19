@@ -4,10 +4,12 @@ import { useForm } from 'react-hook-form'
 import api from '../../axios/api';
 import { jwtDecode } from 'jwt-decode'
 import toast from 'react-hot-toast';
+import ClipLoader from 'react-spinners/ClipLoader'
 
 interface UserModalProps {
     isOpen: boolean;
     onClose: () => void;
+    fetchSalesList: () => void
 }
 
 interface JwtPayload {
@@ -15,10 +17,11 @@ interface JwtPayload {
     validUser: string;
 }
 
-const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
+const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose, fetchSalesList }) => {
     const [id, setId] = useState('')
     const [retailerUsername, setRetailerUsername] = useState('')
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         getToken()
@@ -28,7 +31,7 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
     const getToken = async () => {
         const token = localStorage.getItem('retailer_token');
         if (token) {
-            const decodedToken =  jwtDecode<JwtPayload>(token)
+            const decodedToken = jwtDecode<JwtPayload>(token)
             if (decodedToken) {
                 setId(decodedToken.id)
                 setRetailerUsername(decodedToken.validUser)
@@ -39,6 +42,7 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
     const onSubmit = async (data: any) => {
         try {
             console.log(data);
+            setLoading(true)
             const response = await api.post('/retailer/add_sales', { data, id }, {
                 headers: {
                     "Content-Type": 'application/json'
@@ -48,10 +52,17 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
             console.log('result from here adding sales exec', result);
             if (result.success === true) {
                 toast.success('Sales executive added successfully!')
+                setLoading(false)
                 onClose()
+
+                fetchSalesList()
+            } else if (!result.success) {
+                toast.error(result.message)
+                setLoading(false)
             }
         } catch (error) {
             console.log('error at post', error);
+            // toast.error(response.data.message)
         }
 
     };
@@ -129,12 +140,18 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose }) => {
                                     >
                                         Close
                                     </button>
-                                    <button
-                                        className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                        type="submit"
-                                    >
-                                        Add
-                                    </button>
+                                    {loading ? (
+                                        <button className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                                            <ClipLoader />
+                                        </button>
+                                    ) : (
+                                        <button
+                                            className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                            type="submit"
+                                        >
+                                            Add
+                                        </button>
+                                    )}
                                 </div>
                             </form>
                         </div>

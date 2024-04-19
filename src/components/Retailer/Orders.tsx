@@ -1,45 +1,48 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../../axios/api';
 import toast from 'react-hot-toast';
 import ClipLoader from "react-spinners/ClipLoader";
 
 interface Order {
     _id: string;
-    item:string;
-    quantity:string;
-    scheduledDate:Date;
-    status:string;
+    item: string;
+    quantity: string;
+    scheduledDate: Date;
+    status: string;
     accepted: boolean;
-    description:string;
+    description: string;
     productionId: {
         productionName: string;
-      
+
     };
     salesExecId: {
+        _id: string
         username: string;
-      
+
     };
-   
+
 }
 
 export default function Orders() {
-    const [orders, setOrders] = useState <Order[]>([]);
+    const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(1)
 
     useEffect(() => {
-        fetchOrder();
-    }, []);
+        fetchOrder(currentPage);
+    }, [currentPage]);
 
-    const fetchOrder = async () => {
+    const fetchOrder = async (page: number = 1) => {
         setLoading(true);
         const token = localStorage.getItem('retailer_token');
         if (token) {
-            const decodedToken = decodeJWT(token);
-            const decodedId = decodedToken.id;
             try {
-                const response = await api.get(`/retailer/getOrder?id=${decodedId}`);
+                const response = await api.get(`/retailer/getOrder?page=${page}`);
                 if (response.data.success) {
                     setOrders(response.data.orders);
+                    setTotalPages(response.data.totalPages)
+                    // console.log(response.data.orders)
                     setLoading(false);
                 }
             } catch (error) {
@@ -49,17 +52,6 @@ export default function Orders() {
             }
         }
     };
-
-    function decodeJWT(token:string) {
-        const parts = token.split('.');
-        if (parts.length !== 3) {
-            throw new Error('Invalid token format');
-        }
-        const base64Url = parts[1];
-        const base64 = base64Url.replace('-', '+').replace('_', '/');
-        const payload = JSON.parse(window.atob(base64));
-        return payload;
-    }
 
     return (
         <div className='bg-white rounded-md text-center shadow-md sm:w-9/12 p-5'>
@@ -77,8 +69,8 @@ export default function Orders() {
 
                                     <div key={order._id} className='flex flex-col bg-gradient-to-r from-stone-100 to-stone-50 p-5 rounded-md '>
                                         <div className='flex justify-evenly'>
-                                            <h1>Production name: {order.productionId.productionName}</h1>
-                                            <h1>Sales exec: {order.salesExecId.username}</h1>
+                                            <h1>Production name: {order.productionId?.productionName}</h1>
+                                            <h1>Sales exec: {order.salesExecId?.username}</h1>
                                         </div>
                                         <div className='flex justify-evenly'>
                                             <h1>Item: {order.item}</h1>
@@ -87,14 +79,23 @@ export default function Orders() {
                                             <h1>Status: {order.status}</h1>
                                             <h1>Payment: {order.accepted}</h1>
                                         </div>
-                                        <div className='flex justify-evenly px-3 p-3'>
+                                        {/* <div className='flex justify-evenly px-3 p-3'>
                                             <div className='bg-slate-50 rounded-md p-2 '>
                                                 <p>Description: {order.description}</p>
                                             </div>
 
-                                        </div>
+                                        </div> */}
                                     </div>
                                 ))}
+                            </div>
+                            <div className='text-center justify-center flex space-x-5 pt-5'>
+                                <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}
+                                    className="border rounded-full p-2 shadow-sm disabled:bg-white disabled:text-gray-500 disabled:cursor-not-allowed enabled:hover:bg-black enabled:hover:text-white"
+                                >Prev</button>
+                                <p className='pt-2'>{currentPage}</p>
+                                <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}
+                                    className="border rounded-full p-2 shadow-sm disabled:bg-white disabled:text-gray-500 disabled:cursor-not-allowed enabled:hover:bg-black enabled:hover:text-white"
+                                >Next</button>
                             </div>
 
                         </>
