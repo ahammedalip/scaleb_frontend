@@ -6,9 +6,12 @@ function AdminHome() {
   return (
     <div className=''>
       <Header />
-      <div className='flex bg-red-50/40 space-x-5 pt-20 h-screen'>
+      <div className='flex flex-col-reverse sm:flex-row justify-start  bg-red-50/40 min-h-screen  pt-20 space-x-5'>
+        <div className='fixed sm:static bottom-1'>
+
         <Menu />
-        <div className='w-9/12 '>
+        </div>
+        <div className='w-9/12 h-screen'>
 
         <Admnhome />
         </div>

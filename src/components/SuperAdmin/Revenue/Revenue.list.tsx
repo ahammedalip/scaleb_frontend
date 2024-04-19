@@ -64,7 +64,7 @@ export default function Revenuelist() {
     }
 
     return (
-        <div className='bg-white rounded-md shadow-md w-9/12'
+        <div className='bg-white rounded-md shadow-md '
             style={{
                 backgroundImage: `url(${img})`,
                 backgroundSize: 'cover',

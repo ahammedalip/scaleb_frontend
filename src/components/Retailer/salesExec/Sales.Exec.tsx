@@ -29,7 +29,7 @@ function SalesList() {
 
   }, [currentPage]);
 
-  const fetchSalesList = async (page: number =1) => {
+  const fetchSalesList = async (page: number = 1) => {
     try {
       setLoading(true)
       const response = await api.get(`/retailer/sales_list?page=${page}`)
@@ -80,7 +80,7 @@ function SalesList() {
   };
 
   return (
-    <div className='bg-white  shadow-lg rounded-lg'>
+    <div className='bg-white  shadow-lg rounded-lg '>
       <div className='flex justify-end items-center pt-5'>
         <p className='pr-6'>Add a new sales executive</p>
         <button
@@ -92,18 +92,17 @@ function SalesList() {
           Add
         </button>
       </div>
-      <UserModal isOpen={showModal} onClose={handleCloseModal} fetchSalesList ={fetchSalesList}/>
+      <UserModal isOpen={showModal} onClose={handleCloseModal} fetchSalesList={fetchSalesList} />
 
-      <div className="overflow-auto">
-        <div className='p-4 '>
-          <div className="overflow-x-auto">
-            {loading ? (
-              <div className='items-center flex justify-center'>
-                <ClipLoader />
-              </div>
-            ) : (
-
-              <table className="min-w-full divide-y divide-gray-200 border-black rounded-lg">
+      <div className="">
+        <div className="p-5">
+          {loading ? (
+            <div className='items-center flex justify-center'>
+              <ClipLoader />
+            </div>
+          ) : (
+            <div className=''>
+              <table className="min-w-full divide-y divide-gray-200 border-black rounded-lg overflow-x-scroll">
                 <thead className="bg-gray-50">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -147,18 +146,19 @@ function SalesList() {
                   ))}
                 </tbody>
               </table>
-            )}
-            <div className='text-center justify-center flex space-x-5 pt-5'>
-            <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1} 
-             className="border rounded-full p-2 shadow-sm disabled:bg-white disabled:text-gray-500 disabled:cursor-not-allowed enabled:hover:bg-black enabled:hover:text-white"
+            </div>
+          )}
+          <div className='text-center justify-center flex space-x-5 pt-5'>
+            <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}
+              className="border rounded-full p-2 shadow-sm disabled:bg-white disabled:text-gray-500 disabled:cursor-not-allowed enabled:hover:bg-black enabled:hover:text-white"
             >Prev</button>
             <p className='pt-2'>{currentPage}</p>
-            <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages} 
-            className="border rounded-full p-2 shadow-sm disabled:bg-white disabled:text-gray-500 disabled:cursor-not-allowed enabled:hover:bg-black enabled:hover:text-white"
+            <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}
+              className="border rounded-full p-2 shadow-sm disabled:bg-white disabled:text-gray-500 disabled:cursor-not-allowed enabled:hover:bg-black enabled:hover:text-white"
             >Next</button>
           </div>
-          </div>
         </div>
+
       </div>
 
 

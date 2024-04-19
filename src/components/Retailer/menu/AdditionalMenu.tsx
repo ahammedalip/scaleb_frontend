@@ -39,7 +39,7 @@ function AdditionalMenu() {
                             </Link>
                         </li>
                     </div>
-                    <div className='group  hover:bg-pink-700/85 transition duration-1000 ease-in-out'>
+                    {/* <div className='group  hover:bg-pink-700/85 transition duration-1000 ease-in-out'>
                         <li className='Subscriptions'>
                             <Link to='/retailer/requests' className='flex items-center py-2'>
                                 <span className='inline-flex items-center pl-5'>
@@ -48,7 +48,7 @@ function AdditionalMenu() {
                                 </span>
                             </Link>
                         </li>
-                    </div>
+                    </div> */}
 
                     {/* <div className='  hover:bg-pink-700/85 transition duration-1000 ease-in-out group'>
                         <li className='logout'>

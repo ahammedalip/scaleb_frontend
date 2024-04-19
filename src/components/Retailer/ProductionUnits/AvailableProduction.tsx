@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react';
 import api from '../../../axios/api';
 import { useNavigate } from 'react-router-dom';
 import img from '../../../../public/images/Product_pro.png'
+import ClipLoader from 'react-spinners/ClipLoader'
+import toast from 'react-hot-toast';
 
 function ProductionAvailable() {
   const [availableProduction, setAvailableProduction] = useState([]);
+  const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate()
 
@@ -14,13 +17,17 @@ function ProductionAvailable() {
 
   const fetchAvailableUsers = async () => {
     try {
+      setLoading(true)
       const response = await api.get('/retailer/available');
       const result = response.data;
       console.log('result her', result.availableProduction);
       setAvailableProduction(result.availableProduction)
+      setLoading(false)
       // You might want to set the result to your state here
     } catch (error) {
       console.log('error fetching available productions', error)
+      setLoading(false)
+      toast.error('Please refresh again')
     }
   }
   const handleViewClick = (id: number) => {
@@ -32,8 +39,12 @@ function ProductionAvailable() {
       <div className='text-center'>
         <h1 className='heading1 font-bold ' style={{ fontSize: '20px', textShadow: '1px 3px 4px grey', color: 'black' }}>Production Companies Available for Connection</h1>
       </div>
-
-      <div className='profile text-center p-5 flex flex-col md:flex-row'>
+      {loading ? (
+        <div className='h-28 items-center justify-center flex'>
+          <ClipLoader/>
+        </div>
+      ):(        
+        <div className='profile text-center p-5 flex flex-col md:flex-row'>
         {availableProduction.map((unit: {
           _id: number,
           name: string,
@@ -50,6 +61,7 @@ function ProductionAvailable() {
           </div>
         ))}
       </div>
+      )}
       <div className='text-center justify-center flex space-x-5 pt-5'>
         <button disabled
           className="border rounded-full p-2 shadow-sm disabled:bg-white disabled:text-gray-500 disabled:cursor-not-allowed enabled:hover:bg-black enabled:hover:text-white"

@@ -81,15 +81,15 @@ export default function Subscription() {
     return (
         <div>
             <Header />
-            <div className="bg-red-50/40 pt-20 space-x-5 h-screen flex">
-                <div className="w-1/4">
+            <div className='flex flex-col-reverse sm:flex-row justify-start  bg-red-50/40 min-h-screen  pt-20 space-x-5'>
+        <div className='fixed sm:static bottom-1'>
 
                     <Menu />
                 </div>
-                <div className="bg-white rounded-md shadow-md w-[90%] p-5 text-center space-y-5">
+                <div className="bg-white rounded-md shadow-md w-[90%] p-5 text-center h-screen space-y-5">
 
                     <h1 className="font-semibold" style={{ fontSize: '1.2rem' }}>Subscription Plans</h1>
-                    <div className="border p-4 rounded-lg bg-gradient-to-bl from-red-200 via-orange-300 to-red-400">
+                    <div className="border p-4 rounded-lg bg-gradient-to-bl from-red-200 via-orange-300 to-red-400 overflow-x-scroll">
                         <h1>Plans</h1>
 
                         <div>

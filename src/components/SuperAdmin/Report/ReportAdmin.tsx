@@ -29,9 +29,9 @@ export default function ReportAdmin() {
     };
 
     return (
-        <div className='bg-white rounded-md shadow-md w-9/12'>
+        <div className='bg-white rounded-md shadow-md'>
             <div className='p-5'>
-                <div className='border rounded-md w-fit text-center'>
+                <div className='border rounded-md w-fit text-center overflow-x-auto'>
                     <h1>Revenue collected</h1>
                     {revenue.length > 0 && (
 

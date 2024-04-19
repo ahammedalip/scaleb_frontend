@@ -6,9 +6,14 @@ export default function RevenueList() {
     return (
         <div>
             <Header />
-            <div className='bg-red-50/40 pt-20 h-screen flex space-x-5'>
+            <div className='flex flex-col-reverse sm:flex-row justify-start  bg-red-50/40 min-h-screen  pt-20 space-x-5'>
+        <div className='fixed sm:static bottom-1'>
                 <Menu/>
+                </div>
+                <div className='sm:w-9/12 h-screen'>
+
                 <Revenuelist />
+                </div>
 
             </div>
 

@@ -52,7 +52,7 @@ export default function RetailerReport() {
   };
 
   return (
-    <div className='bg-white sm:w-9/12 rounded-md shadow-md'>
+    <div className='bg-white  rounded-md shadow-md'>
       <div className='p-5 items-center justify-center flex flex-col space-y-7 overflow-x-auto'>
         {loading ? (
           <div className='w-full h-[80%] items-center justify-center flex'>
