@@ -39,7 +39,7 @@ function ProductionList() {
   }
 
   return (
-    <div className='bg-white rounded-lg shadow-md p-5  w-9/12 space-y-4'>
+    <div className='bg-white rounded-lg shadow-md p-5  space-y-4'>
       <div className='text-center'>
         <h1 className='heading1' style={{ fontSize: '1.5rem' }}>Available Production Units</h1>
 

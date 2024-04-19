@@ -39,7 +39,7 @@ export default function ReportSales() {
   }
 
   return (
-    <div className='rounded-md shadow-md bg-white w-[80% h-[95%] '
+    <div className='rounded-md shadow-md bg-white  '
       style={{
         backgroundImage: `url(${img1})`,
         backgroundPosition: 'center',

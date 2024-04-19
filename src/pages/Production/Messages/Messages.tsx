@@ -99,7 +99,7 @@ function Messages() {
           </div>
         ) : (
 
-          <div className='flex bg-white rounded-lg shadow-lg p-2 sm:p-5 sm:w-9/12 bg-gradient-to-r from-zinc-200 to-gray-400 h-screen'>
+          <div className='flex bg-white rounded-lg shadow-lg p-2 sm:p-5 sm:w-9/12 bg-gradient-to-r from-zinc-200 to-gray-400 h-[600px]'>
             
             <Chat selectedUser={selectedUser} />
             <ChatList onUserSelect={handleUserSelect} />

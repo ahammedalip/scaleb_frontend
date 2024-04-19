@@ -11,7 +11,7 @@ export default function Report() {
                     <ProductionMenu />
                 </div>
 
-                <div className='sm:w-9/12'>
+                <div className='sm:w-9/12 h-screen'>
 
                     <ReportsProd />
                 </div>

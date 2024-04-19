@@ -36,7 +36,7 @@ export default function RecentChats({ conversation, id, onUserSelect }: Props) {
       try {
         const response = await api.post(`/production/sales-prof`, { salesId });
         if (response.data.success) {
-          // console.log('sales exec', response.data.salesExecutive);
+          console.log('sales exec', response.data.salesExecutive);
           setUser(response.data.salesExecutive)
         }
       } catch (error) {

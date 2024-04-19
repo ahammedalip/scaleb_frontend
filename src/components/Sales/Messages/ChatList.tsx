@@ -134,7 +134,7 @@ function ChatList({ onUserSelect }: { onUserSelect: any }) {
             _id: string;
           }, index) => {
             return (
-              <div key={index} className='bg-slate-200 pl-7 text-lg rounded-full p-2 hover:bg-white hover:cursor-pointer duration-150 ease-in-out' onClick={() => createConversation(production._id, production.productionName)}>
+              <div key={index} className='bg-slate-200 pl-2 sm:pl-7 text-lg rounded-full p-2 hover:bg-white hover:cursor-pointer duration-150 ease-in-out' onClick={() => createConversation(production._id, production.productionName)}>
                 <h1>{production.productionName}</h1>
 
               </div>

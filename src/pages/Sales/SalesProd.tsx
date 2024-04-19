@@ -5,12 +5,17 @@ import ProductionList from '../../components/Sales/ProductionList/ProductionList
 function SalesProd() {
   return (
     <div>
-        <Header/>
-        <div className='bg-red-50/40 flex space-x-4 pt-20 min-h-screen'>
-            <SalesMenu/>
-            <ProductionList/>
-
+      <Header />
+      <div className='flex flex-col-reverse sm:flex-row justify-start  bg-red-50/40 min-h-screen  pt-20 space-x-5'>
+        <div className='fixed sm:static md:w-1/4 w-full bottom-2'>
+          <SalesMenu />
         </div>
+        <div className='sm:w-9/12'>
+
+        <ProductionList />
+        </div>
+
+      </div>
     </div>
   )
 }

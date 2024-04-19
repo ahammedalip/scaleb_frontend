@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import api from '../../../axios/api';
 import ClipLoader from "react-spinners/ClipLoader";
 import RecentChats from './RecentChats';
@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 
 
-function ChatList({ onUserSelect }:{onUserSelect: any}) {
+function ChatList({ onUserSelect }: { onUserSelect: any }) {
   const [conversations, setConversations] = useState([])
   const [salesList, setSalesList] = useState<{ _id: string; username: string }[]>([]);
   const [loading, setLoading] = useState(false)
@@ -27,7 +27,7 @@ function ChatList({ onUserSelect }:{onUserSelect: any}) {
         setId(decoded.id)
         const response = await api.get(`/conversation/${decoded.id}`)
         if (response.data.success == true) {
-
+          console.log('conversations', response.data.conversation)
           setConversations(response.data.conversation)
           setLoading(false)
         }
@@ -88,8 +88,8 @@ function ChatList({ onUserSelect }:{onUserSelect: any}) {
         console.log(response.data)
         fetchRecentConversations()
       }
-      const user ={
-        _id:salesId,
+      const user = {
+        _id: salesId,
         username: username
       }
       onUserSelect(user)
@@ -122,12 +122,12 @@ function ChatList({ onUserSelect }:{onUserSelect: any}) {
 
           <h1>Available Chats</h1>
           {salesList.filter((sales) => {
-            return !conversations.some((conv:any) => conv.members.includes(sales._id));
+            return !conversations.some((conv: any) => conv.members.includes(sales._id));
           }).map((sales:
             {
-            username:string;
-            _id: string
-          }, index) => (
+              username: string;
+              _id: string
+            }, index) => (
             <div key={index} className='bg-slate-200 sm:pl-7 text-lg rounded-full p-2 hover:bg-white hover:cursor-pointer duration-150 ease-in-out' onClick={() => createConversation(sales._id, sales.username)}>
               <h1>{sales.username}</h1>
             </div>

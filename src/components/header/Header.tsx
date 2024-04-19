@@ -53,9 +53,9 @@ const Header:React.FC=()=> {
             <Link to='/sales/home'>
               <h1>Home</h1>
             </Link>
-            <Link to='/sales/profile'>
+            {/* <Link to='/sales/profile'>
               <img src={img} alt="" className='w-8 h-8 ' />
-            </Link>
+            </Link> */}
           </div>
 
         ) : isProductionLoggedIn ? (
