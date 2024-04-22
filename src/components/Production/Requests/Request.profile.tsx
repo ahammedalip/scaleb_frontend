@@ -17,8 +17,8 @@ interface Profile {
 export default function RequestProfile() {
 
     const [loading, setLoading] = useState(false)
+    const [buttonClickLoading, setButtonClickLoading] = useState(false)
     const [retailerProf, setRetailerProf] = useState<Profile>({} as Profile)
-    const [buttonClick, setButtonClick] = useState(false)
 
     useEffect(() => {
         fetchProfile()
@@ -44,10 +44,12 @@ export default function RequestProfile() {
         }
     }
 
-    const handleAccept = async (profileId: string) => {
+    const handleAccept = async () => {
         try {
-            setButtonClick(true)
-            const response = await api.post(`/production/acc-req`, { profileId })
+            setButtonClickLoading(true)
+            const id = retailerProf._id
+            console.log('id is ', id)
+            const response = await api.post(`/production/acc-req`, { id })
 
             const data = response.data;
             if (data.success == true && data.message == 'already connected') {
@@ -55,6 +57,7 @@ export default function RequestProfile() {
                 navigate('/production/requests')
             } else if (data.success == true && data.message == 'User connected') {
                 toast.success('Succesfully connected')
+                setButtonClickLoading(false)
                 navigate('/production/requests')
             }
             else {
@@ -62,22 +65,27 @@ export default function RequestProfile() {
             }
         } catch (error) {
             console.log('Error while accepting request')
+            setButtonClickLoading(false)
             toast.error('Error! please try again')
         }
     }
 
-    const handleReject = async (profileId: string) => {
+    const handleReject = async () => {
         try {
-            setButtonClick(true)
+            setButtonClickLoading(true)
+            const profileId = retailerProf._id
             const response = await api.delete(`/production/delete-req?id=${profileId}`);
 
             if (response.data.success) {
                 toast.success(response.data.message)
+                setButtonClickLoading(false)
                 navigate('/production/requests')
             }
         } catch (error) {
             console.log('error in rejecting the request')
             toast.error('Something went wrong, please try again')
+            setButtonClickLoading(false)
+
         }
     }
 
@@ -94,12 +102,24 @@ export default function RequestProfile() {
                         <img src={img} alt="" className='w-36 rounded-xl shadow-slate-800 shadow-md' />
                     </div>
                     <h1 className='text-center font-bold  p-5 productionName' style={{ fontSize: '32px' }}>{retailerProf.retailerName}</h1>
-                    {!buttonClick ? (
-                        <div className='space-x-5'>
-                            <button className='p-2 bg-green-500 rounded-md shadow-md hover:bg-green-700 hover:text-white' onClick={() => handleAccept(retailerProf._id)}>Accept request</button>
-                            <button className='p-2 bg-red-500 rounded-md shadow-md hover:bg-red-700 hover:text-white' onClick={() => handleReject(retailerProf._id)}>Reject request</button>
-                        </div>
-                    ) : null}
+                  
+                        <>
+                            {buttonClickLoading ? (
+
+                                <div>
+                                    <div className='space-x-5'>
+                                        <button className='p-1 bg-slate-300 rounded-md shadow-md  hover:text-white w-40' ><ClipLoader /></button>
+                                    </div>
+
+                                </div>
+                            ) : (
+
+                                <div className='space-x-5'>
+                                    <button className='p-2 bg-green-500 rounded-md shadow-md hover:bg-green-700 hover:text-white' onClick={handleAccept}>Accept request</button>
+                                    <button className='p-2 bg-red-500 rounded-md shadow-md hover:bg-red-700 hover:text-white' onClick={handleReject}>Reject request</button>
+                                </div>
+                            )}
+                        </>
 
                     <div className='p-8'>
                         <div className='border-2 rounded-lg bg-red-50/40 border-pink-700/10 p-5 box-border text-center description min-w-80'>
