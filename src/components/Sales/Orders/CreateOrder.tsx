@@ -15,36 +15,17 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { app } from '../../../firebase/firebaseConfig'
 import { FormHelperText } from '@mui/material';
 import toast from 'react-hot-toast';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 interface Production {
   _id: string;
   productionName: string;
   availableItems: string[];
 }
-// interface Order {
-//   productionName: string;
-//   // productionId: string;
-//   salesExec: string;
-//   retailerId: string;
-//   scheduledDate: Date;
-//   imageURL: string[];
-//   quantity: number;
-//   status: string;
-//   blocked: boolean;
-//   accepted: boolean;
-//   description: string;
-//   item: string;
 
-// }
 
-// interface CreateOrderProps {
-//   orderToEdit?: Order; // Assuming you have an Order interface defined
-//   isEditMode?: boolean;
-//  }
-// function CreateOrder({ onOrderCreated }) {
-  
- 
 function CreateOrder() {
+  const [loading, setLoading] = useState(false)
   const [createOrder, setCreateOrder] = useState<boolean>(false);
   const [availableProduction, setAvailableProduction] = useState<Production[]>([]);
   const [selectedProduction, setSelectedProduction] = useState('');
@@ -52,7 +33,6 @@ function CreateOrder() {
   const [date, setDate] = React.useState<Dayjs | null>();
   const [quantity, setQuantity] = useState<number>(0)
   const [images, setImages] = useState<File[]>([]);
-  // const [downloadURLs, setDownloadURLs] = useState<string[]>([]);
   const [description, setDescription] = useState<string>('')
   const [errorMessages, setErrorMessages] = useState({
     production: '',
@@ -60,8 +40,6 @@ function CreateOrder() {
     date: '',
     quantity: '',
   });
-
-
 
 
   const resetForm = () => {
@@ -83,11 +61,19 @@ function CreateOrder() {
 
 
   const fetchApi = async () => {
-    const response = await api.get('/sales/available-prod')
-    const result = response.data;
-    if (result.success == true) {
-      console.log('result her', result.availableProduction);
-      setAvailableProduction(result.availableProduction)
+    try {
+      setLoading(true)
+      const response = await api.get('/sales/available-prod')
+      const result = response.data;
+      if (result.success == true) {
+        console.log('result her', result.availableProduction);
+        setAvailableProduction(result.availableProduction)
+        setLoading(false)
+      }
+    } catch (error) {
+      console.log('Error while fetching available production details')
+      toast.error('please try again later')
+      setLoading(false)
     }
   }
 
@@ -202,127 +188,130 @@ function CreateOrder() {
       </div>
 
       {createOrder ? (
-
-        <div>
-          <div className='text-right pr-5'>
-            <span className='hover:shadow-lg px-2 hover:border-2 border-gray-400' style={{ fontSize: '32px', cursor: 'pointer' }} onClick={() => setCreateOrder(!createOrder)}>x</span>
-          </div>
-          < div className='bg-gray-100 p-5 rounded-md space-y-4'>
-
+        <>
+          {loading ? (
             <div>
-              <FormControl sx={{ m: 1, minWidth: 200 }}>
-                <InputLabel id="demo-simple-select-autowidth1-label">Production Unit</InputLabel>
-                <Select
-                  labelId="demo-simple-select-autowidth1-label"
-                  id="demo-simple-select-autowidth1"
-                  value={selectedProduction}
-                  onChange={handleProductionCompany}
-                  autoWidth
-
-                  label="Production Unit"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {availableProduction.map((production: Production) => (
-                    <MenuItem key={production._id} value={production._id}>
-                      {production.productionName}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {errorMessages.production && <FormHelperText><span className='text-red-600/85'>{errorMessages.production} </span></FormHelperText>}
-              </FormControl>
+              <ClipLoader />
             </div>
-
-
+          ) : (
             <div>
-              <FormControl sx={{ m: 1, minWidth: 200 }}>
-                <InputLabel id="demo-simple-select-autowidth-label">Select Product</InputLabel>
-                <Select
-                  labelId="demo-simple-select-autowidth-label"
-                  id="demo-simple-select-autowidth"
-                  value={selectedProduct}
-                  onChange={handleProduct}
-                  autoWidth
-                  required
-                  label="Production Unit"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {availableItems.map((item, index) => (
-                    <MenuItem key={index} value={item}>
-                      {item}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {errorMessages.product && <FormHelperText><span className='text-red-600/85'>{errorMessages.product}</span></FormHelperText>}
-              </FormControl>
-            </div>
+              <div className='text-right pr-5'>
+                <span className='hover:shadow-lg px-2 hover:border-2 border-gray-400' style={{ fontSize: '32px', cursor: 'pointer' }} onClick={() => setCreateOrder(!createOrder)}>x</span>
+              </div>
+              < div className='bg-gray-100 p-5 rounded-md space-y-4'>
+                <div>
+                  <FormControl sx={{ m: 1, minWidth: 200 }}>
+                    <InputLabel id="demo-simple-select-autowidth1-label">Production Unit</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-autowidth1-label"
+                      id="demo-simple-select-autowidth1"
+                      value={selectedProduction}
+                      onChange={handleProductionCompany}
+                      autoWidth
+
+                      label="Production Unit"
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {availableProduction.map((production: Production) => (
+                        <MenuItem key={production._id} value={production._id}>
+                          {production.productionName}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    {errorMessages.production && <FormHelperText><span className='text-red-600/85'>{errorMessages.production} </span></FormHelperText>}
+                  </FormControl>
+                </div>
+
+
+                <div>
+                  <FormControl sx={{ m: 1, minWidth: 200 }}>
+                    <InputLabel id="demo-simple-select-autowidth-label">Select Product</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-autowidth-label"
+                      id="demo-simple-select-autowidth"
+                      value={selectedProduct}
+                      onChange={handleProduct}
+                      autoWidth
+                      required
+                      label="Production Unit"
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {availableItems.map((item, index) => (
+                        <MenuItem key={index} value={item}>
+                          {item}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    {errorMessages.product && <FormHelperText><span className='text-red-600/85'>{errorMessages.product}</span></FormHelperText>}
+                  </FormControl>
+                </div>
 
 
 
-            <div className='flex space-x-6'>
+                <div className='flex space-x-6'>
 
 
-              <div className='w-fit pl-2'>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DemoContainer components={['DatePicker', 'DatePicker']}>
+                  <div className='w-fit pl-2'>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DemoContainer components={['DatePicker', 'DatePicker']}>
 
-                    <DatePicker
+                        <DatePicker
 
-                      label="Select Date"
-                      value={date}
-                      onChange={(newValue) => setDate(newValue)}
-                      disablePast
-                      
+                          label="Select Date"
+                          value={date}
+                          onChange={(newValue) => setDate(newValue)}
+                          disablePast
+
+                        />
+
+                      </DemoContainer>
+                      {errorMessages.date && <FormHelperText><span className='text-red-600/80 pl-4'>{errorMessages.date}</span></FormHelperText>}
+                    </LocalizationProvider>
+                  </div>
+
+                  <div className='quantity-div p-2'>
+                    <TextField
+                      required
+                      label="Quantity"
+                      type="number"
+                      value={quantity}
+                      onChange={handleQuantity}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      error={!!errorMessages.quantity}
+                      helperText={errorMessages.quantity}
                     />
+                  </div>
+                </div>
 
-                  </DemoContainer>
-                  {errorMessages.date && <FormHelperText><span className='text-red-600/80 pl-4'>{errorMessages.date}</span></FormHelperText>}
-                </LocalizationProvider>
+                <div className='px-2'>
+                  <TextField
+                    id="outlined-multiline-static"
+                    label="Description"
+                    multiline
+                    rows={4}
+                    placeholder='Enter description..'
+                    fullWidth
+                    onChange={handleDescription}
+                  />
+                </div>
+                <div className='pl-2'>
+                  <FileUploader images={images} setImages={setImages} />
+                </div>
+                <div className='pl-2'>
+                  <button className='bg-pink-500 p-2 rounded-md shadow-md text-white' type='submit' onClick={submitOrder}>Create Order</button>
+                </div>
               </div>
-
-              <div className='quantity-div p-2'>
-                <TextField
-                  required
-                  label="Quantity"
-                  type="number"
-                  value={quantity}
-                  onChange={handleQuantity}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  error={!!errorMessages.quantity}
-                  helperText={errorMessages.quantity}
-                />
-              </div>
             </div>
+          )}
 
-            <div className='px-2'>
-              <TextField
-                id="outlined-multiline-static"
-                label="Description"
-                multiline
-                rows={4}
-                placeholder='Enter description..'
-                fullWidth
-                onChange={handleDescription}
-              />
-            </div>
-            <div className='pl-2'>
-              <FileUploader images={images} setImages={setImages} />
-            </div>
-            <div className='pl-2'>
-              <button className='bg-pink-500 p-2 rounded-md shadow-md text-white' type='submit' onClick={submitOrder}>Create Order</button>
-            </div>
-
-          </div>
-        </div>
-
+        </>
       ) : null}
-
-
     </div>
   )
 }
