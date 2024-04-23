@@ -1,8 +1,9 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../../../axios/api.ts'
 // import './sample.css'
 import toast from 'react-hot-toast';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 interface FormData {
   retailerName?: string;
@@ -12,11 +13,28 @@ interface FormData {
 
 function Retailersignup() {
   const navigate = useNavigate();
+  const [loading, setLoading]= useState(false);
   const [formData, setFormData] = useState<FormData>({})
   const [otp, setOTP] = useState<string>('')
   const [error, setError] = useState<string>('')
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [passwordError, setPasswordError] = useState<string>('')
+  const [remainingTime, setRemainingTime] = useState<number>(10);
+
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+
+    if (isOtpSent && remainingTime > 0) {
+      timer = setTimeout(() => {
+        setRemainingTime(prevTime => prevTime - 1);
+      }, 1000);
+    }
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [isOtpSent, remainingTime]);
 
   const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value })
@@ -26,7 +44,6 @@ function Retailersignup() {
     } else {
       setPasswordError('')
     }
-    console.log(formData);
   }
   const validateFormData = () => {
     const { retailerName, email, password } = formData;
@@ -51,12 +68,13 @@ function Retailersignup() {
   const handleSubmitCred = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
-    console.log('validate', validateFormData);
+    // console.log('validate', validateFormData);
     if (!validateFormData()) {
       return;
     }
 
     try {
+      setLoading(true)
       const response = await api.post('/retailer/auth/verify_cred', formData, {
         headers: {
           "Content-Type": "application/json"
@@ -66,10 +84,12 @@ function Retailersignup() {
       console.log('coming from retailer signup', data)
       if (data.success === true && data.message == 'OTP send succesfully') {
         setIsOtpSent(true);
+        setLoading(false)
       }
     }
     catch (err: any) {
       console.log(err?.response.data);
+      setLoading(false)
       setError(err?.response.data.message || "An error occured");
     }
   }
@@ -78,12 +98,35 @@ function Retailersignup() {
     console.log(otp);
 
   }
+
+  const resendOtp = async () => {
+    const email = {
+      email:formData.email
+    }
+    try {
+      setLoading(true)
+      const response = await api.post('/retailer/auth/resend-otp',email)
+      if (response.data.success) {
+        setLoading(false)
+        setRemainingTime(10)
+      }
+    } catch (error) {
+      console.log('Error while trying to resend otp')
+      setLoading(false)
+      toast.error('Please restart again')
+    }
+  }
+
   const handleSubmitOTP = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if(otp == ''){
+      return
+    }
     const signupData = {
       formData, otp
     }
     try {
+      setLoading(true)
       const response = await api.post('/retailer/auth/verify_otp', signupData, {
         headers: {
           "Content-Type": 'application/json'
@@ -94,18 +137,20 @@ function Retailersignup() {
       if (data.success === true) {
         toast.success('Signup Success! Please Login')
         navigate('/retail/login')
+        setLoading(false)
       }
     } catch (error: any) {
       console.log(error?.response.data);
       setError(error?.response.data.message || "An error occured");
+      setLoading(false)
     }
-    console.log(otp)
+    // console.log(otp)
   }
 
   return (
 
     <div className='gradient-bg'>
-      <div className=' flex items-center justify-center h-full'>
+      <div className=' flex items-center justify-center h-full pt-20'>
         <div className=' bg-gray-200 bg-opacity-20 border backdrop-filter backdrop-blur-sm  p-8 shadow-left-bottom  rounded-lg w-96'>
           {!isOtpSent ? (
             <form className=' grad' onSubmit={handleSubmitCred}>
@@ -132,9 +177,9 @@ function Retailersignup() {
                 <button
                   type="submit"
                   className="w-auto px-3 text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300 disabled:bg-disabled disabled:text-disabled"
-                  disabled={!!passwordError}
+                  disabled={loading || !!passwordError}
                 >
-                  Send OTP
+                 {loading ? <span className='w-20'><ClipLoader/></span> : 'Send OTP'}
                 </button>
               </div>
               <div className='text-center pt-3'>
@@ -149,16 +194,29 @@ function Retailersignup() {
                   <div className='flex-auto'>
                     <input type="text" id='otp' className='w-32 px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500' placeholder='OTP' onChange={handleOTPChange} />
                   </div>
-                  <div className='flex-auto'>
-                    <button
-                      type="submit"
-                      className="w-auto px-3 bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition duration-300"
-                    >
-                      Verify and Submit
-                    </button>
-                  </div>
+                  {remainingTime != 0 && (
+                    <div className='flex-auto'>
+                      <button
+                        type="submit"
+                        className="w-auto px-3 bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition duration-300"
+                      >
+                        Verify and Submit
+                      </button>
+                    </div>
+                  )}
                 </div>
               </form>
+              <div className='text-center '>
+
+              <h1 className='text-sm text-red-500'>resend otp after {remainingTime} seconds</h1>
+              </div>
+
+              {remainingTime == 0 && (
+                <div className='items-center justify-center flex flex-col space-y-2'>
+                  <button disabled={loading}
+                   onClick={resendOtp} className='border p-2 rounded-md hover:bg-slate-300 hover:shadow-md transition-shadow'>{loading ? <span className='w-16'><ClipLoader/></span> : 'Resend OTP'}</button>
+                </div>
+              )}
             </div>
           )}
         </div>

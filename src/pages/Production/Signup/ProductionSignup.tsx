@@ -8,6 +8,7 @@ import api from '../../../axios/api'
 import toast from 'react-hot-toast'
 
 
+
 interface SignupForm {
   productionName: string,
   email: string,
@@ -180,7 +181,6 @@ export const ProductionSignup: React.FC = () => {
               <form onSubmit={handleSubmitOTP(onOtpSubmit)} className=''>
                 <div className='mb-4 text-center'>
                   <h2 className='text-2xl font- '>VERIFY OTP</h2>
-                  <p>resend otp after {remainingTime} seconds</p>
                 </div>
                 <div className='mb-4'>
                   {otpError && (
