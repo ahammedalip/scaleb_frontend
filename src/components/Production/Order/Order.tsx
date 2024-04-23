@@ -104,17 +104,31 @@ function Order() {
         }
     }
 
-    const handlePermitEdit = async (orderId: string, role: string) => {
+    const handlePermitEdit = async (orderId: string) => {
         const id = {
             orderId,
-            role
         }
         const request = await api.patch('/production/edit-acc', id)
         const response = request.data
 
         if (response.success) {
-            toast.success('')
+            toast.success('Sales executive is allowed to edit order')
+            fetchOrder()
         }
+    }
+
+    const handleDenyEdit = async(orderId:string)=>{
+        const id = {
+            orderId
+        }
+        const request = await api.patch('/production/edit-deny', id)
+        const response = request.data
+
+        if (response.success) {
+            toast.success('Sales executive is allowed to edit order')
+            fetchOrder()
+        }
+
     }
 
     return (
@@ -168,8 +182,8 @@ function Order() {
                                                                 <div className='flex space-x-3 items-center bg-white p-2 rounded-md hover:border-2 border-gray-500'>
 
                                                                     <h1>Requested for Updating order:</h1>
-                                                                    <button className='bg-green-700 text-white rounded-full px-3 py-2 hover:bg-black hover:text-white hover:shadow-md' onClick={() => handlePermitEdit(order._id, 'task')}>Grand</button>
-                                                                    <button className='bg-red-600 text-white rounded-full px-3 py-2 hover:bg-black hover:text-white hover:shadow-md'>Deny</button>
+                                                                    <button className='bg-green-700 text-white rounded-full px-3 py-2 hover:bg-black hover:text-white hover:shadow-md' onClick={() => handlePermitEdit(order._id)}>Grand</button>
+                                                                    <button className='bg-red-600 text-white rounded-full px-3 py-2 hover:bg-black hover:text-white hover:shadow-md' onClick={()=>{handleDenyEdit(order._id)}}>Deny</button>
                                                                 </div>
                                                             ) : null}
 

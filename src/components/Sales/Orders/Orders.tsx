@@ -143,9 +143,11 @@ function ExistingOrders() {
       const response = request.data
       if (response.success) {
         fetchOrders()
-        toast.success('Update request sent.')
+        toast.success('Order edited succesfully')
+        handleClose()
       } else {
         toast.error('Something went wrong, Please try again')
+        handleClose()
       }
 
     } catch (error) {
@@ -256,9 +258,9 @@ function ExistingOrders() {
                               </Box>
                             </Modal>
                           </div>
-                        ) : order.status === 'Pending' && order.accepted === 'Yes' && order.updateRequest !== 'Requested' ? (
+                        ) : order.status === 'Pending' && order.accepted === 'Yes' && (order.updateRequest !== 'Requested' && order.updateRequest !== 'Granted') ? (
                           <button className='border-2  bg-white hover:bg-pink-700/95 hover:text-white border-pink-700 p-2 rounded-md ease-linear transition-all duration-150' onClick={() => handleEditRequest(order._id)}>Request for Editing</button>
-                        ) : order.updateRequest === 'Accepted' ? (
+                        ) : order.updateRequest === 'Granted' ? (
                           <button className='border-2  bg-white hover:bg-pink-700/95 hover:text-white border-pink-700 p-2 rounded-md ease-linear transition-all duration-150' onClick={() => handleOpen(order)}>Edit Order</button>
                         ) : null}
                         <Modal
@@ -325,7 +327,7 @@ function ExistingOrders() {
 
                             </div>
                             <div className='text-center p-2'>
-                              <Button variant="outlined" sx={{ borderColor: '#b83280', color: '#b83280' }} onClick={handleUpdateRequest}> Request Update</Button>
+                              <Button variant="outlined" sx={{ borderColor: '#b83280', color: '#b83280' }} onClick={handleUpdateRequest}> Edit Order</Button>
                             </div>
                           </Box>
                         </Modal>

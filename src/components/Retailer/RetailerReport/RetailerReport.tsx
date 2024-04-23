@@ -5,6 +5,7 @@ import { BarChart } from '@mui/x-charts/BarChart';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { jwtDecode } from 'jwt-decode';
 import ClipLoader from 'react-spinners/ClipLoader'
+import empty from '../../../../public/images/2953962.jpg'
 
 interface JwtPayLoad {
   id: string;
@@ -60,7 +61,7 @@ export default function RetailerReport() {
           </div>
         ) : (
           <>
-            {chartData.length > 0 && (
+            {chartData.length > 0 ? (
               <>
                 <div className='border shadow-sm w-fit text-center'>
                   <h1>Orders By Sales Executives</h1>
@@ -95,6 +96,11 @@ export default function RetailerReport() {
                   />
                 </div>
               </>
+            ):(
+              <div className='h-[500px] flex justify-center sm:w-96' style={{backgroundImage:`url(${empty})`,backgroundPosition: 'center',
+              backgroundSize: 'cover',}}>
+                <h1 className='text-2xl text-slate-500'>No orders are created </h1>
+              </div>
             )}
           </>
         )}

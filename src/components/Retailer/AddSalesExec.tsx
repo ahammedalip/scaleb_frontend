@@ -103,8 +103,8 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose, fetchSalesList }
                                         type="text"
                                         placeholder="Username"
                                     />
-                                    {retailerUsername && (<p>username will be username@ {retailerUsername}</p>)}
-                                    {errors.username && <span>This field is required</span>}
+                                    {retailerUsername && (<p>username will be username@{retailerUsername}</p>)}
+                                    {errors.username && <span className='text-red-500'>This field is required</span>}
                                 </div>
                                 <div className="mb-4">
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
@@ -117,7 +117,7 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose, fetchSalesList }
                                         type="email"
                                         placeholder="Email"
                                     />
-                                    {errors.email && <span>This field is required</span>}
+                                    {errors.email && <span className='text-red-500'>This field is required</span>}
                                 </div>
                                 <div className="mb-6">
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
@@ -128,9 +128,9 @@ const UserModal: React.FC<UserModalProps> = ({ isOpen, onClose, fetchSalesList }
                                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         id="password"
                                         type="password"
-                                        placeholder="******************"
+                                        placeholder="password"
                                     />
-                                    {errors.password && <span>This field is required</span>}
+                                    {errors.password && <span className='text-red-500'>This field is required</span>}
                                 </div>
                                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                                     <button

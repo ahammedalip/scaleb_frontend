@@ -12,7 +12,7 @@ export default function Report() {
 
                     <RetailerMenu />
                 </div>
-                <div className='h-screen sm:w-9/12'>
+                <div className='h-screen sm:h-[600px] sm:w-9/12'>
 
                 <RetailerReport />
                 </div>

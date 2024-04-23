@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import ClipLoader from 'react-spinners/ClipLoader'
 import api from '../../../axios/api'
@@ -47,50 +47,65 @@ export default function ReportSales() {
 
       }}>
       {loading ? (
-        <div>
+        <div className='h-96 flex justify-center items-center'>
           <ClipLoader />
         </div>
 
       ) : (
-        <div className='p-5 flex-row space-y-5 items-center justify-center overflow-x-auto'>
-          {barChartData.length > 0 && (
-            <div className=' border-2  bg-slate-100/70 w-fit rounded '>
+        <div className='p-5 flex-row space-y-5 items-center justify-center overflow-x-auto '>
+          <div>
 
-              <h1>Sales Executives chart</h1>
-              <BarChart
-                xAxis={[{ data: barChartData.map(data => data.retailerName), scaleType: 'band' }]}
-                series={[{ data: barChartData.map(data => data.totalOrders) }]}
-                width={400}
-                height={250}
-              />
+            {barChartData.length > 0 ? (
+              <div className=' border-2  bg-slate-100/70 w-fit rounded '>
 
-            </div>
-          )}
+                <h1>Sales Executives chart</h1>
+                <BarChart
+                  xAxis={[{ data: barChartData.map(data => data.retailerName), scaleType: 'band' }]}
+                  series={[{ data: barChartData.map(data => data.totalOrders) }]}
+                  width={400}
+                  height={250}
+                />
 
-          {pieChartData.length > 0 && (
-            <div className='border-2 bg-slate-100/70 w-fit rounded '>
-              <h1>Orders to Production Unit</h1>
-              <PieChart
-                series={[
-                  {
-                    data: pieChartData.map((data, index) => ({
-                      id: index + 1,
-                      value: data.totalOrders,
-                      label: data.productionAdmin
-                    })),
-                    highlightScope: { faded: 'global', highlighted: 'item' },
-                    faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
-                  },
-                ]}
-                width={400}
-                height={200}
-              />
+              </div>
+            ) : (
+              <div className='bg-slate-100/70 w-fit'>
+                <h1 className='text-center pt-10'>Your haven't created any orders yet</h1>
+                <BarChart
+                  xAxis={[{ scaleType: 'band', data: ['You'] }]}
+                  series={[{ data: [0] }]}
+                  width={500}
+                  height={300}
+                />
+              </div>
+            )}
+          </div>
+          <div>
+            {pieChartData.length > 0 && (
+              <div className='border-2 bg-slate-100/70 w-fit rounded '>
+                <h1>Orders to Production Unit</h1>
+                <PieChart
+                  series={[
+                    {
+                      data: pieChartData.map((data, index) => ({
+                        id: index + 1,
+                        value: data.totalOrders,
+                        label: data.productionAdmin
+                      })),
+                      highlightScope: { faded: 'global', highlighted: 'item' },
+                      faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+                    },
+                  ]}
+                  width={400}
+                  height={200}
+                />
 
-            </div>
-          )}
-
+              </div>
+            )}
+          </div>
         </div>
       )}
+
+
 
 
     </div>
