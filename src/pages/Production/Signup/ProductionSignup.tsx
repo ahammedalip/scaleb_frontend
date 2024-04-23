@@ -1,5 +1,5 @@
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from '../../../components/header/Header'
 import './prod.css'
 import { useNavigate, Link } from 'react-router-dom'
@@ -27,6 +27,22 @@ export const ProductionSignup: React.FC = () => {
   const { register: registerOTP, handleSubmit: handleSubmitOTP, formState: { errors: errorsOTP } } = useForm<OTP>()
   const navigate = useNavigate()
   const [email, setEmail] = useState<string>('')
+  const [remainingTime, setRemainingTime] = useState<number>(59);
+
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+
+    if (isOtpSent && remainingTime > 0) {
+      timer = setTimeout(() => {
+        setRemainingTime(prevTime => prevTime - 1);
+      }, 1000);
+    }
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [isOtpSent, remainingTime]);
 
   const onSubmit: SubmitHandler<SignupForm> = async (data) => {
     setEmail(data.email)
@@ -46,6 +62,18 @@ export const ProductionSignup: React.FC = () => {
     } catch (error: any) {
       console.log(error?.response.data)
       setAuthError(error?.response.data.message || 'An error occured')
+    }
+  }
+
+  const resendOtp = async () => {
+    try{
+      const response = await api.post('/production/auth/resend-otp',{email})
+      if(response.data.success){
+        setRemainingTime(59)
+      }
+    }catch(error){
+      console.log('Error while trying to resend otp')
+      toast.error('Please restart again')
     }
   }
 
@@ -148,42 +176,59 @@ export const ProductionSignup: React.FC = () => {
             </form>
           ) : (
 
-            <form onSubmit={handleSubmitOTP(onOtpSubmit)} className='bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-full max-w-md mt-4'>
-              <div className='mb-4 text-center'>
-                <h2 className='text-2xl font- '>VERIFY OTP</h2>
-              </div>
-              <div className='mb-4'>
-                {otpError && (
-                  <div className='mb-4 text-red-500 text-center'>{otpError}</div>
-                )}
-              </div>
-              <div className='mb-4'>
-                <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='otp'>
-                  Enter OTP
-                </label>
-                <input
-                  id='otp'
-                  type='text'
-                  className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                  {...registerOTP('otp', { required: 'OTP is required' })}
-                  value={otp}
-                  onChange={e => setOtp(e.target.value)}
-                />
-                {errorsOTP.otp && <p className='text-red-500 text-xs italic'>{errorsOTP.otp.message}</p>}
-              </div>
-              <div className='flex items-center justify-center'>
+            <div className='flex flex-col bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 w-full max-w-md mt-4 items-center'>
+              <form onSubmit={handleSubmitOTP(onOtpSubmit)} className=''>
+                <div className='mb-4 text-center'>
+                  <h2 className='text-2xl font- '>VERIFY OTP</h2>
+                  <p>resend otp after {remainingTime} seconds</p>
+                </div>
+                <div className='mb-4'>
+                  {otpError && (
+                    <div className='mb-4 text-red-500 text-center'>{otpError}</div>
+                  )}
+                </div>
+                <div className='mb-4'>
+                  <label className='flex justify-center text-gray-700 text-sm font-bold mb-2 items-center ' htmlFor='otp'>
+                    Enter OTP
+                  </label>
+                  <input
+                    id='otp'
+                    type='text'
+                    className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                    {...registerOTP('otp', { required: 'OTP is required' })}
+                    value={otp}
+                    onChange={e => setOtp(e.target.value)}
+                  />
+                  {errorsOTP.otp && <p className='text-red-500 text-xs italic'>{errorsOTP.otp.message}</p>}
+                </div>
+                <div className='flex flex-col items-center justify-center space-y-3'>
+                  <div>
+                    <h1 className='text-sm text-red-500'>resend otp after {remainingTime} seconds</h1>
+                  </div>
 
-                <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' type='submit'>
-                  verify & Sign Up
-                </button>
-              </div>
+                  {remainingTime != 0 && (
 
-            </form>
+                    <div>
+                      <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' type='submit'>
+                        verify & Sign Up
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+              </form>
+              {remainingTime == 0 && (
+                <div className='pt-2'>
+                  <button className='border p-2 rounded-md hover:bg-slate-300 hover:shadow-md transition-shadow' onClick={resendOtp}>Resend OTP</button>
+                </div>
+              )}
+            </div>
           )}
+
 
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 
