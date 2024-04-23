@@ -5,6 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signInSuccess } from '../../../redux/Retailer/slice';
 import toast from 'react-hot-toast';
+import ClipLoader from 'react-spinners/ClipLoader'
 
 interface IFormInput {
     retailerName: string,
@@ -14,6 +15,7 @@ interface IFormInput {
 
 function Retailerlogin() {
     const [authError, setAuthError] = useState<string>('')
+    const [loading, setLoading] = useState(false)
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -30,20 +32,22 @@ function Retailerlogin() {
     })
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
         try {
+            setLoading(true)
             const response = await api.post('/retailer/auth/login', data, {
                 headers: {
                     "Content-Type": "application/json"
                 }
             })
             const result = response.data;
-            console.log(result);
+            // console.log(result);
             if (result.success == true && result.user.role == 'retailer') {
-                // console.log('hai from here',result.user);
+                setLoading(false)
                 dispatch(signInSuccess({ user: result.user }))
                 localStorage.setItem('retailer_token', result?.token)
                 toast.success('Login Success!')
                 navigate('/retail/home')
             } else if (result.success == true && result.user.role == 'retailer_sales') {
+                setLoading(false)
                 dispatch(signInSuccess({ user: result.user }))
                 localStorage.setItem('retailerSales_token', result?.token)
                 toast.success('Login Success!')
@@ -53,8 +57,8 @@ function Retailerlogin() {
         } catch (error: any) {
             console.log(error?.response.data)
             setAuthError(error?.response.data.message || 'An error occured')
+            setLoading(false)
         }
-        // console.log(data);
     };
 
     return (
@@ -97,11 +101,7 @@ function Retailerlogin() {
                     />
                     {errors.password && <p className='text-red-500 text-xs italic'>{errors.password.message}</p>}
                 </div>
-                <div className='flex items-center justify-center'>
-                    <button className='bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline' type='submit'>
-                        Sign In
-                    </button>
-                </div>
+
                 <div className='mb-4'>
                     <label className='block text-gray-700 text-sm font-semibold mb-2'>
                         Role
@@ -133,6 +133,13 @@ function Retailerlogin() {
                     </div>
 
                     {errors.role && <p className='text-red-500 text-xs italic'>{errors.role.message}</p>}
+                </div>
+                <div className='flex items-center justify-center'>
+                    <button
+                        disabled={loading}
+                        className='bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline' type='submit'>
+                        {loading ? <span><ClipLoader /></span> : 'Log In'}
+                    </button>
                 </div>
                 <div className='text-center pt-3'>
                     <h2>New user? <Link to='/retail/signup' className='text-blue-500'>Click here</Link> </h2>

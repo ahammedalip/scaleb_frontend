@@ -19,7 +19,7 @@ function Retailersignup() {
   const [error, setError] = useState<string>('')
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [passwordError, setPasswordError] = useState<string>('')
-  const [remainingTime, setRemainingTime] = useState<number>(10);
+  const [remainingTime, setRemainingTime] = useState<number>(59);
 
 
   useEffect(() => {
@@ -108,7 +108,7 @@ function Retailersignup() {
       const response = await api.post('/retailer/auth/resend-otp',email)
       if (response.data.success) {
         setLoading(false)
-        setRemainingTime(10)
+        setRemainingTime(59)
       }
     } catch (error) {
       console.log('Error while trying to resend otp')
