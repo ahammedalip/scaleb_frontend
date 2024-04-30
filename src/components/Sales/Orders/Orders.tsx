@@ -208,7 +208,7 @@ function ExistingOrders() {
   return (
     <div className='bg-white rounded-md shadow-md'>
       <div className='text-center'>
-        <CreateOrder />
+        <CreateOrder fetchOrders = {fetchOrders}/>
       </div>
       {loading ? (
         <div className='flex items-center justify-center h-96 '>

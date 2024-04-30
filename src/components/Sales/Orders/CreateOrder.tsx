@@ -22,9 +22,10 @@ interface Production {
   productionName: string;
   availableItems: string[];
 }
+type FetchOrdersFunction = () => void;
 
 
-function CreateOrder() {
+function CreateOrder({ fetchOrders }: { fetchOrders: FetchOrdersFunction }) {
   const [loading, setLoading] = useState(false)
   const [createOrder, setCreateOrder] = useState<boolean>(false);
   const [availableProduction, setAvailableProduction] = useState<Production[]>([]);
@@ -40,6 +41,7 @@ function CreateOrder() {
     date: '',
     quantity: '',
   });
+
 
 
   const resetForm = () => {
@@ -165,7 +167,8 @@ function CreateOrder() {
         setCreateOrder(false)
         toast.success('Order Created!')
         resetForm()
-        // onOrderCreated();
+        fetchOrders()
+        
       }
 
     } catch (error) {

@@ -37,7 +37,7 @@ const Header:React.FC=()=> {
 
   return (
     <div className='flex justify-center'>
-      <div className="fixed p-4 w-[98%] border-box shadow-lg flex justify-between items-center rounded-full bg-white">
+      <div className="fixed p-4 w-[98%] border-box shadow-lg flex justify-between items-center rounded-full header-container ">
         <h2 className="headerLogo pl-5 text-xl">SCALE.B</h2>
         {isRetailerLoggedIn ? (
           <div className='flex items-center space-x-10 mr-4'>
