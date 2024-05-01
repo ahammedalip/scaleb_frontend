@@ -26,7 +26,7 @@ function AdditionalMenu() {
     }
 
     return (
-        <div className='  pl-4'>
+        <div className='pl-8 pr-4'>
             <div className='bg-white py-4 rounded-lg shadow-lg '>
                 <ul className='list-none'>
                     <div className='group  hover:bg-pink-700/85 transition duration-1000 ease-in-out'>

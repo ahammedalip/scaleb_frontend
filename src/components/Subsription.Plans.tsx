@@ -203,7 +203,7 @@ const SubscriptionPlans: React.FC<SubscriptionPlansProps> = ({ role }) => {
 
 
     return (
-        <div className='bg-white rounded-md shadow-md p-5 justify-center w-9/12flex'>
+        <div className='bg-white rounded-md shadow-md p-5 justify-center flex h-[80%]'>
             {loading ? (
                 <div className='justify-center items-center' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '10vh' }}>
                     <ClipLoader color="rgb(10, 10, 10)" size={60} />
@@ -212,8 +212,8 @@ const SubscriptionPlans: React.FC<SubscriptionPlansProps> = ({ role }) => {
                 <>
                     {sub ? (
 
-                        <div className='flex flex-col items-center justify-center p-5 w-fit bg-green-200/45 border rounded-sm'>
-                            <img src={img} alt="" className='w-60' />
+                        <div className='flex flex-col items-center justify-center p-5 w-fit bg-yellow-400/45  border rounded-2xl shadow-xl'>
+                            <img src={img} alt="" className='w-60 rounded-xl' />
                             <h1 className='text-center' style={{ fontSize: '1.5rem', fontFamily: 'serif' }}>ACTIVE</h1>
                             <h1 className='text-center'>Your subscription is active</h1>
                             <p className='text-center'>validity: <span className='bold'>{new Date(subscriptionData.endDate).toLocaleDateString()}</span></p>

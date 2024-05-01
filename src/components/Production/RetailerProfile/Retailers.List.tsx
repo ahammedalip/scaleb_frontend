@@ -101,10 +101,13 @@ export default function RetailersList() {
     }
   }
 
-  const handleSort = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const sortDirection = e.target.id === 'low-high' ? 1 : -1;
+  const handleSort = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log('comign here')
+    const sortDirection = e.target.value === '1' ? 1 : -1;
+    console.log('sort value is ', sortDirection);
     setSortValue(sortDirection);
   }
+
   const handleQuery = async () => {
     setType('associated')
     setSearchValue('')
@@ -116,17 +119,26 @@ export default function RetailersList() {
 
       <div className='space-x-5 items-center bg-gray-200 border w-full justify-center flex flex-col space-y-4 p-5 rounded-md shadow-md md:flex-row'>
 
-        <div className=' items-center justify-center flex flex-row border-2 border-gray-400/50 rounded-lg'>
+        <div className=' items-center  justify-center flex flex-row border-2 border-gray-400/50 rounded-lg'>
           <input type="text"
             placeholder='Enter name'
-            className=' border-gray-300 bg-white h-10 px-5 pr-16 rounded-tl-lg rounded-bl-lg text-sm focus:outline-none'
+            className=' border-gray-300 bg-white h-10 px-5 pr-16  rounded-tl-lg rounded-bl-lg text-sm focus:outline-none'
             onChange={handleChange} />
           <button className='px-2 ' onClick={handleSearch}>
             <CiSearch fontSize={'25px'} />
           </button>
         </div>
 
-        <div className='flex flex-col'>
+        <div className='flex flex-col text-center'>
+          <h1 className='text-lg'>Sort</h1>
+          <select className='bg-gray-200 border-2 border-gray-400/50 rounded-md p-2'  onChange={handleSort}>
+            <option  value="1">Low to High</option>
+            <option  value="-1">High to Low</option>
+          </select>
+        </div>
+
+
+        {/* <div className='flex flex-col'>
           <h1>Sort</h1>
           <label htmlFor='low-high'>
             <input type="radio" id='low-high' name='sort'
@@ -139,21 +151,21 @@ export default function RetailersList() {
               name='sort'
               onChange={handleSort} />High to Low
           </label>
-        </div>
+        </div> */}
 
         <div className='text-center'>
-          <div className='space-x-5'>
-            <button className='bg-green-500 p-2 shadow-md rounded-lg  hover:bg-green-700 hover:text-white  duration-200 ease-in-out'
+          <div className='space-x-2 sm:space-x-0   sm:space-y-2'>
+            <button className='bg-green-500 p-2 px-2 shadow-md rounded-lg  hover:bg-green-700 hover:text-white  duration-200 ease-in-out'
               onClick={handleFetchRetailers}
-            >Associated Retailers</button>
-            <button className='bg-blue-400 p-2 shadow-md rounded-lg hover:bg-blue-700 hover:text-white duration-200 ease-in-out'
+            >Associated</button>
+            <button className='bg-blue-400 p-2 px-4 shadow-md rounded-lg hover:bg-blue-700 hover:text-white duration-200 ease-in-out'
               onClick={handleFetchAvailable}
-            >Available Retailers</button>
+            >Available</button>
           </div>
         </div>
 
         <div >
-          <button onClick={handleQuery} className='bg-black text-white rounded-md'>Clear Query</button>
+          <button onClick={handleQuery} className='bg-black text-white rounded-md p-1'>Clear Query</button>
         </div>
       </div>
 

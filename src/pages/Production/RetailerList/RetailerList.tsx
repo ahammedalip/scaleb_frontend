@@ -10,7 +10,7 @@ export default function RetailerList() {
         <div className='bottom-3 fixed sm:static md:w-1/4 w-full'>
           <ProductionMenu />
         </div>
-        <div className=''>
+        <div className='sm:w-9/12'>
 
         <RetailersList />
         </div>
